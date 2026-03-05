@@ -1,0 +1,25 @@
+name: e-ticaret
+services:
+  gateway:
+    build: .
+    container_name: gateway-service
+    command: turbo dev --filter=gateway-service
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/apps/gateway-service/node_modules
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+
+  web:
+    build: .
+    container_name: web-service
+    command: turbo dev --filter=web-service -- --host
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/apps/web-service/node_modules
+    ports:
+      - "5173:5173"
