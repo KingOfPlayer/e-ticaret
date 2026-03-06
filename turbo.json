@@ -16,6 +16,10 @@
     "test": {
       "outputs": ["coverage/**"]
     },
+    "test:watch": {
+      "cache": false,
+      "persistent": true
+    },
     "test:e2e": {
       "cache": false
     },
