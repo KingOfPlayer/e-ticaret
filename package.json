@@ -5,7 +5,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "turbo run test --parallel",
     "dev": "turbo run dev --parallel",
+    "start": "turbo run start --parallel",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "format": "prettier . --write",

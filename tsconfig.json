@@ -1,4 +1,10 @@
 {
   "files": [],
-  "references": [{ "path": "./apps/gateway-service" }, { "path": "./apps/web-service" }]
+  "references": [
+    { "path": "./apps/gateway-service" },
+    { "path": "./apps/auth-service" },
+    { "path": "./apps/product-service" },
+    { "path": "./apps/order-service" },
+    { "path": "./apps/frontend" }
+  ]
 }
