@@ -1,11 +1,15 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { GatewayService } from '../src/modules/gateway/gateway.service';
-import { BadGatewayException, ServiceUnavailableException } from '@nestjs/common';
+import {
+  BadGatewayException,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import axios from 'axios';
 
 vi.mock('axios');
-const mockedAxios = axios as any;
+const mockedAxios = vi.mocked(axios);
+mockedAxios.isAxiosError.mockImplementation((err: any) => !!err?.isAxiosError);
 
 describe('GatewayErrors (Red Phase)', () => {
   let service: GatewayService;
@@ -19,16 +23,24 @@ describe('GatewayErrors (Red Phase)', () => {
   });
 
   it('should return 502 Bad Gateway when downstream service returns error', async () => {
-    mockedAxios.request.mockRejectedValueOnce({ response: { status: 500 } });
-    
-    await expect(service.proxyRequest('http://product-service:3000', {}))
-      .rejects.toThrow(BadGatewayException);
+    mockedAxios.request.mockRejectedValueOnce({
+      response: { status: 500 },
+      isAxiosError: true,
+    } as any);
+
+    await expect(
+      service.proxyRequest('http://product-service:3000', {}),
+    ).rejects.toThrow(BadGatewayException);
   });
 
   it('should return 503 Service Unavailable when downstream service is down', async () => {
-    mockedAxios.request.mockRejectedValueOnce({ code: 'ECONNREFUSED' });
-    
-    await expect(service.proxyRequest('http://product-service:3000', {}))
-      .rejects.toThrow(ServiceUnavailableException);
+    mockedAxios.request.mockRejectedValueOnce({
+      code: 'ECONNREFUSED',
+      isAxiosError: true,
+    } as any);
+
+    await expect(
+      service.proxyRequest('http://product-service:3000', {}),
+    ).rejects.toThrow(ServiceUnavailableException);
   });
 });

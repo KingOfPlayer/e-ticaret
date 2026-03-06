@@ -17,7 +17,7 @@ describe('GatewayLogging (Red Phase)', () => {
     expect(service).toBeDefined();
   });
 
-  it('should save a request log with correct data', async () => {
+  it('should save a request log with correct data', () => {
     const logData = {
       path: '/api/products',
       method: 'GET',
@@ -27,7 +27,7 @@ describe('GatewayLogging (Red Phase)', () => {
       userId: 'user123',
     };
 
-    const savedLog = await service.createLog(logData);
+    const savedLog = service.createLog(logData);
     expect(savedLog).toMatchObject(logData);
     expect(savedLog.createdAt).toBeDefined();
   });

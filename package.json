@@ -11,8 +11,7 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "format": "prettier . --write",
-    "format:check": "prettier . --check",
-    "test": "turbo run test",
+    "formatCheck": "prettier . --check",
     "test:watch": "turbo run test:watch",
     "test:cov": "turbo run test:cov",
     "test:e2e": "turbo run test:e2e"
