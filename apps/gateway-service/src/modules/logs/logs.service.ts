@@ -17,10 +17,10 @@ export class LogsService {
       id: Math.random().toString(36).substr(2, 9),
       createdAt: new Date(),
     };
-    
+
     // In a real scenario, we would save this to MongoDB
     this.logs.push(newLog);
-    
+
     return newLog;
   }
 
