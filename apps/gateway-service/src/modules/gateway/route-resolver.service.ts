@@ -10,6 +10,6 @@ export class RouteResolverService {
       throw new NotFoundException(`Route not found for path: ${path}`);
     }
 
-    return ROUTE_MAP[route];
+    return (ROUTE_MAP as Record<string, string>)[route];
   }
 }

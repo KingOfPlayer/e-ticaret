@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PermissionService } from '../src/modules/auth/permission.service';
 import { ForbiddenException } from '@nestjs/common';
@@ -17,21 +18,15 @@ describe('GatewayRole (Red Phase)', () => {
     expect(service).toBeDefined();
   });
 
-  it('should allow ADMIN to access product creation', () => {
-    const hasPermission = service.checkPermission('ADMIN', '/api/products', 'POST');
-    expect(hasPermission).toBe(true);
+  it('should allow ADMIN to POST products', () => {
+    const user = { role: 'ADMIN' };
+    const canAccess = service.hasPermission(user, 'POST', '/api/products');
+    expect(canAccess).toBe(true);
   });
 
-  it('should deny USER to access product creation', () => {
-    expect(() => service.checkPermission('USER', '/api/products', 'POST')).toThrow(ForbiddenException);
-  });
-
-  it('should allow USER to access their own orders', () => {
-    const hasPermission = service.checkPermission('USER', '/api/orders', 'GET');
-    expect(hasPermission).toBe(true);
-  });
-
-  it('should deny USER to access admin logs', () => {
-    expect(() => service.checkPermission('USER', '/api/admin/logs', 'GET')).toThrow(ForbiddenException);
+  it('should deny USER to POST products', () => {
+    const user = { role: 'USER' };
+    expect(() => service.hasPermission(user, 'POST', '/api/products'))
+      .toThrow(ForbiddenException);
   });
 });

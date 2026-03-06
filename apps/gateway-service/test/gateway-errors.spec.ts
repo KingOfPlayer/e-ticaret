@@ -5,7 +5,7 @@ import { BadGatewayException, ServiceUnavailableException } from '@nestjs/common
 import axios from 'axios';
 
 vi.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+const mockedAxios = axios as any;
 
 describe('GatewayErrors (Red Phase)', () => {
   let service: GatewayService;
