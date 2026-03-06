@@ -4,7 +4,7 @@ services:
   # Dispatcher
   dispatcher:
     build:
-      context: ./dispatcher
+      context: ./apps/gateway-service
       dockerfile: Dockerfile
     ports:
       - '3000:3000'
@@ -28,7 +28,7 @@ services:
   # Auth Service
   auth-service:
     build:
-      context: ./auth-service
+      context: ./apps/auth-service
       dockerfile: Dockerfile
     environment:
       - MONGO_URI=mongodb://auth-mongo:27017/auth
@@ -45,7 +45,7 @@ services:
   # Product Service
   product-service:
     build:
-      context: ./product-service
+      context: ./apps/product-service
       dockerfile: Dockerfile
     environment:
       - MONGO_URI=mongodb://product-mongo:27017/products
@@ -62,7 +62,7 @@ services:
   # Order Service
   order-service:
     build:
-      context: ./order-service
+      context: ./apps/order-service
       dockerfile: Dockerfile
     environment:
       - MONGO_URI=mongodb://order-mongo:27017/orders
@@ -79,7 +79,7 @@ services:
   # Frontend
   frontend:
     build:
-      context: ./frontend
+      context: ./apps/frontend
       dockerfile: Dockerfile
     ports:
       - '3001:3000'
