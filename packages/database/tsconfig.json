@@ -5,13 +5,12 @@
     "lib": ["ES2023"],
     "declaration": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "composite": true,
     "declarationMap": true
   },
-  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

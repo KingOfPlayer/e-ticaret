@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { add } from '@e-ticaret/database';
 
 (() => {
-  const a: number = add(1, 2) as number;
+  const a: number = add(1, 2);
   console.log(a);
 })();
 
