@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "turbo run dev --parallel",
+    "prestart": "turbo run build --filter=@e-ticaret/*",
     "start": "turbo run start --parallel",
     "build": "turbo run build",
     "lint": "turbo run lint",
