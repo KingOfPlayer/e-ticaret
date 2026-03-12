@@ -7,12 +7,12 @@ services:
       context: ./apps/gateway-service
       dockerfile: Dockerfile
     ports:
-      - '3000:3000'
+      - '5000:5000'
     environment:
       - MONGO_URI=mongodb://dispatcher-mongo:27017/dispatcher
-      - AUTH_SERVICE_URL=http://auth-service:3000
-      - PRODUCT_SERVICE_URL=http://product-service:3000
-      - ORDER_SERVICE_URL=http://order-service:3000
+      - AUTH_SERVICE_URL=http://auth-service:5001
+      - PRODUCT_SERVICE_URL=http://product-service:5002
+      - ORDER_SERVICE_URL=http://order-service:5003
       - JWT_SECRET=super-secret-key
     depends_on:
       - dispatcher-mongo
@@ -84,7 +84,7 @@ services:
     ports:
       - '3001:3000'
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:3000/api
+      - NEXT_PUBLIC_API_URL=http://localhost:5000/api
     networks:
       - frontend-network
 
