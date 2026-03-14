@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { GatewayService } from '../src/modules/gateway/gateway.service';
 import {
@@ -7,9 +6,9 @@ import {
 } from '@nestjs/common';
 import axios from 'axios';
 
-vi.mock('axios');
-const mockedAxios = vi.mocked(axios);
-mockedAxios.isAxiosError.mockImplementation((err: any) => !!err?.isAxiosError);
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+mockedAxios.isAxiosError = jest.fn().mockImplementation((err: any) => !!err?.isAxiosError) as any;
 
 describe('GatewayErrors (Red Phase)', () => {
   let service: GatewayService;

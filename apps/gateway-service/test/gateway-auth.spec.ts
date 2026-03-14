@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '../src/modules/auth/jwt.service';
 import { UnauthorizedException } from '@nestjs/common';
