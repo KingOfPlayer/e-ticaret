@@ -21,4 +21,14 @@ export class OrdersService {
   async findOne(id: string): Promise<Order | null> {
     return this.orderModel.findById(id).exec();
   }
+
+  async update(id: string, updateOrderDto: any): Promise<Order | null> {
+    return this.orderModel
+      .findByIdAndUpdate(id, updateOrderDto, { new: true })
+      .exec();
+  }
+
+  async remove(id: string): Promise<any> {
+    return this.orderModel.findByIdAndDelete(id).exec();
+  }
 }
