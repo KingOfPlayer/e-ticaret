@@ -3,13 +3,25 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/a
 export async function apiRequest(path: string, options: RequestInit = {}) {
   const url = `${API_BASE_URL}${path}`;
   
+  // Client-side'da olduğumuzdan emin olalım
+  const token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
+  
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+    ...options.headers,
+  };
+
   const response = await fetch(url, {
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
+    headers,
   });
+
+  if (response.status === 401 && typeof window !== 'undefined') {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user');
+    window.location.href = '/auth/login';
+  }
 
   if (!response.ok && response.status !== 204) {
     const error = await response.json().catch(() => ({ message: 'API Hatası' }));
