@@ -7,8 +7,11 @@ This project is a mini e-commerce system built with a microservices architecture
 - **Independent Services**: Dispatcher, Auth, Product, and Order.
 - **TDD-First**: Dispatcher developed using Red-Green-Refactor.
 - **Security**: Centralized JWT and RBAC at the Dispatcher level.
-- **Isolation**: Microservices are not reachable from the outside; only via Dispatcher.
-- **Database**: Each service has its own isolated MongoDB instance.
+- **Isolation**: Microservices are not reachable from the outside; only via Dispatcher. This is achieved via Docker Network Isolation (Backend services do not expose ports to the host).
+- **Network Isolation Verification**:
+    - **Frontend Network**: Only `dispatcher` and `frontend` are exposed.
+    - **Backend Network**: All microservices and databases communicate privately.
+    - **Security**: Direct access to `auth-service`, `product-service`, or `order-service` from outside the Docker network is prohibited.
 - **Scalability**: Traffic visualization and Load testing (k6) included.
 
 ## Technology Stack
