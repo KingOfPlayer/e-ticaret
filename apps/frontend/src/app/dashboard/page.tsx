@@ -1,5 +1,7 @@
 import React from 'react';
 import { Activity, Package, ShoppingCart, TrendingUp } from 'lucide-react';
+import { TrafficFlow } from '@/components/dashboard/traffic-flow';
+import { cn } from '@/lib/utils';
 
 export default function DashboardPage() {
   return (
@@ -41,12 +43,8 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 rounded-2xl bg-slate-900/50 border border-slate-800 p-8 h-[400px] flex items-center justify-center border-dashed">
-          <div className="text-center">
-            <Activity className="w-12 h-12 text-slate-700 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-slate-300">Trafik Akışı Görselleştirmesi</h3>
-            <p className="text-sm text-slate-500 max-w-xs mx-auto">Bu alanda mikroservisler arası anlık istek akışı (Canvas) görüntülenecek.</p>
-          </div>
+        <div className="lg:col-span-2 rounded-2xl bg-slate-900/50 border border-slate-800 p-8 h-[400px] flex items-center justify-center">
+          <TrafficFlow />
         </div>
         
         <div className="rounded-2xl bg-slate-900/50 border border-slate-800 p-8 h-[400px] flex items-center justify-center border-dashed">
@@ -81,9 +79,4 @@ function StatCard({ title, value, change, icon: Icon, color }: any) {
       </div>
     </div>
   );
-}
-
-// Utility to fix missing import in the same component file
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(' ');
 }
