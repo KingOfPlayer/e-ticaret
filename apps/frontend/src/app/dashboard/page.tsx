@@ -1,6 +1,7 @@
 import React from 'react';
 import { Activity, Package, ShoppingCart, TrendingUp } from 'lucide-react';
 import { TrafficFlow } from '@/components/dashboard/traffic-flow';
+import { LogTable } from '@/components/dashboard/log-table';
 import { cn } from '@/lib/utils';
 
 export default function DashboardPage() {
@@ -51,10 +52,12 @@ export default function DashboardPage() {
           <div className="text-center">
             <TrendingUp className="w-12 h-12 text-slate-700 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-slate-300">Hızlı İstatistikler</h3>
-            <p className="text-sm text-slate-500">Servis bazlı detaylı metrikler yakında.</p>
+            <p className="text-sm text-slate-500 text-balance">Servis bazlı detaylı metrikler yakında.</p>
           </div>
         </div>
       </div>
+
+      <LogTable />
     </div>
   );
 }
