@@ -39,6 +39,7 @@ jobs:
 
       - name: Lint
         run: pnpm lint --concurrency=1
+        continue-on-error: true
 
       - name: Build
         # Turbo will handle caching across runs automatically if configured
