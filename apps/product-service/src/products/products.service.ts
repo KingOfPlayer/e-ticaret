@@ -21,4 +21,14 @@ export class ProductsService {
   async findOne(id: string): Promise<Product | null> {
     return this.productModel.findById(id).exec();
   }
+
+  async update(id: string, updateProductDto: any): Promise<Product | null> {
+    return this.productModel
+      .findByIdAndUpdate(id, updateProductDto, { new: true })
+      .exec();
+  }
+
+  async remove(id: string): Promise<any> {
+    return this.productModel.findByIdAndDelete(id).exec();
+  }
 }

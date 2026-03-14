@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Product } from '../schemas/product.schema';
 
@@ -19,5 +29,19 @@ export class ProductsController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Product | null> {
     return this.productsService.findOne(id);
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateProductDto: any,
+  ): Promise<Product | null> {
+    return this.productsService.update(id, updateProductDto);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id') id: string): Promise<void> {
+    await this.productsService.remove(id);
   }
 }
