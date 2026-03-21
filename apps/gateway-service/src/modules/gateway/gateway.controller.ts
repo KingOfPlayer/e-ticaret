@@ -13,7 +13,9 @@ export class GatewayController {
   @All('*')
   async handleRequest(@Req() req: express.Request, @Res() res: express.Response) {
     const targetBaseUrl = this.routeResolverService.resolveService(req.path);
-    const targetUrl = `${targetBaseUrl}${req.path}`;
+    console.log(`Received request: ${req.method} ${req.path}, forwarding to: ${targetBaseUrl}`);
+    const targetUrl = `${targetBaseUrl}${req.path.replace(/^\/api/, '')}`;
+    console.log(`Proxying request to: ${targetUrl}`);
 
     try {
       const response = await this.gatewayService.proxyRequest(targetUrl, {
@@ -24,6 +26,7 @@ export class GatewayController {
       });
       return res.status(200).json(response);
     } catch (error: any) {
+      console.error(`Error occurred while proxying request to ${targetUrl}:`, error);
       const statusCode = error.response?.status || 500;
       return res.status(statusCode).json(error.response?.data || { message: error.message });
     }
