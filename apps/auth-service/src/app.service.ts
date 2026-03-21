@@ -48,4 +48,8 @@ export class AppService {
       },
     };
   }
+  health(): any {
+    return { status: 'ok' };
+  }
 }
+
