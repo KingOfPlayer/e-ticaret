@@ -5,7 +5,7 @@ export class JwtService {
   private readonly publicRoutes = ['/api/auth/login', '/api/auth/register'];
   private readonly mockSecret = 'super-secret-key';
 
-  verifyToken(token: string): any {
+  verifyToken(token: string): { userId: string; role: string } {
     if (!token) {
       throw new UnauthorizedException('Token missing');
     }

@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '../src/modules/auth/jwt.service';
 import { UnauthorizedException } from '@nestjs/common';
@@ -21,7 +20,7 @@ describe('GatewayAuth (Red Phase)', () => {
   it('should validate a correct token', () => {
     const mockToken = 'valid-token';
     const mockPayload = { userId: '123', role: 'USER' };
-    const payload = service.verifyToken(mockToken);
+    const payload: { userId: string; role: string } = service.verifyToken(mockToken);
     expect(payload).toEqual(mockPayload);
   });
 
@@ -30,7 +29,9 @@ describe('GatewayAuth (Red Phase)', () => {
   });
 
   it('should throw UnauthorizedException for invalid token', () => {
-    expect(() => service.verifyToken('invalid-token')).toThrow(UnauthorizedException);
+    expect(() => service.verifyToken('invalid-token')).toThrow(
+      UnauthorizedException,
+    );
   });
 
   it('should identify public routes (no token required)', () => {

@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PermissionService } from '../src/modules/auth/permission.service';
 import { ForbiddenException } from '@nestjs/common';
@@ -26,7 +25,8 @@ describe('GatewayRole (Red Phase)', () => {
 
   it('should deny USER to POST products', () => {
     const user = { role: 'USER' };
-    expect(() => service.hasPermission(user, 'POST', '/api/products'))
-      .toThrow(ForbiddenException);
+    expect(() => service.hasPermission(user, 'POST', '/api/products')).toThrow(
+      ForbiddenException,
+    );
   });
 });
