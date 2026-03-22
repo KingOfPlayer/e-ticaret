@@ -20,9 +20,7 @@ export class PermissionService {
 
       // Specifically deny POST/PUT/DELETE for sensitive paths like /api/products
       if (['POST', 'PUT', 'DELETE'].includes(method)) {
-        throw new ForbiddenException(
-          `User role ${user.role} cannot perform ${method} on ${path}`,
-        );
+        throw new ForbiddenException(`User role ${user.role} cannot perform ${method} on ${path}`);
       }
     }
 

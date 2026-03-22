@@ -1,9 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { GatewayService } from '../src/modules/gateway/gateway.service';
-import {
-  BadGatewayException,
-  ServiceUnavailableException,
-} from '@nestjs/common';
+import { BadGatewayException, ServiceUnavailableException } from '@nestjs/common';
 import axios from 'axios';
 
 jest.mock('axios');
@@ -27,9 +24,9 @@ describe('GatewayErrors (Red Phase)', () => {
       isAxiosError: true,
     } as any);
 
-    await expect(
-      service.proxyRequest('http://product-service:3000', {}),
-    ).rejects.toThrow(BadGatewayException);
+    await expect(service.proxyRequest('http://product-service:3000', {})).rejects.toThrow(
+      BadGatewayException,
+    );
   });
 
   it('should return 503 Service Unavailable when downstream service is down', async () => {
@@ -38,8 +35,8 @@ describe('GatewayErrors (Red Phase)', () => {
       isAxiosError: true,
     } as any);
 
-    await expect(
-      service.proxyRequest('http://product-service:3000', {}),
-    ).rejects.toThrow(ServiceUnavailableException);
+    await expect(service.proxyRequest('http://product-service:3000', {})).rejects.toThrow(
+      ServiceUnavailableException,
+    );
   });
 });

@@ -21,8 +21,8 @@ export default function RegisterPage() {
     const password = formData.get('password');
 
     try {
-       await api.post('/auth/register', { email, password });
-       router.push('/auth/login?registered=true');
+      await api.post('/auth/register', { email, password });
+      router.push('/auth/login?registered=true');
     } catch (err: any) {
       setError(err.message || 'Kayıt işlemi başarısız.');
     } finally {
@@ -41,7 +41,9 @@ export default function RegisterPage() {
             <span className="text-2xl font-bold text-white tracking-tight">EcoSystem</span>
           </Link>
           <h1 className="text-3xl font-bold text-white tracking-tight">Hesap Oluştur</h1>
-          <p className="text-slate-400 mt-2 font-medium">Bize katılın ve ekosistemi yönetmeye başlayın.</p>
+          <p className="text-slate-400 mt-2 font-medium">
+            Bize katılın ve ekosistemi yönetmeye başlayın.
+          </p>
         </div>
 
         <div className="bg-slate-900/50 border border-slate-800 rounded-3xl p-8 shadow-2xl backdrop-blur-xl">
@@ -56,8 +58,8 @@ export default function RegisterPage() {
               <label className="text-sm font-semibold text-slate-400 ml-1">E-posta Adresi</label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   name="email"
                   required
                   placeholder="admin@ecosystem.com"
@@ -70,22 +72,26 @@ export default function RegisterPage() {
               <label className="text-sm font-semibold text-slate-400 ml-1">Şifre Oluştur</label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                <input 
-                  type="password" 
+                <input
+                  type="password"
                   name="password"
                   required
                   placeholder="••••••••"
                   className="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-12 pr-4 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all font-medium"
                 />
               </div>
-              <p className="text-[10px] text-slate-500 ml-1">En az 8 karakter, harf ve rakam içermelidir.</p>
+              <p className="text-[10px] text-slate-500 ml-1">
+                En az 8 karakter, harf ve rakam içermelidir.
+              </p>
             </div>
 
-            <button 
+            <button
               disabled={loading}
               className="w-full bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl py-4 font-bold transition-all shadow-xl shadow-indigo-600/20 flex items-center justify-center gap-2 group active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100"
             >
-              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
+              {loading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
                 <>
                   Hemen Kayıt Ol
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -96,7 +102,12 @@ export default function RegisterPage() {
 
           <p className="text-center text-slate-500 mt-8 text-sm font-medium">
             Zaten bir hesabınız var mı?{' '}
-            <Link href="/auth/login" className="text-indigo-400 font-bold hover:text-indigo-300 transition-colors">Giriş Yapın</Link>
+            <Link
+              href="/auth/login"
+              className="text-indigo-400 font-bold hover:text-indigo-300 transition-colors"
+            >
+              Giriş Yapın
+            </Link>
           </p>
         </div>
       </div>

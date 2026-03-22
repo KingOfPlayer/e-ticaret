@@ -15,11 +15,51 @@ interface Log {
 }
 
 const mockLogs: Log[] = [
-  { id: '1', path: '/api/auth/login', method: 'POST', statusCode: 200, latencyMs: 45, service: 'auth-service', createdAt: new Date() },
-  { id: '2', path: '/api/products', method: 'GET', statusCode: 200, latencyMs: 12, service: 'product-service', createdAt: new Date() },
-  { id: '3', path: '/api/orders', method: 'POST', statusCode: 201, latencyMs: 89, service: 'order-service', createdAt: new Date() },
-  { id: '4', path: '/api/products/123', method: 'DELETE', statusCode: 204, latencyMs: 34, service: 'product-service', createdAt: new Date() },
-  { id: '5', path: '/api/auth/register', method: 'POST', statusCode: 400, latencyMs: 23, service: 'auth-service', createdAt: new Date() },
+  {
+    id: '1',
+    path: '/api/auth/login',
+    method: 'POST',
+    statusCode: 200,
+    latencyMs: 45,
+    service: 'auth-service',
+    createdAt: new Date(),
+  },
+  {
+    id: '2',
+    path: '/api/products',
+    method: 'GET',
+    statusCode: 200,
+    latencyMs: 12,
+    service: 'product-service',
+    createdAt: new Date(),
+  },
+  {
+    id: '3',
+    path: '/api/orders',
+    method: 'POST',
+    statusCode: 201,
+    latencyMs: 89,
+    service: 'order-service',
+    createdAt: new Date(),
+  },
+  {
+    id: '4',
+    path: '/api/products/123',
+    method: 'DELETE',
+    statusCode: 204,
+    latencyMs: 34,
+    service: 'product-service',
+    createdAt: new Date(),
+  },
+  {
+    id: '5',
+    path: '/api/auth/register',
+    method: 'POST',
+    statusCode: 400,
+    latencyMs: 23,
+    service: 'auth-service',
+    createdAt: new Date(),
+  },
 ];
 
 export function LogTable() {
@@ -36,26 +76,38 @@ export function LogTable() {
           </span>
         </div>
       </div>
-      
+
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-slate-950/50">
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Method</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Path</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Servis</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">Durum</th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">Gecikme</th>
+              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Method
+              </th>
+              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Path
+              </th>
+              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Servis
+              </th>
+              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">
+                Durum
+              </th>
+              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">
+                Gecikme
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-800">
             {mockLogs.map((log) => (
               <tr key={log.id} className="hover:bg-slate-800/30 transition-colors group">
                 <td className="px-6 py-4">
-                  <span className={cn(
-                    "px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider",
-                    getMethodColor(log.method)
-                  )}>
+                  <span
+                    className={cn(
+                      'px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider',
+                      getMethodColor(log.method),
+                    )}
+                  >
                     {log.method}
                   </span>
                 </td>
@@ -73,10 +125,12 @@ export function LogTable() {
                   </div>
                 </td>
                 <td className="px-6 py-4 text-center">
-                  <span className={cn(
-                    "text-sm font-semibold",
-                    log.statusCode >= 400 ? "text-rose-500" : "text-emerald-500"
-                  )}>
+                  <span
+                    className={cn(
+                      'text-sm font-semibold',
+                      log.statusCode >= 400 ? 'text-rose-500' : 'text-emerald-500',
+                    )}
+                  >
                     {log.statusCode}
                   </span>
                 </td>
@@ -91,7 +145,7 @@ export function LogTable() {
           </tbody>
         </table>
       </div>
-      
+
       <div className="p-4 bg-slate-900/30 border-t border-slate-800 flex justify-center">
         <button className="text-xs font-medium text-slate-500 hover:text-indigo-400 transition-colors flex items-center gap-2">
           Hepsini Gör <Clock className="w-3 h-3" />
@@ -103,24 +157,33 @@ export function LogTable() {
 
 function getMethodColor(method: string) {
   switch (method) {
-    case 'GET': return 'bg-sky-500/10 text-sky-400 border border-sky-500/20';
-    case 'POST': return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
-    case 'PUT': return 'bg-amber-500/10 text-amber-400 border border-amber-500/20';
-    case 'DELETE': return 'bg-rose-500/10 text-rose-400 border border-rose-500/20';
-    default: return 'bg-slate-500/10 text-slate-400 border border-slate-500/20';
+    case 'GET':
+      return 'bg-sky-500/10 text-sky-400 border border-sky-500/20';
+    case 'POST':
+      return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+    case 'PUT':
+      return 'bg-amber-500/10 text-amber-400 border border-amber-500/20';
+    case 'DELETE':
+      return 'bg-rose-500/10 text-rose-400 border border-rose-500/20';
+    default:
+      return 'bg-slate-500/10 text-slate-400 border border-slate-500/20';
   }
 }
 
 function ActivityIcon({ className }: { className?: string }) {
   return (
-    <svg 
+    <svg
       className={className}
-      fill="none" 
-      viewBox="0 0 24 24" 
-      stroke="currentColor" 
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
       strokeWidth={2}
     >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+      />
     </svg>
   );
 }

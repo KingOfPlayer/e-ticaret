@@ -9,7 +9,9 @@ import { User, UserSchema } from './schemas/user.schema';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27017/auth'),
+    MongooseModule.forRoot(
+      process.env.MONGO_URI || 'mongodb://localhost:27017/auth',
+    ),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'super-secret-key',

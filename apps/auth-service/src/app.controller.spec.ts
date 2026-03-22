@@ -13,7 +13,9 @@ describe('AppController', () => {
     app = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot(),
-        MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27017/auth'),
+        MongooseModule.forRoot(
+          process.env.MONGO_URI || 'mongodb://localhost:27017/auth',
+        ),
         MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
         JwtModule.register({
           secret: process.env.JWT_SECRET || 'super-secret-key',
@@ -21,18 +23,18 @@ describe('AppController', () => {
         }),
       ],
       controllers: [AppController],
-      providers: [AppService]
+      providers: [AppService],
     }).compile();
 
     appController = app.get<AppController>(AppController);
   });
 
   afterAll(async () => {
-    await app.close();        // Close the Nest application
+    await app.close(); // Close the Nest application
   });
 
   describe('health', () => {
-    it('should return { status: \'ok\' }', () => {
+    it("should return { status: 'ok' }", () => {
       expect(appController.health()).toEqual({ status: 'ok' });
     });
   });

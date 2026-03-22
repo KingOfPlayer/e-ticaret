@@ -1,4 +1,8 @@
-import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
@@ -27,7 +31,11 @@ export class AppService {
     });
 
     await user.save();
-    return { id: user._id, email: user.email, message: 'Kayıt başarıyla tamamlandı.' };
+    return {
+      id: user._id,
+      email: user.email,
+      message: 'Kayıt başarıyla tamamlandı.',
+    };
   }
 
   async login(loginDto: any): Promise<any> {
@@ -52,4 +60,3 @@ export class AppService {
     return { status: 'ok' };
   }
 }
-
