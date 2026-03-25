@@ -1,3 +1,4 @@
+import { RoleGuard, Roles, UserRole } from '@e-ticaret/role';
 import {
   Controller,
   Post,
@@ -7,12 +8,14 @@ import {
   Res,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import winston, { Logger } from 'winston';
 
 @Controller('log')
+@UseGuards(RoleGuard)
 export class LoggerController {
   constructor(
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
@@ -20,6 +23,7 @@ export class LoggerController {
   ) {}
 
   @Post()
+  @Roles(UserRole.Admin)
   createLog(
     @Body() body: { options?: winston.QueryOptions | undefined },
     @Res() res: Response,

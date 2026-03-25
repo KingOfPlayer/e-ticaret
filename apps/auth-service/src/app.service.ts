@@ -59,7 +59,7 @@ export class AppService {
     };
   }
   health(): any {
-  this.loggerService.logRouting('/auth/health', 'GET');
+    this.loggerService.logRouting('/auth/health', 'GET');
     return { status: 'ok' };
   }
 }
