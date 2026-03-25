@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User, UserSchema } from './schemas/user.schema';
+import { LoggerModule } from '@e-ticaret/logger';
+import { LoggerService } from './logger.service';
 
 @Module({
   imports: [
@@ -17,8 +19,10 @@ import { User, UserSchema } from './schemas/user.schema';
       secret: process.env.JWT_SECRET || 'super-secret-key',
       signOptions: { expiresIn: '1h' },
     }),
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    LoggerModule.register({ serviceName: 'auth-service' }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, LoggerService],
 })
 export class AppModule {}

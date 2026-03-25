@@ -8,12 +8,14 @@ import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from './schemas/user.schema';
+import { LoggerService } from './logger.service';
 
 @Injectable()
 export class AppService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private jwtService: JwtService,
+    private loggerService: LoggerService,
   ) {}
 
   async register(registerDto: any): Promise<any> {
@@ -57,6 +59,7 @@ export class AppService {
     };
   }
   health(): any {
+    this.loggerService.logRouting('/auth/health', 'auth-service');
     return { status: 'ok' };
   }
 }

@@ -4,3 +4,4 @@
 *.tsbuildinfo
 skill/
 test.http
+logs/
