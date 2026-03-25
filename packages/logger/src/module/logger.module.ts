@@ -1,6 +1,7 @@
 import { DynamicModule, Module, Global } from '@nestjs/common';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
+import { LoggerController } from './logger.controller';
 
 @Global()
 @Module({})
@@ -20,10 +21,16 @@ export class LoggerModule {
             }),
             new winston.transports.File({
               filename: `logs/${options.serviceName}-${new Date().toISOString().slice(0, 10)}.log`,
+              format: winston.format.combine(
+                winston.format.timestamp(),
+                winston.format.label({ label: options.serviceName }),
+                winston.format.json(),
+              ),
             }),
           ],
         }),
       ],
+      controllers: [LoggerController],
       exports: [WinstonModule],
     };
   }
