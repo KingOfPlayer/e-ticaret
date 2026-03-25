@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User, UserSchema } from './schemas/user.schema';
-import { LoggerModule } from '@e-ticaret/logger';
+import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
 import { LoggerService } from './logger.service';
 
 @Module({
@@ -25,4 +25,9 @@ import { LoggerService } from './logger.service';
   controllers: [AppController],
   providers: [AppService, LoggerService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    consumer.apply(HttpLoggerMiddleware).forRoutes('*');
+  }
+}

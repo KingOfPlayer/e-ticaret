@@ -24,6 +24,15 @@ export class LoggerModule {
               format: winston.format.combine(
                 winston.format.timestamp(),
                 winston.format.label({ label: options.serviceName }),
+                winston.format.metadata({
+                  fillExcept: [
+                    'message',
+                    'level',
+                    'timestamp',
+                    'label',
+                    'context',
+                  ],
+                }),
                 winston.format.json(),
               ),
             }),
