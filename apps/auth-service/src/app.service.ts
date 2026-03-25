@@ -8,7 +8,7 @@ import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from './schemas/user.schema';
-import { LoggerService } from './logger.service';
+import { LoggerService } from '@e-ticaret/logger';
 
 @Injectable()
 export class AppService {
@@ -39,7 +39,7 @@ export class AppService {
       message: 'Kayıt başarıyla tamamlandı.',
     };
   }
-
+  
   async login(loginDto: any): Promise<any> {
     const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email });
@@ -59,7 +59,10 @@ export class AppService {
     };
   }
   health(): any {
-    this.loggerService.logRouting('/auth/health', 'GET');
+    this.loggerService.log(
+      'Health check endpoint accessed',
+      'AppService.health',
+    );
     return { status: 'ok' };
   }
 }

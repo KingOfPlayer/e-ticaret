@@ -6,7 +6,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User, UserSchema } from './schemas/user.schema';
 import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
-import { LoggerService } from './logger.service';
 
 @Module({
   imports: [
@@ -19,11 +18,10 @@ import { LoggerService } from './logger.service';
       secret: process.env.JWT_SECRET || 'super-secret-key',
       signOptions: { expiresIn: '1h' },
     }),
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     LoggerModule.register({ serviceName: 'auth-service' }),
   ],
   controllers: [AppController],
-  providers: [AppService, LoggerService],
+  providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

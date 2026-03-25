@@ -2,6 +2,7 @@ import { DynamicModule, Module, Global } from '@nestjs/common';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { LoggerController } from './logger.controller';
+import { LoggerService } from './logger.service';
 
 @Global()
 @Module({})
@@ -39,8 +40,15 @@ export class LoggerModule {
           ],
         }),
       ],
+      providers: [
+        {
+          provide: 'LOGGER_SERVICE_NAME',
+          useValue: options.serviceName,
+        },
+        LoggerService,
+      ],
       controllers: [LoggerController],
-      exports: [WinstonModule],
+      exports: [WinstonModule, LoggerService],
     };
   }
 }

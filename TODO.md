@@ -1,16 +1,12 @@
 # Microservices
-
 x-forwarded-for middleware
-logging witson
 
 ## Gateway
-
 nosql route and role permision
 
 # Shared
-
-logging
-auth guard with header
+logging OK
+auth guard with header OK
 
 # Final
 
