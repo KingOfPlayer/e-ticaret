@@ -1,4 +1,5 @@
 import { JwtService } from '@nestjs/jwt';
+import { AuthMiddleware } from '../src/common/middleware/auth.middleware';
 
 describe('AuthMiddleware', () => {
   let middleware: AuthMiddleware;
