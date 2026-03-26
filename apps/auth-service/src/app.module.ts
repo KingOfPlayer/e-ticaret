@@ -25,7 +25,6 @@ import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     consumer.apply(HttpLoggerMiddleware).forRoutes('*');
   }
 }
