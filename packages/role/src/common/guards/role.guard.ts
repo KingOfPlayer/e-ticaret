@@ -19,6 +19,10 @@ export class RoleGuard implements CanActivate {
       [context.getHandler(), context.getClass()],
     );
 
+    if (!requiredRoles) {
+      return true;
+    }
+
     const request = context.switchToHttp().getRequest();
 
     const userId = request.headers['x-user-id'];
@@ -34,10 +38,6 @@ export class RoleGuard implements CanActivate {
       throw new UnauthorizedException(
         'Unauthorized: User information is missing in the request headers.',
       );
-    }
-
-    if (!requiredRoles) {
-      return true;
     }
 
     const hasRole = requiredRoles.some((role) => userRoles.includes(role));
