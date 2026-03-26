@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OrdersModule } from './orders/orders.module';
+import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
 
 @Module({
   imports: [
@@ -10,8 +11,13 @@ import { OrdersModule } from './orders/orders.module';
       process.env.MONGO_URI || 'mongodb://localhost:27017/orders',
     ),
     OrdersModule,
+    LoggerModule.register({ serviceName: 'order-service' }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(HttpLoggerMiddleware).forRoutes('*');
+  }
+}

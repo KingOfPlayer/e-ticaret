@@ -10,7 +10,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
-    
+
     if (!token) {
       router.push('/auth/login');
     } else {

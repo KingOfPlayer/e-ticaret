@@ -21,11 +21,14 @@ export default function Home() {
           <span className="text-2xl font-bold text-white tracking-tight">EcoSystem</span>
         </div>
         <div className="flex items-center gap-6">
-          <Link href="/auth/login" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+          <Link
+            href="/auth/login"
+            className="text-sm font-medium text-slate-400 hover:text-white transition-colors"
+          >
             Giriş Yap
           </Link>
-          <Link 
-            href="/auth/register" 
+          <Link
+            href="/auth/register"
             className="px-5 py-2.5 bg-white text-slate-950 rounded-full text-sm font-bold hover:bg-slate-200 transition-all shadow-xl shadow-white/5 active:scale-95"
           >
             Hemen Katıl
@@ -39,28 +42,28 @@ export default function Home() {
           <Zap className="w-3 h-3" />
           Yeni Nesil Mikroservis Mimarisi
         </div>
-        
+
         <h1 className="text-6xl md:text-8xl font-black text-white tracking-tighter mb-8 leading-[0.9]">
-          E-Ticareti <br /> 
+          E-Ticareti <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-blue-400 to-emerald-400">
             Yeniden Tanımlayın
           </span>
         </h1>
-        
+
         <p className="text-xl text-slate-400 max-w-2xl mb-12 leading-relaxed font-medium">
-          RMM Seviye 2 uyumlu, tam izole mikroservis mimarisi ile projelerinizi 
-          saniyeler içinde ayağa kaldırın ve anlık trafik akışını Dashboard'dan izleyin.
+          RMM Seviye 2 uyumlu, tam izole mikroservis mimarisi ile projelerinizi saniyeler içinde
+          ayağa kaldırın ve anlık trafik akışını Dashboard'dan izleyin.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-6">
-          <Link 
-            href="/dashboard" 
+          <Link
+            href="/dashboard"
             className="group flex items-center gap-3 px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-500 transition-all shadow-2xl shadow-indigo-500/40 active:scale-95"
           >
             Dashboard'a Git
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
-          
+
           <button className="flex items-center gap-3 px-8 py-4 bg-slate-900 border border-slate-800 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all active:scale-95">
             <Globe className="w-5 h-5 text-slate-500" />
             Dokümantasyonu Oku
@@ -69,20 +72,20 @@ export default function Home() {
 
         {/* Floating Badges */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-32 w-full text-left">
-          <FeatureCard 
-            icon={ShieldCheck} 
-            title="Tam İzolasyon" 
-            desc="Dış dünyaya kapalı mikroservisler ile maksimum güvenlik." 
+          <FeatureCard
+            icon={ShieldCheck}
+            title="Tam İzolasyon"
+            desc="Dış dünyaya kapalı mikroservisler ile maksimum güvenlik."
           />
-          <FeatureCard 
-            icon={Activity} 
-            title="Anlık İzleme" 
-            desc="Tüm istekleri gerçek zamanlı olarak dashboard'dan takip edin." 
+          <FeatureCard
+            icon={Activity}
+            title="Anlık İzleme"
+            desc="Tüm istekleri gerçek zamanlı olarak dashboard'dan takip edin."
           />
-          <FeatureCard 
-            icon={ShoppingBag} 
-            title="Modern API" 
-            desc="RMM Seviye 2 standartlarında temiz ve ölçeklenebilir yapı." 
+          <FeatureCard
+            icon={ShoppingBag}
+            title="Modern API"
+            desc="RMM Seviye 2 standartlarında temiz ve ölçeklenebilir yapı."
           />
         </div>
       </main>
@@ -92,8 +95,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex flex-col md:row-start-3 md:flex-row items-center justify-between gap-6 text-sm text-slate-500 font-medium">
           <p>© 2026 EcoSystem Inc. Tüm hakları saklıdır.</p>
           <div className="flex items-center gap-8">
-            <span className="hover:text-white cursor-pointer transition-colors">Gizlilik Politikası</span>
-            <span className="hover:text-white cursor-pointer transition-colors">Kullanım Şartları</span>
+            <span className="hover:text-white cursor-pointer transition-colors">
+              Gizlilik Politikası
+            </span>
+            <span className="hover:text-white cursor-pointer transition-colors">
+              Kullanım Şartları
+            </span>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-emerald-500/80">Sistem Çevrimiçi</span>

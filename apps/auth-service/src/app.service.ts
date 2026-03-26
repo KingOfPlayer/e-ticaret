@@ -1,15 +1,21 @@
-import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from './schemas/user.schema';
+import { LoggerService } from '@e-ticaret/logger';
 
 @Injectable()
 export class AppService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private jwtService: JwtService,
+    private loggerService: LoggerService,
   ) {}
 
   async register(registerDto: any): Promise<any> {
@@ -27,9 +33,13 @@ export class AppService {
     });
 
     await user.save();
-    return { id: user._id, email: user.email, message: 'Kayıt başarıyla tamamlandı.' };
+    return {
+      id: user._id,
+      email: user.email,
+      message: 'Kayıt başarıyla tamamlandı.',
+    };
   }
-
+  
   async login(loginDto: any): Promise<any> {
     const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email });
@@ -49,7 +59,10 @@ export class AppService {
     };
   }
   health(): any {
+    this.loggerService.log(
+      'Health check endpoint accessed',
+      'AppService.health',
+    );
     return { status: 'ok' };
   }
 }
-

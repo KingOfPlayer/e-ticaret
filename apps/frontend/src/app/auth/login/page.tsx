@@ -58,8 +58,8 @@ export default function LoginPage() {
               <label className="text-sm font-semibold text-slate-400 ml-1">E-posta Adresi</label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   name="email"
                   required
                   placeholder="admin@ecosystem.com"
@@ -71,12 +71,14 @@ export default function LoginPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between ml-1">
                 <label className="text-sm font-semibold text-slate-400">Şifre</label>
-                <Link href="#" className="text-xs font-bold text-indigo-400 hover:text-indigo-300">Unuttun mu?</Link>
+                <Link href="#" className="text-xs font-bold text-indigo-400 hover:text-indigo-300">
+                  Unuttun mu?
+                </Link>
               </div>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                <input 
-                  type="password" 
+                <input
+                  type="password"
                   name="password"
                   required
                   placeholder="••••••••"
@@ -85,11 +87,13 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <button 
+            <button
               disabled={loading}
               className="w-full bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl py-4 font-bold transition-all shadow-xl shadow-indigo-600/20 flex items-center justify-center gap-2 group active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100"
             >
-              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
+              {loading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
                 <>
                   Hesaba Giriş Yap
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -100,7 +104,12 @@ export default function LoginPage() {
 
           <p className="text-center text-slate-500 mt-8 text-sm font-medium">
             Henüz hesabınız yok mu?{' '}
-            <Link href="/auth/register" className="text-indigo-400 font-bold hover:text-indigo-300 transition-colors">Şimdi Kaydol</Link>
+            <Link
+              href="/auth/register"
+              className="text-indigo-400 font-bold hover:text-indigo-300 transition-colors"
+            >
+              Şimdi Kaydol
+            </Link>
           </p>
         </div>
       </div>

@@ -76,7 +76,7 @@ export function TrafficFlow() {
         ctx.fillStyle = targetNode.color;
         ctx.arc(x, y, 3, 0, Math.PI * 2);
         ctx.fill();
-        
+
         ctx.shadowBlur = 10;
         ctx.shadowColor = targetNode.color;
         ctx.fill();
@@ -113,14 +113,11 @@ export function TrafficFlow() {
     <div className="relative w-full h-full min-h-[350px] flex items-center justify-center">
       <div className="absolute top-4 left-4 flex items-center gap-2">
         <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-        <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">Canlı Trafik Akışı</span>
+        <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+          Canlı Trafik Akışı
+        </span>
       </div>
-      <canvas 
-        ref={canvasRef} 
-        width={500} 
-        height={350} 
-        className="w-full h-auto max-w-[500px]"
-      />
+      <canvas ref={canvasRef} width={500} height={350} className="w-full h-auto max-w-[500px]" />
     </div>
   );
 }

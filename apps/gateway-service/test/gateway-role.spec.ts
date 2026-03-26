@@ -25,8 +25,6 @@ describe('GatewayRole (Red Phase)', () => {
 
   it('should deny USER to POST products', () => {
     const user = { role: 'USER' };
-    expect(() => service.hasPermission(user, 'POST', '/api/products')).toThrow(
-      ForbiddenException,
-    );
+    expect(() => service.hasPermission(user, 'POST', '/api/products')).toThrow(ForbiddenException);
   });
 });

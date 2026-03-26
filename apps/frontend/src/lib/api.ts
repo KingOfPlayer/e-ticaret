@@ -2,13 +2,13 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/a
 
 export async function apiRequest(path: string, options: RequestInit = {}) {
   const url = `${API_BASE_URL}${path}`;
-  
+
   // Client-side'da olduğumuzdan emin olalım
   const token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
-  
+
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
-    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...options.headers,
   };
 
@@ -37,7 +37,8 @@ export async function apiRequest(path: string, options: RequestInit = {}) {
 
 export const api = {
   get: (path: string) => apiRequest(path, { method: 'GET' }),
-  post: (path: string, data: any) => apiRequest(path, { method: 'POST', body: JSON.stringify(data) }),
+  post: (path: string, data: any) =>
+    apiRequest(path, { method: 'POST', body: JSON.stringify(data) }),
   put: (path: string, data: any) => apiRequest(path, { method: 'PUT', body: JSON.stringify(data) }),
   delete: (path: string) => apiRequest(path, { method: 'DELETE' }),
 };

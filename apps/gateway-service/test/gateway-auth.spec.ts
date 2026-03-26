@@ -29,9 +29,7 @@ describe('GatewayAuth (Red Phase)', () => {
   });
 
   it('should throw UnauthorizedException for invalid token', () => {
-    expect(() => service.verifyToken('invalid-token')).toThrow(
-      UnauthorizedException,
-    );
+    expect(() => service.verifyToken('invalid-token')).toThrow(UnauthorizedException);
   });
 
   it('should identify public routes (no token required)', () => {
