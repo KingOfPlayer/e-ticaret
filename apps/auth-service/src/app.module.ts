@@ -5,7 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User, UserSchema } from './schemas/user.schema';
-import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
+import { HttpLoggerMiddleware, LoggerModule, StatisticsModule } from '@e-ticaret/logger';
 
 @Module({
   imports: [
@@ -19,6 +19,7 @@ import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
       signOptions: { expiresIn: '1h' },
     }),
     LoggerModule.register({ serviceName: 'auth-service' }),
+    StatisticsModule.register(),
   ],
   controllers: [AppController],
   providers: [AppService],

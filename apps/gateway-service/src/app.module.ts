@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { GatewayModule } from './modules/gateway/gateway.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
+import { HttpLoggerMiddleware, LoggerModule, StatisticsModule } from '@e-ticaret/logger';
 import { AuthMiddleware } from './common/middleware/auth.middleware';
 import { JwtModule } from '@nestjs/jwt';
 
@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
   imports: [
     MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27017/gateway'),
     LoggerModule.register({ serviceName: 'gateway-service' }),
+    StatisticsModule.register(),
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET || 'super-secret-key',

@@ -1,0 +1,9 @@
+$kind: http-request
+name: Products
+url: "{{HOST}}api/products/statistics"
+method: GET
+auth:
+  credentials:
+    token: "{{access_token}}"
+  type: bearer
+order: 4003687699030587
