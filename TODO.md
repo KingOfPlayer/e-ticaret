@@ -3,13 +3,25 @@
 Product CRUD
 Order CRUD
 
+## Web
+
+Product CRUD  
+Order CRUD  
+Log View
+Realtime system status 
+
+
 ## Microservices
 
-x-forwarded-for control
+x-forwarded-for control   
+AuthGuard control headers DONE  
+Logging module DONE  
 
 ### Gateway
 
-nosql route
+realtime system status log 
+route prefix DONE
+nosql route 
 
 ## Final
 
