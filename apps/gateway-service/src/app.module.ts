@@ -11,7 +11,7 @@ import { JwtModule } from '@nestjs/jwt';
     LoggerModule.register({ serviceName: 'gateway-service' }),
     JwtModule.register({
       global: true,
-      secret: process.env.JWT_SECRET || 'secretKey',
+      secret: process.env.JWT_SECRET || 'super-secret-key',
       signOptions: { expiresIn: '60s' },
     }),
     GatewayModule,
