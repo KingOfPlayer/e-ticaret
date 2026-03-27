@@ -1,0 +1,11 @@
+name: Dev - localhost
+values:
+  - key: user_password
+    value: ''
+    enabled: true
+  - key: user_email
+    value: ''
+    enabled: true
+  - key: access_token
+    value: ''
+    enabled: true

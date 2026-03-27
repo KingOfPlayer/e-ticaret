@@ -1,0 +1,9 @@
+$kind: http-request
+name: Log - Gateway
+url: "{{HOST}}log"
+method: POST
+auth:
+  credentials:
+    token: "{{access_token}}"
+  type: bearer
+order: 1774578945255
