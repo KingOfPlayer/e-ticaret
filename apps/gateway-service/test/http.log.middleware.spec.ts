@@ -1,10 +1,11 @@
-import { HttpLoggerMiddleware, LoggerService } from '@e-ticaret/logger';
+import { HttpLoggerMiddleware, LoggerService, StatisticsService } from '@e-ticaret/logger';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Request, Response, NextFunction } from 'express';
 
 describe('HttpLoggerMiddleware', () => {
   let middleware: HttpLoggerMiddleware;
   let mockWinston: any;
+  let mockStatisticsService: any;
   let mockRequest: Partial<Request>;
   let mockResponse: Partial<Response>;
   let nextFunction: NextFunction = jest.fn();
@@ -14,11 +15,16 @@ describe('HttpLoggerMiddleware', () => {
       info: jest.fn(),
     };
 
+    mockStatisticsService = {
+      RecordStatistics: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         LoggerService,
         { provide: 'winston', useValue: mockWinston },
         { provide: 'LOGGER_SERVICE_NAME', useValue: 'gateway-service' },
+        { provide: StatisticsService, useValue: mockStatisticsService },
         HttpLoggerMiddleware,
       ],
     }).compile();
