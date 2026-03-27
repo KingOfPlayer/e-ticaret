@@ -2,11 +2,12 @@ import { Injectable, NestMiddleware, Inject } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
+import { LoggerService } from '../../module/logger.service';
 
 @Injectable()
 export class HttpLoggerMiddleware implements NestMiddleware {
   constructor(
-    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    private readonly logger: LoggerService,
   ) {}
 
   use(req: Request, res: Response, next: NextFunction) {
@@ -17,13 +18,17 @@ export class HttpLoggerMiddleware implements NestMiddleware {
       const { statusCode } = res;
       const duration = Date.now() - start;
 
-      this.logger.info(`${method} ${originalUrl} ${statusCode} - ms`, {
-        context: 'HTTP',
-        ip,
-        method,
-        url: originalUrl,
-        statusCode,
-      });
+      this.logger.info(
+        `${method} ${originalUrl} ${statusCode} - ${duration}ms`,
+        'HttpLoggerMiddleware',
+        {
+          method,
+          url: originalUrl,
+          statusCode,
+          duration,
+          ip,
+        },
+      );
     });
 
     next();

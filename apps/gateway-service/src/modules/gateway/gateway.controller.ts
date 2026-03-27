@@ -14,9 +14,10 @@ export class GatewayController {
 
   @All('*')
   async handleRequest(@Req() req: express.Request, @Res() res: express.Response) {
-    const targetBaseUrl = this.routeResolverService.resolveService(req.path);
-    const targetUrl = `${targetBaseUrl}${req.path.replace(/^\/api/, '')}`;
-
+    const targetBase = this.routeResolverService.resolveService(req.path);
+    const servicePath = req.path.replace(targetBase.prefix, '');
+    const targetUrl = `${targetBase.url.replace(/\/$/, '')}/${servicePath.replace(/^\//, '')}`;
+    console.log(`Proxying request to: ${targetUrl}`);
     try {
       const response = await this.gatewayService.proxyRequest(targetUrl, {
         method: req.method,
