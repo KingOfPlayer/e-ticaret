@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{HOST}}api/orders/log"
+method: POST
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+order: 4266576056041728

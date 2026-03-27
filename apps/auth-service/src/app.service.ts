@@ -39,7 +39,7 @@ export class AppService {
       message: 'Kayıt başarıyla tamamlandı.',
     };
   }
-  
+
   async login(loginDto: any): Promise<any> {
     const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email });
@@ -48,7 +48,7 @@ export class AppService {
       throw new UnauthorizedException('Geçersiz e-posta veya şifre.');
     }
 
-    const payload = { sub: user._id, email: user.email, role: user.role };
+    const payload = { userId: user._id, email: user.email, role: user.role };
     return {
       access_token: await this.jwtService.signAsync(payload),
       user: {

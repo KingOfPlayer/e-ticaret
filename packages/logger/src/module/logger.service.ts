@@ -10,21 +10,31 @@ export class LoggerService {
   ) {}
 
   // Bilgi logları (Genel trafik için)
-  public log(message: string, context: string, metadata?: any[]) {
+  public log(message: string, context: string, ...metadata: any[]) {
     this.logger.info(message, { label: this.label, context, ...metadata });
   }
 
   // Uyarı logları (Yetki reddi durumları için idealdir)
-  public warn(message: string, context: string, metadata?: any[]) {
+  public warn(message: string, context: string, ...metadata: any[]) {
     this.logger.warn(message, { label: this.label, context, ...metadata });
   }
 
   // Hata logları (HTTP 4xx/5xx hataları için)
-  public error(message: string, context: string, trace?: string, ) {
-    this.logger.error(message, { label: this.label, context, stack: trace });
+  public error(
+    message: string,
+    context: string,
+    trace?: string,
+    ...metadata: any[]
+  ) {
+    this.logger.error(message, {
+      label: this.label,
+      context,
+      stack: trace,
+      ...metadata,
+    });
   }
 
-  public info(message: string, context: string) {
-    this.logger.info(message, { label: this.label, context });
+  public info(message: string, context: string, ...metadata: any[]) {
+    this.logger.info(message, { label: this.label, context, ...metadata });
   }
 }

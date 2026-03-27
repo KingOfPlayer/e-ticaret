@@ -1,0 +1,9 @@
+$kind: http-request
+name: Log - Products
+url: "{{HOST}}api/products/log"
+method: POST
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+order: 4222105064558507

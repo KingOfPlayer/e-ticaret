@@ -1,14 +1,29 @@
-# Microservices
-x-forwarded-for middleware
+# General
 
-## Gateway
-nosql route and role permision
+Product CRUD
+Order CRUD
 
-# Shared
-logging OK
-auth guard with header OK
+## Web
 
-# Final
+Product CRUD  
+Order CRUD  
+Log View
+Realtime system status 
+
+
+## Microservices
+
+x-forwarded-for control   
+AuthGuard control headers DONE  
+Logging module DONE  
+
+### Gateway
+
+realtime system status log 
+route prefix DONE
+nosql route 
+
+## Final
 
 compose config
 load test

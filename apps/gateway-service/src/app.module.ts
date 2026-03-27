@@ -1,13 +1,25 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { GatewayModule } from './modules/gateway/gateway.module';
-import { LogsModule } from './modules/logs/logs.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
+import { AuthMiddleware } from './common/middleware/auth.middleware';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27017/gateway'),
+    LoggerModule.register({ serviceName: 'gateway-service' }),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET || 'super-secret-key',
+      signOptions: { expiresIn: '60s' },
+    }),
     GatewayModule,
-    LogsModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('*');
+    consumer.apply(HttpLoggerMiddleware).forRoutes('*');
+  }
+}

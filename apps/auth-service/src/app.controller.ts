@@ -3,7 +3,7 @@ import { AppService } from './app.service';
 import { RoleGuard, Roles, UserRole } from '@e-ticaret/role';
 import { User } from './schemas/user.schema';
 
-@Controller('auth')
+@Controller('')
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 @UseGuards(RoleGuard)
 export class AppController {
