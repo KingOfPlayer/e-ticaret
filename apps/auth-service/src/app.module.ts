@@ -1,4 +1,4 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer, Type } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
@@ -10,6 +10,7 @@ import {
   LoggerModule,
   StatisticsModule,
 } from '@e-ticaret/logger';
+import { MicroserviceMiddleware } from '@e-ticaret/microservice';
 
 @Module({
   imports: [
@@ -31,5 +32,8 @@ import {
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(HttpLoggerMiddleware).forRoutes('*');
+    consumer
+      .apply(MicroserviceMiddleware as Type<MicroserviceMiddleware>)
+      .forRoutes('*');
   }
 }

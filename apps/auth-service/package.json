@@ -20,6 +20,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@e-ticaret/logger": "workspace:*",
+    "@e-ticaret/microservice": "workspace:*",
+    "@e-ticaret/role": "workspace:*",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.1",
@@ -29,9 +32,7 @@
     "bcrypt": "^6.0.0",
     "mongoose": "^9.3.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1",
-    "@e-ticaret/logger": "workspace:*",
-    "@e-ticaret/role": "workspace:*"
+    "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

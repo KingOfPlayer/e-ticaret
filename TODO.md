@@ -12,13 +12,14 @@ Realtime system status
 
 ## Microservices
 
-x-forwarded-for control  
+x-gateway-secret control DONE
 AuthGuard control headers DONE  
 Logging module DONE
 
 ### Gateway
 
-realtime system status log
+realtime system status log DONE
+statistics time window
 route prefix DONE
 nosql route
 
