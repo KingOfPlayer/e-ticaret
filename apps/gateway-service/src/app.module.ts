@@ -2,6 +2,7 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { GatewayModule } from './modules/gateway/gateway.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
+import { AuthMiddleware } from './common/middleware/auth.middleware';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('*');
     consumer.apply(HttpLoggerMiddleware).forRoutes('*');
   }
 }

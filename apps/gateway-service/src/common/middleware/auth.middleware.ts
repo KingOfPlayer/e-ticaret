@@ -7,6 +7,10 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(private readonly jwtService: JwtService) {}
 
   use(req: Request, res: Response, next: NextFunction) {
+    // Remove x-user-id and x-user-role headers to prevent spoofing
+    delete req.headers['x-user-id'];
+    delete req.headers['x-user-role'];
+
     const authHeader = req.headers.authorization;
     if (authHeader && authHeader.startsWith('Bearer ')) {
       const token = authHeader.split(' ')[1];
