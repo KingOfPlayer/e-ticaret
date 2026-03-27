@@ -20,8 +20,8 @@ describe('AuthMiddleware', () => {
 
     middleware.use(mockReq, mockRes, mockNext);
 
-    expect(mockReq.user).toBeDefined();
-    expect(mockReq.user.userId).toBe(1);
+    expect(mockReq.headers['x-user-id']).toBeDefined();
+    expect(mockReq.headers['x-user-id']).toBe(1);
     expect(mockNext).toHaveBeenCalled();
   });
 
@@ -32,7 +32,7 @@ describe('AuthMiddleware', () => {
 
     middleware.use(mockReq, mockRes, mockNext);
 
-    expect(mockReq.user).toBeUndefined();
+    expect(mockReq.headers['x-user-id']).toBeUndefined();
     expect(mockNext).toHaveBeenCalled();
   });
 
