@@ -26,19 +26,17 @@ describe('HttpLoggerMiddleware', () => {
 
     middleware = module.get<HttpLoggerMiddleware>(HttpLoggerMiddleware);
 
-    
     mockRequest = {
       method: 'GET',
       originalUrl: '/test-url',
       ip: '127.0.0.1',
     };
 
-    
     mockResponse = {
       statusCode: 200,
       on: jest.fn((event, callback) => {
         if (event === 'finish') {
-          callback(); 
+          callback();
         }
         return mockResponse;
       }),

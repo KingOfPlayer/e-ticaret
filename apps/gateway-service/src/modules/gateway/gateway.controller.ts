@@ -26,12 +26,17 @@ export class GatewayController {
       });
       return res.status(200).json(response);
     } catch (error: any) {
-      this.logger.error(`Error proxying request to ${targetUrl}: ${error.message}`, "GatewayService", error, {
-        method: req.method,
-        url: req.originalUrl,
-        targetUrl,
-        error: error.response?.data || error.message,
-      });
+      this.logger.error(
+        `Error proxying request to ${targetUrl}: ${error.message}`,
+        'GatewayService',
+        error,
+        {
+          method: req.method,
+          url: req.originalUrl,
+          targetUrl,
+          error: error.response?.data || error.message,
+        },
+      );
       const statusCode = error.status || 500;
       return res.status(statusCode).json(error.response?.data || { message: error.message });
     }

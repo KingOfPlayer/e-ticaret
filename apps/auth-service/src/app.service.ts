@@ -39,7 +39,7 @@ export class AppService {
       message: 'Kayıt başarıyla tamamlandı.',
     };
   }
-  
+
   async login(loginDto: any): Promise<any> {
     const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email });

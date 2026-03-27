@@ -13,7 +13,7 @@ describe('AuthMiddleware', () => {
   it('Processing a request containing JWT.', () => {
     const mockPayload = { userId: 1, role: 'admin' };
     const token = jwtService.sign(mockPayload);
-    
+
     const mockReq = { headers: { authorization: `Bearer ${token}` } } as any;
     const mockRes = {} as any;
     const mockNext = jest.fn();
@@ -37,7 +37,7 @@ describe('AuthMiddleware', () => {
   });
 
   it('It should remove x-user-id headers', () => {
-    const mockReq = { headers: { 'x-user-id': '123', "x-user-role": "admin" } } as any;
+    const mockReq = { headers: { 'x-user-id': '123', 'x-user-role': 'admin' } } as any;
     const mockRes = {} as any;
     const mockNext = jest.fn();
 

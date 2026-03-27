@@ -20,8 +20,18 @@ export class LoggerService {
   }
 
   // Hata logları (HTTP 4xx/5xx hataları için)
-  public error(message: string, context: string, trace?: string, ...metadata: any[]) {
-    this.logger.error(message, { label: this.label, context, stack: trace, ...metadata });
+  public error(
+    message: string,
+    context: string,
+    trace?: string,
+    ...metadata: any[]
+  ) {
+    this.logger.error(message, {
+      label: this.label,
+      context,
+      stack: trace,
+      ...metadata,
+    });
   }
 
   public info(message: string, context: string, ...metadata: any[]) {

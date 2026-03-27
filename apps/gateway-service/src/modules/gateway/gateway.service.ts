@@ -1,17 +1,21 @@
 import { LoggerService } from '@e-ticaret/logger';
-import { Injectable, BadGatewayException, ServiceUnavailableException, GatewayTimeoutException } from '@nestjs/common';
+import {
+  Injectable,
+  BadGatewayException,
+  ServiceUnavailableException,
+  GatewayTimeoutException,
+} from '@nestjs/common';
 import axios from 'axios';
 
 @Injectable()
 export class GatewayService {
-
   constructor(private loggerService: LoggerService) {}
 
   async proxyRequest(url: string, config: any): Promise<any> {
     try {
-      delete config.headers['content-length']; 
-      delete config.headers['host'];           
-      delete config.headers['accept-encoding']; 
+      delete config.headers['content-length'];
+      delete config.headers['host'];
+      delete config.headers['accept-encoding'];
 
       const response = await axios.request({
         url,
@@ -30,7 +34,7 @@ export class GatewayService {
         // Request timed out
         throw new GatewayTimeoutException('Downstream service request timed out');
       }
-      throw error; 
+      throw error;
     }
   }
 }

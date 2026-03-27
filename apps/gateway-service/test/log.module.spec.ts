@@ -6,7 +6,7 @@ describe('LoggerService', () => {
   let mockWinston: any;
 
   beforeEach(async () => {
-    mockWinston = { info: jest.fn(), error: jest.fn(), warn: jest.fn()};
+    mockWinston = { info: jest.fn(), error: jest.fn(), warn: jest.fn() };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -24,7 +24,10 @@ describe('LoggerService', () => {
     const context = 'LogContext';
     const metadata = { userId: 123 };
     service.log(message, context, metadata);
-    expect(mockWinston.info).toHaveBeenCalledWith(message, expect.objectContaining({ "0":metadata, context }));
+    expect(mockWinston.info).toHaveBeenCalledWith(
+      message,
+      expect.objectContaining({ '0': metadata, context }),
+    );
   });
 
   it('Warn metod', () => {
@@ -32,16 +35,22 @@ describe('LoggerService', () => {
     const context = 'WarnContext';
     const metadata = { userId: 123 };
     service.warn(message, context, metadata);
-    expect(mockWinston.warn).toHaveBeenCalledWith(message, expect.objectContaining({ "0":metadata, context }));
+    expect(mockWinston.warn).toHaveBeenCalledWith(
+      message,
+      expect.objectContaining({ '0': metadata, context }),
+    );
   });
 
   it('Error metod', () => {
     const message = 'Error message';
     const context = 'ErrorContext';
-    const stack = new Error("Error").stack;
+    const stack = new Error('Error').stack;
     const metadata = { userId: 123 };
     service.error(message, context, stack, metadata);
-    expect(mockWinston.error).toHaveBeenCalledWith(message, expect.objectContaining({ "0":metadata, context, stack }));
+    expect(mockWinston.error).toHaveBeenCalledWith(
+      message,
+      expect.objectContaining({ '0': metadata, context, stack }),
+    );
   });
 
   it('Info metod', () => {
@@ -49,6 +58,9 @@ describe('LoggerService', () => {
     const context = 'InfoContext';
     const metadata = { userId: 123 };
     service.info(message, context, metadata);
-    expect(mockWinston.info).toHaveBeenCalledWith(message, expect.objectContaining({ "0":metadata, context }));
+    expect(mockWinston.info).toHaveBeenCalledWith(
+      message,
+      expect.objectContaining({ '0': metadata, context }),
+    );
   });
 });
