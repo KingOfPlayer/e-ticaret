@@ -35,4 +35,15 @@ describe('AuthMiddleware', () => {
     expect(mockReq.user).toBeUndefined();
     expect(mockNext).toHaveBeenCalled();
   });
+
+  it('It should remove x-user-id headers', () => {
+    const mockReq = { headers: { 'x-user-id': '123', "x-user-role": "admin" } } as any;
+    const mockRes = {} as any;
+    const mockNext = jest.fn();
+
+    middleware.use(mockReq, mockRes, mockNext);
+
+    expect(mockReq.headers['x-user-id']).toBeUndefined();
+    expect(mockReq.headers['x-user-role']).toBeUndefined();
+  });
 });
