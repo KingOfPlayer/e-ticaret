@@ -1,4 +1,4 @@
-import { HttpLoggerMiddleware } from '@e-ticaret/logger';
+import { HttpLoggerMiddleware, LoggerService } from '@e-ticaret/logger';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Request, Response, NextFunction } from 'express';
 
@@ -16,11 +16,10 @@ describe('HttpLoggerMiddleware', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
+        LoggerService,
+        { provide: 'winston', useValue: mockWinston },
+        { provide: 'LOGGER_SERVICE_NAME', useValue: 'gateway-service' },
         HttpLoggerMiddleware,
-        {
-          provide: 'winston',
-          useValue: mockWinston,
-        },
       ],
     }).compile();
 
@@ -58,11 +57,14 @@ describe('HttpLoggerMiddleware', () => {
     expect(mockWinston.info).toHaveBeenCalledWith(
       expect.stringContaining('GET /test-url 200'),
       expect.objectContaining({
-        context: 'HTTP',
-        method: 'GET',
-        url: '/test-url',
-        statusCode: 200,
-      }),
+        "0": expect.objectContaining({
+          method: "GET",
+          url: "/test-url",
+          statusCode: 200
+        }),
+        context: "HttpLoggerMiddleware",
+        label: "gateway-service"
+      })
     );
   });
 });
