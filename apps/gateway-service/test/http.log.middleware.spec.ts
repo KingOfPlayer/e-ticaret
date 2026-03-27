@@ -1,10 +1,11 @@
-import { HttpLoggerMiddleware } from '@e-ticaret/logger';
+import { HttpLoggerMiddleware, LoggerService, StatisticsService } from '@e-ticaret/logger';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Request, Response, NextFunction } from 'express';
 
 describe('HttpLoggerMiddleware', () => {
   let middleware: HttpLoggerMiddleware;
   let mockWinston: any;
+  let mockStatisticsService: any;
   let mockRequest: Partial<Request>;
   let mockResponse: Partial<Response>;
   let nextFunction: NextFunction = jest.fn();
@@ -14,13 +15,17 @@ describe('HttpLoggerMiddleware', () => {
       info: jest.fn(),
     };
 
+    mockStatisticsService = {
+      RecordStatistics: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
+        LoggerService,
+        { provide: 'winston', useValue: mockWinston },
+        { provide: 'LOGGER_SERVICE_NAME', useValue: 'gateway-service' },
+        { provide: StatisticsService, useValue: mockStatisticsService },
         HttpLoggerMiddleware,
-        {
-          provide: 'winston',
-          useValue: mockWinston,
-        },
       ],
     }).compile();
 
@@ -58,10 +63,13 @@ describe('HttpLoggerMiddleware', () => {
     expect(mockWinston.info).toHaveBeenCalledWith(
       expect.stringContaining('GET /test-url 200'),
       expect.objectContaining({
-        context: 'HTTP',
-        method: 'GET',
-        url: '/test-url',
-        statusCode: 200,
+        '0': expect.objectContaining({
+          method: 'GET',
+          url: '/test-url',
+          statusCode: 200,
+        }),
+        context: 'HttpLoggerMiddleware',
+        label: 'gateway-service',
       }),
     );
   });

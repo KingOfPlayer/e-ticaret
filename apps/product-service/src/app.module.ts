@@ -3,7 +3,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
-import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
+import {
+  HttpLoggerMiddleware,
+  LoggerModule,
+  StatisticsModule,
+} from '@e-ticaret/logger';
 
 @Module({
   imports: [
@@ -12,6 +16,7 @@ import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
     ),
     ProductsModule,
     LoggerModule.register({ serviceName: 'product-service' }),
+    StatisticsModule.register(),
   ],
   controllers: [AppController],
   providers: [AppService],

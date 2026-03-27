@@ -17,6 +17,8 @@ export class GatewayService {
       delete config.headers['host'];
       delete config.headers['accept-encoding'];
 
+      config.headers['x-gateway-secret'] = process.env.GATEWAY_SECRET || 'gateway-secret';
+
       const response = await axios.request({
         url,
         ...config,

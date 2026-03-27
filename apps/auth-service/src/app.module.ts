@@ -1,11 +1,16 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer, Type } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User, UserSchema } from './schemas/user.schema';
-import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
+import {
+  HttpLoggerMiddleware,
+  LoggerModule,
+  StatisticsModule,
+} from '@e-ticaret/logger';
+import { MicroserviceMiddleware } from '@e-ticaret/microservice';
 
 @Module({
   imports: [
@@ -19,6 +24,7 @@ import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
       signOptions: { expiresIn: '1h' },
     }),
     LoggerModule.register({ serviceName: 'auth-service' }),
+    StatisticsModule.register(),
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -26,5 +32,8 @@ import { HttpLoggerMiddleware, LoggerModule } from '@e-ticaret/logger';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(HttpLoggerMiddleware).forRoutes('*');
+    consumer
+      .apply(MicroserviceMiddleware as Type<MicroserviceMiddleware>)
+      .forRoutes('*');
   }
 }

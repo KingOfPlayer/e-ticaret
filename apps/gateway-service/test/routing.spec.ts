@@ -18,17 +18,26 @@ describe('GatewayRouting', () => {
 
   it('should resolve /api/auth to auth-service', () => {
     const target = service.resolveService('/api/auth/login');
-    expect(target).toStrictEqual({ url: process.env.AUTH_SERVICE_URL || 'http://localhost:5001', prefix: '/api/auth' });
+    expect(target).toStrictEqual({
+      url: process.env.AUTH_SERVICE_URL || 'http://localhost:5001',
+      prefix: '/api/auth',
+    });
   });
 
   it('should resolve /api/products to product-service', () => {
     const target = service.resolveService('/api/products');
-    expect(target).toStrictEqual({ url: process.env.PRODUCT_SERVICE_URL || 'http://localhost:5002', prefix: '/api/products' });
+    expect(target).toStrictEqual({
+      url: process.env.PRODUCT_SERVICE_URL || 'http://localhost:5002',
+      prefix: '/api/products',
+    });
   });
 
   it('should resolve /api/orders to order-service', () => {
     const target = service.resolveService('/api/orders/my-orders');
-    expect(target).toStrictEqual({ url: process.env.ORDER_SERVICE_URL || 'http://localhost:5003', prefix: '/api/orders' });
+    expect(target).toStrictEqual({
+      url: process.env.ORDER_SERVICE_URL || 'http://localhost:5003',
+      prefix: '/api/orders',
+    });
   });
 
   it('should throw Error for unknown route', () => {

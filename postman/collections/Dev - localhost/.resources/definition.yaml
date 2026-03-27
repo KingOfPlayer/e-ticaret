@@ -1,4 +1,4 @@
 $kind: collection
 name: Dev - localhost
 variables:
-  HOST: ""
+  HOST: http://localhost:5000/
