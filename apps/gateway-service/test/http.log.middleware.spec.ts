@@ -1,3 +1,4 @@
+import { HttpLoggerMiddleware } from '@e-ticaret/logger';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Request, Response, NextFunction } from 'express';
 
