@@ -57,14 +57,14 @@ describe('HttpLoggerMiddleware', () => {
     expect(mockWinston.info).toHaveBeenCalledWith(
       expect.stringContaining('GET /test-url 200'),
       expect.objectContaining({
-        "0": expect.objectContaining({
-          method: "GET",
-          url: "/test-url",
-          statusCode: 200
+        '0': expect.objectContaining({
+          method: 'GET',
+          url: '/test-url',
+          statusCode: 200,
         }),
-        context: "HttpLoggerMiddleware",
-        label: "gateway-service"
-      })
+        context: 'HttpLoggerMiddleware',
+        label: 'gateway-service',
+      }),
     );
   });
 });

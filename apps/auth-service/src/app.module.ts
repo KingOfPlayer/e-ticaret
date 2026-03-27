@@ -5,7 +5,11 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User, UserSchema } from './schemas/user.schema';
-import { HttpLoggerMiddleware, LoggerModule, StatisticsModule } from '@e-ticaret/logger';
+import {
+  HttpLoggerMiddleware,
+  LoggerModule,
+  StatisticsModule,
+} from '@e-ticaret/logger';
 
 @Module({
   imports: [

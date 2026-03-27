@@ -8,20 +8,19 @@ Order CRUD
 Product CRUD  
 Order CRUD  
 Log View
-Realtime system status 
-
+Realtime system status
 
 ## Microservices
 
-x-forwarded-for control   
+x-forwarded-for control  
 AuthGuard control headers DONE  
-Logging module DONE  
+Logging module DONE
 
 ### Gateway
 
-realtime system status log 
+realtime system status log
 route prefix DONE
-nosql route 
+nosql route
 
 ## Final
 

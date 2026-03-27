@@ -11,8 +11,7 @@ describe('AuthMiddleware', () => {
   });
 
   it('Processing a request containing JWT.', () => {
-    
-    const mockPayload = { userId: 1, email: "test@example.com", role: "user" };
+    const mockPayload = { userId: 1, email: 'test@example.com', role: 'user' };
     const token = jwtService.sign(mockPayload);
 
     const mockReq = { headers: { authorization: `Bearer ${token}` } } as any;
