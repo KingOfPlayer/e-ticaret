@@ -1,89 +1,95 @@
-version: '3.8'
-
 services:
   # Dispatcher
   dispatcher:
     build:
-      context: ./apps/gateway-service
+      context: .
       dockerfile: Dockerfile
+      args:
+        APP_NAME: gateway-service
     ports:
       - '5000:5000'
     environment:
-      - MONGO_URI=mongodb://dispatcher-mongo:27017/dispatcher
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/dispatcher
       - AUTH_SERVICE_URL=http://auth-service:5001
       - PRODUCT_SERVICE_URL=http://product-service:5002
       - ORDER_SERVICE_URL=http://order-service:5003
+      - LOGS_SERVICE_URL=http://dispatcher:5000
       - JWT_SECRET=super-secret-key
+      - GATEWAY_SECRET=gateway-secret
     depends_on:
-      - dispatcher-mongo
+      - mongo
     networks:
       - backend-network
       - frontend-network
 
-  dispatcher-mongo:
+  mongo:
     image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
     networks:
       - backend-network
 
   # Auth Service
   auth-service:
     build:
-      context: ./apps/auth-service
+      context: .
       dockerfile: Dockerfile
+      args:
+        APP_NAME: auth-service
     environment:
-      - MONGO_URI=mongodb://auth-mongo:27017/auth
+      - PORT=5001
+      - MONGO_URI=mongodb://mongo:27017/auth
+      - JWT_SECRET=super-secret-key
+      - GATEWAY_SECRET=gateway-secret
     depends_on:
-      - auth-mongo
-    networks:
-      - backend-network
-
-  auth-mongo:
-    image: mongo:latest
+      - mongo
     networks:
       - backend-network
 
   # Product Service
   product-service:
     build:
-      context: ./apps/product-service
+      context: .
       dockerfile: Dockerfile
+      args:
+        APP_NAME: product-service
     environment:
-      - MONGO_URI=mongodb://product-mongo:27017/products
+      - PORT=5002
+      - MONGO_URI=mongodb://mongo:27017/products
+      - GATEWAY_SECRET=gateway-secret
     depends_on:
-      - product-mongo
-    networks:
-      - backend-network
-
-  product-mongo:
-    image: mongo:latest
+      - mongo
     networks:
       - backend-network
 
   # Order Service
   order-service:
     build:
-      context: ./apps/order-service
+      context: .
       dockerfile: Dockerfile
+      args:
+        APP_NAME: order-service
     environment:
-      - MONGO_URI=mongodb://order-mongo:27017/orders
+      - PORT=5003
+      - MONGO_URI=mongodb://mongo:27017/orders
+      - GATEWAY_SECRET=gateway-secret
     depends_on:
-      - order-mongo
-    networks:
-      - backend-network
-
-  order-mongo:
-    image: mongo:latest
+      - mongo
     networks:
       - backend-network
 
   # Frontend
   frontend:
     build:
-      context: ./apps/frontend
+      context: .
       dockerfile: Dockerfile
+      args:
+        APP_NAME: frontend
     ports:
       - '3001:3000'
     environment:
+      - PORT=3000
       - NEXT_PUBLIC_API_URL=http://localhost:5000/api
     networks:
       - frontend-network
@@ -93,3 +99,6 @@ networks:
     driver: bridge
   frontend-network:
     driver: bridge
+
+volumes:
+  mongo-data:
