@@ -22,19 +22,37 @@ export class HttpLoggerMiddleware implements NestMiddleware {
 
       this.statistics.RecordStatistics(originalUrl, statusCode, duration);
 
-      this.logger.info(
-        `${method} ${originalUrl} ${statusCode} - ${duration}ms`,
-        'HttpLoggerMiddleware',
-        {
-          method,
-          url: originalUrl,
-          statusCode,
-          duration,
-          ip,
-        },
-      );
+      const logMessage = `${method} ${originalUrl} ${statusCode} - ${duration}ms`;
+      const logMeta = { method,
+        url: originalUrl,
+        statusCode,
+        duration,
+        ip,
+      };
+      if (statusCode < 400) {
+        this.logger.log(logMessage, 'HttpLoggerMiddleware',logMeta);
+      } else if (statusCode < 500) {
+        this.logger.warn(logMessage, 'HttpLoggerMiddleware',logMeta);
+      }
     });
-
-    next();
+    
+    try {
+      next();
+    } catch (error: any) {
+      const duration = Date.now() - start;
+      const logMessage = `${method} ${originalUrl} 500 - ${duration}ms`;
+      const logMeta = { method,
+        url: originalUrl,
+        statusCode: 500,
+        duration,
+        ip,
+      };
+      this.logger.error(
+        logMessage,
+        'HttpLoggerMiddleware',
+        error.stack,
+        logMeta
+      );
+    }
   }
 }
