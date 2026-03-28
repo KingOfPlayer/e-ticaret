@@ -1,5 +1,3 @@
-process.env.MONGO_URI = 'mongodb://127.0.0.1:27018/auth';
-
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AppService } from './app.service';
