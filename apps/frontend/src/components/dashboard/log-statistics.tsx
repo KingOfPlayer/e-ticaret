@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Activity, TrendingUp, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { api } from '@/lib/api';
@@ -39,18 +39,43 @@ export function LogStatistics() {
     return () => clearInterval(interval);
   }, []);
 
-  const getStatusColor = (statusCode: number) => {
-    if (statusCode >= 200 && statusCode < 300) return 'text-green-400';
-    if (statusCode >= 300 && statusCode < 400) return 'text-blue-400';
-    if (statusCode >= 400 && statusCode < 500) return 'text-yellow-400';
-    return 'text-red-400';
+  const routeEntries = useMemo(() => Object.entries(statistics ?? {}), [statistics]);
+
+  const overall = useMemo(() => {
+    let totalStatusCount = 0;
+    let errorStatusCount = 0;
+
+    routeEntries.forEach(([, stats]) => {
+      Object.entries(stats.statusCodeDistribution).forEach(([code, count]) => {
+        const numericCode = Number(code);
+        totalStatusCount += count;
+        if (numericCode >= 300 && numericCode < 599) {
+          errorStatusCount += count;
+        }
+      });
+    });
+
+    const errorRate = totalStatusCount > 0 ? (errorStatusCount / totalStatusCount) * 100 : 0;
+
+    return {
+      totalStatusCount,
+      errorStatusCount,
+      errorRate,
+      totalRoutes: routeEntries.length,
+      totalRequests: routeEntries.reduce((sum, [, stats]) => sum + stats.totalRequests, 0),
+    };
+  }, [routeEntries]);
+
+  const getPerformanceText = (averageResponseTime: number) => {
+    if (averageResponseTime < 10) return 'Excellent';
+    if (averageResponseTime < 50) return 'Good';
+    return 'Fair';
   };
 
-  const getStatusBgColor = (statusCode: number) => {
-    if (statusCode >= 200 && statusCode < 300) return 'bg-green-500/10 border border-green-500/20';
-    if (statusCode >= 300 && statusCode < 400) return 'bg-blue-500/10 border border-blue-500/20';
-    if (statusCode >= 400 && statusCode < 500) return 'bg-yellow-500/10 border border-yellow-500/20';
-    return 'bg-red-500/10 border border-red-500/20';
+  const getPerformanceClass = (averageResponseTime: number) => {
+    if (averageResponseTime < 10) return 'text-green-400';
+    if (averageResponseTime < 50) return 'text-cyan-400';
+    return 'text-yellow-400';
   };
 
   if (loading) {
@@ -82,79 +107,55 @@ export function LogStatistics() {
         <h3 className="text-xl font-bold text-white">API Statistics</h3>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {statistics &&
-          Object.entries(statistics).map(([route, stats]) => (
-            <div
-              key={route}
-              className="bg-slate-900/50 border border-slate-800 rounded-xl p-5 hover:border-slate-700 transition-all"
-            >
-              {/* Route Header */}
-              <div className="flex items-center justify-between mb-4">
-                <h4 className="text-sm font-semibold text-indigo-300 truncate">{route}</h4>
-                <span className="px-2 py-1 rounded-full bg-slate-800 text-xs font-medium text-slate-300">
-                  {stats.totalRequests} requests
-                </span>
+      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <div className="bg-slate-800/40 rounded-lg p-3">
+            <p className="text-xs text-slate-400">Total Routes</p>
+            <p className="text-lg font-semibold text-white">{overall.totalRoutes}</p>
+          </div>
+          <div className="bg-slate-800/40 rounded-lg p-3">
+            <p className="text-xs text-slate-400">Total Requests</p>
+            <p className="text-lg font-semibold text-white">{overall.totalRequests}</p>
+          </div>
+          <div className="bg-slate-800/40 rounded-lg p-3">
+            <p className="text-xs text-slate-400">Error Count (300-598)</p>
+            <p className="text-lg font-semibold text-red-400">{overall.errorStatusCount}</p>
+          </div>
+          <div className="bg-slate-800/40 rounded-lg p-3">
+            <p className="text-xs text-slate-400">Overall Error Rate</p>
+            <p className="text-lg font-semibold text-red-400">{overall.errorRate.toFixed(2)}%</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden">
+        <div className="grid grid-cols-12 gap-3 px-4 py-3 bg-slate-950/40 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
+          <div className="col-span-4">Route</div>
+          <div className="col-span-2 text-right">Requests</div>
+          <div className="col-span-2 text-right">Avg (ms)</div>
+          <div className="col-span-1 text-right">Min</div>
+          <div className="col-span-1 text-right">Max</div>
+          <div className="col-span-2 text-right">Performance</div>
+        </div>
+
+        <div className="divide-y divide-slate-800">
+          {routeEntries.map(([route, stats]) => (
+            <div key={route} className="grid grid-cols-12 gap-3 px-4 py-3 text-sm hover:bg-slate-800/20">
+              <div className="col-span-4 text-indigo-300 truncate" title={route}>
+                {route}
               </div>
-
-              {/* Metrics Grid */}
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                {/* Average Response Time */}
-                <div className="bg-slate-800/30 rounded-lg p-3">
-                  <p className="text-xs text-slate-400 mb-1">Avg Response</p>
-                  <p className="text-lg font-bold text-cyan-400">
-                    {stats.averageResponseTime.toFixed(2)}ms
-                  </p>
-                </div>
-
-                {/* Min Response Time */}
-                <div className="bg-slate-800/30 rounded-lg p-3">
-                  <p className="text-xs text-slate-400 mb-1">Min Response</p>
-                  <p className="text-lg font-bold text-green-400">{stats.minResponseTime}ms</p>
-                </div>
-
-                {/* Max Response Time */}
-                <div className="bg-slate-800/30 rounded-lg p-3">
-                  <p className="text-xs text-slate-400 mb-1">Max Response</p>
-                  <p className="text-lg font-bold text-orange-400">{stats.maxResponseTime}ms</p>
-                </div>
-
-                {/* Performance Badge */}
-                <div className="bg-slate-800/30 rounded-lg p-3">
-                  <p className="text-xs text-slate-400 mb-1">Performance</p>
-                  <p className={cn(
-                    'text-lg font-bold',
-                    stats.averageResponseTime < 10 ? 'text-green-400' :
-                    stats.averageResponseTime < 50 ? 'text-cyan-400' :
-                    'text-yellow-400'
-                  )}>
-                    {stats.averageResponseTime < 10 ? 'Excellent' :
-                     stats.averageResponseTime < 50 ? 'Good' :
-                     'Fair'}
-                  </p>
-                </div>
-              </div>
-
-              {/* Status Code Distribution */}
-              <div className="pt-4 border-t border-slate-700">
-                <p className="text-xs text-slate-400 mb-3 font-medium">Status Codes</p>
-                <div className="flex flex-wrap gap-2">
-                  {Object.entries(stats.statusCodeDistribution).map(([code, count]) => (
-                    <div
-                      key={code}
-                      className={cn(
-                        'px-3 py-1 rounded-lg text-xs font-semibold transition-all',
-                        getStatusBgColor(parseInt(code))
-                      )}
-                    >
-                      <span className={getStatusColor(parseInt(code))}>{code}</span>
-                      <span className="text-slate-400 ml-1">({count})</span>
-                    </div>
-                  ))}
-                </div>
+              <div className="col-span-2 text-right text-slate-200">{stats.totalRequests}</div>
+              <div className="col-span-2 text-right text-cyan-400">{stats.averageResponseTime.toFixed(2)}</div>
+              <div className="col-span-1 text-right text-green-400">{stats.minResponseTime}</div>
+              <div className="col-span-1 text-right text-orange-400">{stats.maxResponseTime}</div>
+              <div
+                className={cn('col-span-2 text-right font-medium', getPerformanceClass(stats.averageResponseTime))}
+              >
+                {getPerformanceText(stats.averageResponseTime)}
               </div>
             </div>
           ))}
+        </div>
       </div>
     </div>
   );
