@@ -24,22 +24,24 @@ export class GatewayController {
         data: req.body,
         headers: req.headers,
         params: req.query,
+        req, // Passing original request for IP forwarding
       });
       return res.status(200).json(response);
     } catch (error: any) {
+      const errorMessage = error.message || 'Unknown proxy error';
       this.logger.error(
-        `Error proxying request to ${targetUrl}: ${error.message}`,
+        `Error proxying request to ${targetUrl}: ${errorMessage}`,
         'GatewayService',
-        error,
+        error.stack || undefined,
         {
           method: req.method,
           url: req.originalUrl,
           targetUrl,
-          error: error.response?.data || error.message,
+          error: error.response?.data || errorMessage,
         },
       );
       const statusCode = error.status || 500;
-      return res.status(statusCode).json(error.response?.data || { message: error.message });
+      return res.status(statusCode).json(error.response?.data || { message: errorMessage });
     }
   }
 }
