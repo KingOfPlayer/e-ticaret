@@ -11,6 +11,7 @@ import {
   LogOut,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { SystemStatus } from '../dashboard/SystemStatus';
 
 const sidebarItems = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -73,7 +74,8 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="mt-auto p-4 border-t border-slate-800">
+      <div className="mt-auto p-4 space-y-4 border-t border-slate-800">
+        <SystemStatus />
         <div className="p-4 rounded-2xl bg-slate-900/40 flex flex-col gap-4">
           <div className="flex flex-col">
             <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest">
