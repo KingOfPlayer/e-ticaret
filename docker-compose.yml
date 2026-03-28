@@ -22,6 +22,8 @@ services:
 
   dispatcher-mongo:
     image: mongo:latest
+    ports:
+      - '27017:27017'
     networks:
       - backend-network
 
@@ -39,6 +41,8 @@ services:
 
   auth-mongo:
     image: mongo:latest
+    ports:
+      - '27018:27017'
     networks:
       - backend-network
 
@@ -56,6 +60,8 @@ services:
 
   product-mongo:
     image: mongo:latest
+    ports:
+      - '27019:27017'
     networks:
       - backend-network
 
@@ -73,6 +79,8 @@ services:
 
   order-mongo:
     image: mongo:latest
+    ports:
+      - '27020:27017'
     networks:
       - backend-network
 
