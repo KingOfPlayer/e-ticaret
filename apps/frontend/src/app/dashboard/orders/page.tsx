@@ -77,13 +77,23 @@ export default function OrdersPage() {
             Müşteri siparişlerini izleyin ve durumlarını güncelleyin.
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <div className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-lg">
             <span className="text-xs text-slate-500 block uppercase font-bold tracking-wider">
               Toplam Sipariş
             </span>
             <span className="text-lg font-bold text-white">{orders.length}</span>
           </div>
+          <button
+            onClick={() => {
+              setSelectedOrder(null);
+              setIsModalOpen(true);
+            }}
+            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 rounded-lg font-medium transition-colors shadow-lg shadow-indigo-500/20"
+          >
+            <ShoppingCart className="w-5 h-5" />
+            Yeni Sipariş Oluştur
+          </button>
         </div>
       </div>
 

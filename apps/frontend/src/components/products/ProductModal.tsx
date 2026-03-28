@@ -149,13 +149,23 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-300">Kategori</label>
-            <input
-              type="text"
-              value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all font-medium"
-              placeholder="Örn: Teknoloji"
-            />
+            <div className="relative group/select">
+              <input
+                type="text"
+                list="product-categories"
+                value={formData.category}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all font-medium"
+                placeholder="Bir kategori seçin veya yazın..."
+              />
+              <datalist id="product-categories">
+                <option value="Teknoloji" />
+                <option value="Mutfak" />
+                <option value="Giyim" />
+                <option value="Ev & Yaşam" />
+                <option value="Spor" />
+              </datalist>
+            </div>
           </div>
 
           <div className="pt-4 flex items-center gap-3">
