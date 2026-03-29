@@ -16,7 +16,7 @@ import { RoleGuard, Roles, UserRole } from '@e-ticaret/role';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
-@Controller('products')
+@Controller()
 @UseGuards(RoleGuard)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}

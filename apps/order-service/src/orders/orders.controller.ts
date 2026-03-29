@@ -16,7 +16,7 @@ import { RoleGuard, Roles, UserRole } from '@e-ticaret/role';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 
-@Controller('orders')
+@Controller()
 @UseGuards(RoleGuard)
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}

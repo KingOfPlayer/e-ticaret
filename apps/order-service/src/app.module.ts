@@ -1,7 +1,5 @@
 import { Module, NestModule, MiddlewareConsumer, Type } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { OrdersModule } from './orders/orders.module';
 import {
   HttpLoggerMiddleware,
@@ -19,8 +17,8 @@ import { MicroserviceMiddleware } from '@e-ticaret/microservice';
     LoggerModule.register({ serviceName: 'order-service' }),
     StatisticsModule.register(),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -14,7 +14,7 @@ services:
       - AUTH_SERVICE_URL=http://auth-service:5001
       - PRODUCT_SERVICE_URL=http://product-service:5002
       - ORDER_SERVICE_URL=http://order-service:5003
-      - LOGS_SERVICE_URL=http://dispatcher:5000
+      - LOGS_SERVICE_URL=http://dispatcher:5000/log
       - JWT_SECRET=super-secret-key
       - GATEWAY_SECRET=gateway-secret
     depends_on:
