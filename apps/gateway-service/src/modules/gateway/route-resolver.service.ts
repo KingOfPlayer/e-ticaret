@@ -1,15 +1,43 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { ROUTE_MAP } from '../../common/constants/route-map.constant';
+import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Route } from './schemas/route.schema';
 
 @Injectable()
-export class RouteResolverService {
-  resolveService(path: string): { url: string; prefix: string } {
-    const route = Object.keys(ROUTE_MAP).find((r) => path.startsWith(r));
+export class RouteResolverService implements OnModuleInit {
 
-    if (!route) {
-      throw new NotFoundException(`Route not found for path: ${path}`);
+  private cachedRoutes: Route[] = [];
+
+  constructor(
+    @InjectModel(Route.name) private routeModel: Model<Route>,
+  ) {
+  }
+
+  async onModuleInit() {
+    await this.refleshRoutes();
+  }
+
+  async addRoute(route: { prefix: string; target: string }) {
+    const newRoute = await this.routeModel.create(route);
+    this.cachedRoutes.push(newRoute);
+  }
+
+  async refleshRoutes() {
+    const routes = await this.routeModel.find().exec();
+    this.cachedRoutes = routes ?? [];
+  }
+
+  async resolveRoute(path: string): Promise<{ prefix: string; target: string } | null> {
+    if (!this.cachedRoutes || this.cachedRoutes.length === 0) {
+      await this.refleshRoutes();
     }
 
-    return { url: (ROUTE_MAP as Record<string, string>)[route], prefix: route };
+    const route = this.cachedRoutes.find(r => path.startsWith(r.prefix));
+    if (!route) {
+      return null;
+    }
+
+    return { prefix: route.prefix, target: route.target };
   }
+
 }

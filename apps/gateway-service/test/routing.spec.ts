@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose'; // Import this
 import { RouteResolverService } from '../src/modules/gateway/route-resolver.service';
+import { Route } from '../src/modules/gateway/schemas/route.schema';
 
 describe('RouteResolverService', () => {
   let service: RouteResolverService;
@@ -17,7 +18,7 @@ describe('RouteResolverService', () => {
       providers: [
         RouteResolverService,
         {
-          provide: getModelToken('Route'), 
+          provide: getModelToken(Route.name), 
           useValue: mongodbMonk,
         },
       ],
@@ -33,13 +34,13 @@ describe('RouteResolverService', () => {
   it('should return empty route for non-existing path', async () => {
     mongodbMonk.find.mockReturnValue({ exec: jest.fn().mockResolvedValue(null) });
     
-    const route = await service.resolveRoute('/non-existing-path');
-    expect(route).toEqual({});
+    const route = await service.resolveRoute('non-existing-path');
+    expect(route).toEqual(null);
   });
 
   it('should add routes to the database', async () => {
     const newRoute = {
-      prefix: '/test',
+      prefix: 'test',
       target: 'http://localhost:3000',
     };
 
@@ -57,7 +58,7 @@ describe('RouteResolverService', () => {
       exec: jest.fn().mockResolvedValue([existingRoute]),
     });
 
-    const route = await service.resolveRoute('/test/some-path');
+    const route = await service.resolveRoute('test/some-path');
     expect(route).toEqual(existingRoute);
   });
 
@@ -71,8 +72,8 @@ describe('RouteResolverService', () => {
       exec: jest.fn().mockResolvedValue([existingRoute]),
     });
 
-    const route = await service.resolveRoute('/non-matching-path');
-    expect(route).toEqual({});
+    const route = await service.resolveRoute('non-matching-path');
+    expect(route).toEqual(null);
   });
 
   it('should update route table from database', async () => {
@@ -85,7 +86,7 @@ describe('RouteResolverService', () => {
       exec: jest.fn().mockResolvedValue(routesFromDb),
     });
 
-    await service.updateRouteTable();
-    expect(service['routeTable']).toEqual(routesFromDb);
+    await service.refleshRoutes();
+    expect(service['cachedRoutes']).toEqual(routesFromDb);
   });
 });
