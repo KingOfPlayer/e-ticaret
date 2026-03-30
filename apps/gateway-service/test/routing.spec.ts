@@ -9,8 +9,10 @@ describe('RouteResolverService', () => {
 
   beforeEach(async () => {
     mongodbMonk = {
-      find: jest.fn(),
-      create: jest.fn(), 
+      find: jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue([]),
+      }),
+      create: jest.fn(),
       save: jest.fn(),
     };
 
@@ -18,7 +20,7 @@ describe('RouteResolverService', () => {
       providers: [
         RouteResolverService,
         {
-          provide: getModelToken(Route.name), 
+          provide: getModelToken(Route.name),
           useValue: mongodbMonk,
         },
       ],
@@ -33,7 +35,7 @@ describe('RouteResolverService', () => {
 
   it('should return empty route for non-existing path', async () => {
     mongodbMonk.find.mockReturnValue({ exec: jest.fn().mockResolvedValue(null) });
-    
+
     const route = await service.resolveRoute('non-existing-path');
     expect(route).toEqual(null);
   });
@@ -90,9 +92,25 @@ describe('RouteResolverService', () => {
     expect(service['cachedRoutes']).toEqual(routesFromDb);
   });
 
-  it('should rotue seeding', async () => {
+  it('should route seeding', async () => {
     await service.seedRoutes();
-    expect(mongodbMonk.create).toHaveBeenCalledWith(seedRoutes[0]);
-    expect(mongodbMonk.create).toHaveBeenCalledWith(seedRoutes[1]);
-  }
+    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: '/api/auth', target: process.env.AUTH_SERVICE_URL || 'http://localhost:5001' });
+    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: '/api/products', target: process.env.PRODUCT_SERVICE_URL || 'http://localhost:5002' });
+    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: '/api/orders', target: process.env.ORDER_SERVICE_URL || 'http://localhost:5003' });
+  });
+
+  it('should not seed routes if they already exist', async () => {
+
+    mongodbMonk.find.mockReturnValue({
+      exec: jest.fn().mockResolvedValue([
+        { prefix: '/api/auth', target: 'http://localhost:5001' },
+        { prefix: '/api/products', target: 'http://localhost:5002' },
+        { prefix: '/api/orders', target: 'http://localhost:5003' },
+      ]),
+    });
+
+    await service.seedRoutes();
+    expect(mongodbMonk.find).toHaveBeenCalled();
+    expect(mongodbMonk.create).not.toHaveBeenCalled();
+  });
 });

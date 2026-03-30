@@ -40,4 +40,23 @@ export class RouteResolverService implements OnModuleInit {
     return { prefix: route.prefix, target: route.target };
   }
 
+  async seedRoutes() {
+    const RouteSeed: { [key: string]: string } = {
+      '/api/auth': process.env.AUTH_SERVICE_URL || 'http://localhost:5001',
+      '/api/products': process.env.PRODUCT_SERVICE_URL || 'http://localhost:5002',
+      '/api/orders': process.env.ORDER_SERVICE_URL || 'http://localhost:5003',
+    };
+
+    const existingRoutes = await this.routeModel.find().exec();
+    if (existingRoutes && existingRoutes.length > 0) {
+      return; 
+    }
+
+    for (const prefix in RouteSeed) {
+      if (RouteSeed.hasOwnProperty(prefix)) {
+        const target = RouteSeed[prefix];
+        await this.addRoute({ prefix, target });
+      }
+    }
+  }
 }
