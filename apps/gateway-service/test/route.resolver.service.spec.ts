@@ -60,7 +60,7 @@ describe('RouteResolverService', () => {
       exec: jest.fn().mockResolvedValue([existingRoute]),
     });
 
-    const route = await service.resolveRoute('test/some-path');
+    const route = await service.resolveRoute('test');
     expect(route).toEqual(existingRoute);
   });
 
@@ -112,5 +112,19 @@ describe('RouteResolverService', () => {
     await service.seedRoutes();
     expect(mongodbMonk.find).toHaveBeenCalled();
     expect(mongodbMonk.create).not.toHaveBeenCalled();
+  });
+
+  it('should get available routes', async () => {
+    const routesFromDb = [
+      { prefix: 'test1', target: 'http://localhost:3001' },
+      { prefix: 'test2', target: 'http://localhost:3002' },
+    ];
+
+    mongodbMonk.find.mockReturnValue({
+      exec: jest.fn().mockResolvedValue(routesFromDb),
+    });
+
+    const routes = await service.getRoutes();
+    expect(routes).toEqual(routesFromDb);
   });
 });
