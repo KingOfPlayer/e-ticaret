@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@e-ticaret/logger": "workspace:*",
+    "@e-ticaret/role": "workspace:*",
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/mongoose": "^11.0.4",

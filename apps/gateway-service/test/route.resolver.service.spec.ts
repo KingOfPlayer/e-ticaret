@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getModelToken } from '@nestjs/mongoose'; // Import this
-import { RouteResolverService } from '../src/modules/gateway/route.resolver.service';
-import { Route } from '../src/modules/gateway/schemas/route.schema';
+import { getModelToken } from '@nestjs/mongoose';
+import { RouteResolverService } from '../src/modules/resolver/route.resolver.service';
+import { Route } from '../src/modules/resolver/schemas/route.schema';
 
 describe('RouteResolverService', () => {
   let service: RouteResolverService;
