@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose'; // Import this
-import { RouteResolverService } from '../src/modules/gateway/route-resolver.service';
+import { RouteResolverService } from '../src/modules/gateway/route.resolver.service';
 import { Route } from '../src/modules/gateway/schemas/route.schema';
 
 describe('RouteResolverService', () => {
@@ -94,18 +94,18 @@ describe('RouteResolverService', () => {
 
   it('should route seeding', async () => {
     await service.seedRoutes();
-    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: '/api/auth', target: process.env.AUTH_SERVICE_URL || 'http://localhost:5001' });
-    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: '/api/products', target: process.env.PRODUCT_SERVICE_URL || 'http://localhost:5002' });
-    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: '/api/orders', target: process.env.ORDER_SERVICE_URL || 'http://localhost:5003' });
+    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: 'auth', target: process.env.AUTH_SERVICE_URL || 'http://localhost:5001' });
+    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: 'products', target: process.env.PRODUCT_SERVICE_URL || 'http://localhost:5002' });
+    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: 'orders', target: process.env.ORDER_SERVICE_URL || 'http://localhost:5003' });
   });
 
   it('should not seed routes if they already exist', async () => {
 
     mongodbMonk.find.mockReturnValue({
       exec: jest.fn().mockResolvedValue([
-        { prefix: '/api/auth', target: 'http://localhost:5001' },
-        { prefix: '/api/products', target: 'http://localhost:5002' },
-        { prefix: '/api/orders', target: 'http://localhost:5003' },
+        { prefix: 'auth', target: 'http://localhost:5001' },
+        { prefix: 'products', target: 'http://localhost:5002' },
+        { prefix: 'orders', target: 'http://localhost:5003' },
       ]),
     });
 

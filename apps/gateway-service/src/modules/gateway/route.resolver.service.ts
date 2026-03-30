@@ -14,6 +14,7 @@ export class RouteResolverService implements OnModuleInit {
   }
 
   async onModuleInit() {
+    await this.seedRoutes();
     await this.refleshRoutes();
   }
 
@@ -28,11 +29,12 @@ export class RouteResolverService implements OnModuleInit {
   }
 
   async resolveRoute(path: string): Promise<{ prefix: string; target: string } | null> {
+    
     if (!this.cachedRoutes || this.cachedRoutes.length === 0) {
       await this.refleshRoutes();
     }
 
-    const route = this.cachedRoutes.find(r => path.startsWith(r.prefix));
+    const route = this.cachedRoutes.find(r => path === r.prefix);
     if (!route) {
       return null;
     }
@@ -41,22 +43,19 @@ export class RouteResolverService implements OnModuleInit {
   }
 
   async seedRoutes() {
-    const RouteSeed: { [key: string]: string } = {
-      '/api/auth': process.env.AUTH_SERVICE_URL || 'http://localhost:5001',
-      '/api/products': process.env.PRODUCT_SERVICE_URL || 'http://localhost:5002',
-      '/api/orders': process.env.ORDER_SERVICE_URL || 'http://localhost:5003',
-    };
+    const RouteSeed: { prefix: string; target: string }[] = [
+      { prefix: 'auth', target: 'http://localhost:5001' },
+      { prefix: 'products', target: 'http://localhost:5002' },
+      { prefix: 'orders', target: 'http://localhost:5003' },
+    ];
 
     const existingRoutes = await this.routeModel.find().exec();
     if (existingRoutes && existingRoutes.length > 0) {
       return; 
     }
 
-    for (const prefix in RouteSeed) {
-      if (RouteSeed.hasOwnProperty(prefix)) {
-        const target = RouteSeed[prefix];
-        await this.addRoute({ prefix, target });
-      }
+    for (const route of RouteSeed) {
+      await this.addRoute(route);
     }
   }
 }
