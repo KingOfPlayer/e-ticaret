@@ -18,6 +18,13 @@ export class RouteResolverService implements OnModuleInit {
     await this.refleshRoutes();
   }
 
+  async getAllRoutes(): Promise<Route[]> {
+    if (!this.cachedRoutes || this.cachedRoutes.length === 0) {
+      await this.refleshRoutes();
+    }
+    return this.cachedRoutes;
+  }
+
   async addRoute(route: { prefix: string; target: string }) {
     const newRoute = await this.routeModel.create(route);
     this.cachedRoutes.push(newRoute);

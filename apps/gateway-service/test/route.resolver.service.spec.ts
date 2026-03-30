@@ -124,7 +124,7 @@ describe('RouteResolverService', () => {
       exec: jest.fn().mockResolvedValue(routesFromDb),
     });
 
-    const routes = await service.getRoutes();
+    const routes = await service.getAllRoutes();
     expect(routes).toEqual(routesFromDb);
   });
 });
