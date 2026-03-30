@@ -12,10 +12,6 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(private readonly jwtService: JwtService) {}
 
   use(req: Request, res: Response, next: NextFunction) {
-    // Basic IP tracking / x-forwarded-for control
-    const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    req.headers['x-forwarded-for'] = clientIp;
-
     // Remove x-user-id, x-user-email and x-user-role headers to prevent spoofing
     delete req.headers['x-user-id'];
     delete req.headers['x-user-role'];

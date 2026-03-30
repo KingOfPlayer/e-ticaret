@@ -17,6 +17,9 @@ export class GatewayController {
     const targetBase = this.routeResolverService.resolveService(req.path);
     const servicePath = req.path.replace(targetBase.prefix, '');
     const targetUrl = `${targetBase.url.replace(/\/$/, '')}/${servicePath.replace(/^\//, '')}`;
+    
+    const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    req.headers['x-forwarded-for'] = clientIp;
 
     try {
       const response = await this.gatewayService.proxyRequest(targetUrl, {

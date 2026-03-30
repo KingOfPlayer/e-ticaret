@@ -18,6 +18,8 @@ export class GatewayService {
       delete config.headers['accept-encoding'];
 
       // Add X-Forwarded-For if not already present
+
+      
       if (config.req) {
         config.headers['x-forwarded-for'] = config.req.headers['x-forwarded-for'] || config.req.socket.remoteAddress;
       }
