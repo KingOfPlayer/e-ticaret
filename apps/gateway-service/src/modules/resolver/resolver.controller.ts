@@ -21,9 +21,9 @@ export class RouteResolverController {
 
   @Patch()
   async getRoutes(@Req() req: express.Request, @Res() res: express.Response) {
-    const routes = await this.routeResolverService.refleshRoutes();
+    await this.routeResolverService.refleshRoutes();
     this.logger.info(`Routes refreshed successfully`, 'RouteResolverController');
-    return res.status(200).json(routes);
+    return res.status(204).send();
   }
 
   @Post()

@@ -51,6 +51,8 @@ export const api = {
     apiRequest(path, { method: 'POST', body: JSON.stringify(data), useGateway }),
   put: (path: string, data: any, useGateway: boolean = false) => 
     apiRequest(path, { method: 'PUT', body: JSON.stringify(data), useGateway }),
+  patch: (path: string, data: any, useGateway: boolean = false) =>
+    apiRequest(path, { method: 'PATCH', body: JSON.stringify(data), useGateway }),
   delete: (path: string, useGateway: boolean = false) => 
     apiRequest(path, { method: 'DELETE', useGateway }),
 };

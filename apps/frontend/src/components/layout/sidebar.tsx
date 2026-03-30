@@ -9,6 +9,7 @@ import {
   Activity,
   ChevronRight,
   LogOut,
+  RefreshCw,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SystemStatus } from '../dashboard/SystemStatus';
@@ -18,6 +19,7 @@ const sidebarItems = [
   { name: 'Ürünler', href: '/dashboard/products', icon: Package },
   { name: 'Siparişler', href: '/dashboard/orders', icon: ShoppingCart },
   { name: 'Sistem Logları', href: '/dashboard/logs', icon: Activity },
+  { name: 'Route Resolver', href: '/dashboard/resolver', icon: RefreshCw },
 ];
 
 export function Sidebar() {
