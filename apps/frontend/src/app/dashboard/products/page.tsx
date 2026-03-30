@@ -26,7 +26,7 @@ export default function ProductsPage() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const data = await api.get('/products');
+      const data = await api.get('/products/product');
       setProducts(data);
       setError(null);
     } catch (err: any) {

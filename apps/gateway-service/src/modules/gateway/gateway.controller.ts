@@ -28,20 +28,22 @@ export class GatewayController {
       });
       return res.status(200).json(response);
     } catch (error: any) {
-      const errorMessage = error.message || 'Unknown proxy error';
-      this.logger.error(
-        `Error proxying request to ${targetUrl}: ${errorMessage}`,
-        'GatewayService',
-        error.stack || undefined,
-        {
-          method: req.method,
-          url: req.originalUrl,
-          targetUrl,
-          error: error.response?.data || errorMessage,
-        },
-      );
+      if (error.status >= 400) {
+        const errorMessage = error.message || 'Unknown proxy error';
+        this.logger.error(
+          `Error proxying request to ${targetUrl}: ${errorMessage}`,
+          'GatewayService',
+          error.stack || undefined,
+          {
+            method: req.method,
+            url: req.originalUrl,
+            targetUrl,
+            error: error.response?.data || errorMessage,
+          },
+        );
+      }
       const statusCode = error.status || 500;
-      return res.status(statusCode).json(error.response?.data || { message: errorMessage });
+      return res.status(statusCode).json(error.response?.data);
     }
   }
 }

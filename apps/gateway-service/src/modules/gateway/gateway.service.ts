@@ -35,6 +35,7 @@ export class GatewayService {
         // Reflect the actual status and data from the downstream service
         const statusCode = error.response.status;
         const errorData = error.response.data;
+        
         this.loggerService.error(
           `Downstream error from ${url}`,
           'GatewayService',

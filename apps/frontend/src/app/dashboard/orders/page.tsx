@@ -35,7 +35,7 @@ export default function OrdersPage() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const data = await api.get('/orders');
+      const data = await api.get('/orders/orders');
       setOrders(data);
     } catch (err) {
       console.error('Siparişler yüklenemedi:', err);

@@ -14,21 +14,21 @@ export class ProductsService {
     return createdProduct.save();
   }
 
-  async findAll(): Promise<Product[]> {
-    return this.productModel.find().exec();
+  async findAll(userId: string): Promise<Product[]> {
+    return this.productModel.find({ userId }).exec();
   }
 
-  async findOne(id: string): Promise<Product | null> {
-    return this.productModel.findById(id).exec();
+  async findOne(id: string, userId: string): Promise<Product | null> {
+    return this.productModel.findOne({ _id: id, userId }).exec();
   }
 
-  async update(id: string, updateProductDto: any): Promise<Product | null> {
+  async update(id: string, userId: string, updateProductDto: any): Promise<Product | null> {
     return this.productModel
-      .findByIdAndUpdate(id, updateProductDto, { new: true })
+      .findOneAndUpdate({ _id: id, userId }, updateProductDto, { new: true })
       .exec();
   }
 
-  async remove(id: string): Promise<any> {
-    return this.productModel.findByIdAndDelete(id).exec();
+  async remove(id: string, userId: string): Promise<any> {
+    return this.productModel.findOneAndDelete({ _id: id, userId }).exec();
   }
 }

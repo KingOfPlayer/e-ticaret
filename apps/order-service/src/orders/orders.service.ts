@@ -14,21 +14,21 @@ export class OrdersService {
     return createdOrder.save();
   }
 
-  async findAll(): Promise<Order[]> {
-    return this.orderModel.find().exec();
+  async findAll(userId: string): Promise<Order[]> {
+    return this.orderModel.find({ userId }).exec();
   }
 
-  async findOne(id: string): Promise<Order | null> {
-    return this.orderModel.findById(id).exec();
+  async findOne(id: string, userId: string): Promise<Order | null> {
+    return this.orderModel.findOne({ _id: id, userId }).exec();
   }
 
-  async update(id: string, updateOrderDto: any): Promise<Order | null> {
+  async update(id: string, userId: string, updateOrderDto: any): Promise<Order | null> {
     return this.orderModel
-      .findByIdAndUpdate(id, updateOrderDto, { new: true })
+      .findOneAndUpdate({ _id: id, userId }, updateOrderDto, { new: true })
       .exec();
   }
 
-  async remove(id: string): Promise<any> {
-    return this.orderModel.findByIdAndDelete(id).exec();
+  async remove(id: string, userId: string): Promise<any> {
+    return this.orderModel.findOneAndDelete({ _id: id, userId }).exec();
   }
 }

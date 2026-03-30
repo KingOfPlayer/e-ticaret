@@ -6,6 +6,7 @@ import {
   Delete,
   Body,
   Param,
+  Headers,
   HttpCode,
   HttpStatus,
   UseGuards,
@@ -23,34 +24,46 @@ export class OrdersController {
 
   @Roles(UserRole.User, UserRole.Admin)
   @Post()
-  async create(@Body() createOrderDto: CreateOrderDto): Promise<Order> {
-    return this.ordersService.create(createOrderDto);
+  async create(
+    @Body() createOrderDto: CreateOrderDto,
+    @Headers('x-user-id') userId: string,
+  ): Promise<Order> {
+    return this.ordersService.create({ ...createOrderDto, userId });
   }
 
+  @Roles(UserRole.User, UserRole.Admin)
   @Get()
-  async findAll(): Promise<Order[]> {
-    return this.ordersService.findAll();
+  async findAll(@Headers('x-user-id') userId: string): Promise<Order[]> {
+    return this.ordersService.findAll(userId);
   }
 
+  @Roles(UserRole.User, UserRole.Admin)
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Order | null> {
-    return this.ordersService.findOne(id);
+  async findOne(
+    @Param('id') id: string,
+    @Headers('x-user-id') userId: string,
+  ): Promise<Order | null> {
+    return this.ordersService.findOne(id, userId);
   }
 
   @Roles(UserRole.Admin)
   @Put(':id')
   async update(
     @Param('id') id: string,
+    @Headers('x-user-id') userId: string,
     @Body() updateOrderDto: UpdateOrderDto,
   ): Promise<Order | null> {
-    return this.ordersService.update(id, updateOrderDto);
+    return this.ordersService.update(id, userId, updateOrderDto);
   }
 
   @Roles(UserRole.Admin)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param('id') id: string): Promise<void> {
-    await this.ordersService.remove(id);
+  async remove(
+    @Param('id') id: string,
+    @Headers('x-user-id') userId: string,
+  ): Promise<void> {
+    await this.ordersService.remove(id, userId);
   }
 }
 

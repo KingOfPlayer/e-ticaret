@@ -5,17 +5,20 @@ export type OrderDocument = HydratedDocument<Order>;
 
 @Schema({ timestamps: true })
 export class Order {
+  @Prop({ required: true, index: true })
+  userId!: string;
+
   @Prop({ required: true })
-  customerName: string;
+  customerName!: string;
 
   @Prop({ type: [String], required: true })
-  productIds: string[];
+  productIds!: string[];
 
   @Prop({ required: true })
-  totalAmount: number;
+  totalAmount!: number;
 
   @Prop({ default: 'PENDING' })
-  status: string;
+  status!: string;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
