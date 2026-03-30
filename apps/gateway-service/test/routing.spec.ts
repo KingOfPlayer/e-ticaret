@@ -89,4 +89,10 @@ describe('RouteResolverService', () => {
     await service.refleshRoutes();
     expect(service['cachedRoutes']).toEqual(routesFromDb);
   });
+
+  it('should rotue seeding', async () => {
+    await service.seedRoutes();
+    expect(mongodbMonk.create).toHaveBeenCalledWith(seedRoutes[0]);
+    expect(mongodbMonk.create).toHaveBeenCalledWith(seedRoutes[1]);
+  }
 });
