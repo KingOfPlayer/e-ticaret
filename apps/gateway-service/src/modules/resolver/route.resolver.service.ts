@@ -46,9 +46,18 @@ export class RouteResolverService implements OnModuleInit {
 
   async seedRoutes() {
     const RouteSeed: { prefix: string; target: string }[] = [
-      { prefix: 'auth', target: 'http://127.0.0.1:5001' },
-      { prefix: 'products', target: 'http://127.0.0.1:5002' },
-      { prefix: 'orders', target: 'http://127.0.0.1:5003' },
+      {
+        prefix: 'auth',
+        target: process.env.AUTH_SERVICE_URL || 'http://127.0.0.1:5001',
+      },
+      {
+        prefix: 'products',
+        target: process.env.PRODUCT_SERVICE_URL || 'http://127.0.0.1:5002',
+      },
+      {
+        prefix: 'orders',
+        target: process.env.ORDER_SERVICE_URL || 'http://127.0.0.1:5003',
+      },
     ];
 
     for (const seed of RouteSeed) {
