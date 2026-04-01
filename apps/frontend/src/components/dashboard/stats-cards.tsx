@@ -13,40 +13,61 @@ interface StatCardProps {
   trend?: string;
 }
 
-export function StatsCards() {
+interface StatsData {
+  totalRequests: number;
+  successRate: number;
+  avgLatency: number;
+  errorCount: number;
+  trends?: {
+    requests?: string;
+    success?: string;
+    latency?: string;
+    errors?: string;
+  };
+}
+
+export function StatsCards({ stats }: { stats?: StatsData }) {
+  const data = stats || {
+    totalRequests: 0,
+    successRate: 0,
+    avgLatency: 0,
+    errorCount: 0,
+    trends: {}
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <StatCard
         title="Toplam İstek"
-        value="1,284"
-        subtitle="Son 24 saat"
+        value={data.totalRequests.toLocaleString()}
+        subtitle="Sistem Geneli"
         icon={Activity}
         color="blue"
-        trend="+12%"
+        trend={data.trends?.requests}
       />
       <StatCard
         title="Başarı Oranı"
-        value="%98.4"
+        value={`%${data.successRate.toFixed(1)}`}
         subtitle="2xx Yanıtlar"
         icon={CheckCircle2}
         color="emerald"
-        trend="+0.2%"
+        trend={data.trends?.success}
       />
       <StatCard
         title="Ort. Gecikme"
-        value="24ms"
-        subtitle="Milisaniye"
+        value={`${Math.round(data.avgLatency)}ms`}
+        subtitle="Yanıt Süresi"
         icon={Clock}
         color="amber"
-        trend="-4ms"
+        trend={data.trends?.latency}
       />
       <StatCard
         title="Hata Sayısı"
-        value="12"
+        value={data.errorCount}
         subtitle="4xx + 5xx"
         icon={AlertCircle}
         color="rose"
-        trend="-2"
+        trend={data.trends?.errors}
       />
     </div>
   );

@@ -67,6 +67,10 @@ export class RouteResolverService implements OnModuleInit {
         prefix: 'admin/logs',
         target: process.env.LOGS_SERVICE_URL || 'http://127.0.0.1:5000/log',
       },
+      {
+        prefix: 'admin/stats',
+        target: process.env.STATS_SERVICE_URL || 'http://127.0.0.1:5000/admin/stats',
+      },
     ];
 
     for (const seed of RouteSeed) {
