@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { HttpLoggerMiddleware, LoggerModule, StatisticsModule } from '@e-ticaret/logger';
 import { AuthMiddleware } from './common/middleware/auth.middleware';
 import { JwtModule } from '@nestjs/jwt';
+import { ResolverModule } from './modules/resolver/resolver.module';
 
 @Module({
   imports: [
@@ -15,12 +16,13 @@ import { JwtModule } from '@nestjs/jwt';
       secret: process.env.JWT_SECRET || 'super-secret-key',
       signOptions: { expiresIn: '60s' },
     }),
+    ResolverModule,
     GatewayModule,
   ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('*');
     consumer.apply(HttpLoggerMiddleware).forRoutes('*');
+    consumer.apply(AuthMiddleware).forRoutes('*');
   }
 }

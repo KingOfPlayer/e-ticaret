@@ -5,6 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "seed": "turbo run seed --parallel",
     "test": "turbo run test --parallel",
     "dev": "turbo run dev --parallel",
     "prestart": "turbo run build --filter=@e-ticaret/*",

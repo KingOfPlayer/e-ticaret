@@ -1,7 +1,16 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+interface ApiRequestOptions extends RequestInit {
+  useGateway?: boolean; // Flag to use gateway URL instead of API base
+}
 
-export async function apiRequest(path: string, options: RequestInit = {}) {
-  const url = `${API_BASE_URL}${path}`;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL || 'http://localhost:5000';
+
+export async function apiRequest(path: string, options: ApiRequestOptions = {}) {
+  const { useGateway = false, ...fetchOptions } = options;
+
+  // Use gateway URL if flag is set, otherwise use API base URL
+  const baseUrl = useGateway ? GATEWAY_URL : API_BASE_URL;
+  const url = `${baseUrl}${path}`;
 
   // Client-side'da olduğumuzdan emin olalım
   const token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
@@ -9,11 +18,11 @@ export async function apiRequest(path: string, options: RequestInit = {}) {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...options.headers,
+    ...fetchOptions.headers,
   };
 
   const response = await fetch(url, {
-    ...options,
+    ...fetchOptions,
     headers,
   });
 
@@ -36,9 +45,14 @@ export async function apiRequest(path: string, options: RequestInit = {}) {
 }
 
 export const api = {
-  get: (path: string) => apiRequest(path, { method: 'GET' }),
-  post: (path: string, data: any) =>
-    apiRequest(path, { method: 'POST', body: JSON.stringify(data) }),
-  put: (path: string, data: any) => apiRequest(path, { method: 'PUT', body: JSON.stringify(data) }),
-  delete: (path: string) => apiRequest(path, { method: 'DELETE' }),
+  get: (path: string, useGateway: boolean = false) =>
+    apiRequest(path, { method: 'GET', useGateway }),
+  post: (path: string, data: any, useGateway: boolean = false) =>
+    apiRequest(path, { method: 'POST', body: JSON.stringify(data), useGateway }),
+  put: (path: string, data: any, useGateway: boolean = false) =>
+    apiRequest(path, { method: 'PUT', body: JSON.stringify(data), useGateway }),
+  patch: (path: string, data: any, useGateway: boolean = false) =>
+    apiRequest(path, { method: 'PATCH', body: JSON.stringify(data), useGateway }),
+  delete: (path: string, useGateway: boolean = false) =>
+    apiRequest(path, { method: 'DELETE', useGateway }),
 };

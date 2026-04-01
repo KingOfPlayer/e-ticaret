@@ -1,0 +1,9 @@
+$kind: http-request
+name: RouteTable
+url: "{{HOST}}route"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+order: 1774911134235
