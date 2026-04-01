@@ -26,7 +26,7 @@ export default function ProductsPage() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const data = await api.get('/products');
+      const data = await api.get('/products/product');
       setProducts(data);
       setError(null);
     } catch (err: any) {
@@ -61,9 +61,10 @@ export default function ProductsPage() {
     setIsModalOpen(true);
   };
 
-  const filteredProducts = products.filter((p) =>
-    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.category?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProducts = products.filter(
+    (p) =>
+      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.category?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -140,7 +141,8 @@ export default function ProductsPage() {
                             {product.name}
                           </span>
                           <span className="text-xs text-slate-500 mt-0.5 line-clamp-1">
-                            {product.category || 'Kategorisiz'} • {product.description || 'Açıklama yok'}
+                            {product.category || 'Kategorisiz'} •{' '}
+                            {product.description || 'Açıklama yok'}
                           </span>
                         </div>
                       </td>
@@ -195,4 +197,3 @@ export default function ProductsPage() {
     </div>
   );
 }
-

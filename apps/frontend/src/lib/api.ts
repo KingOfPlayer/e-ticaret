@@ -7,7 +7,7 @@ const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL || 'http://localhost:500
 
 export async function apiRequest(path: string, options: ApiRequestOptions = {}) {
   const { useGateway = false, ...fetchOptions } = options;
-  
+
   // Use gateway URL if flag is set, otherwise use API base URL
   const baseUrl = useGateway ? GATEWAY_URL : API_BASE_URL;
   const url = `${baseUrl}${path}`;
@@ -45,12 +45,14 @@ export async function apiRequest(path: string, options: ApiRequestOptions = {}) 
 }
 
 export const api = {
-  get: (path: string, useGateway: boolean = false) => 
+  get: (path: string, useGateway: boolean = false) =>
     apiRequest(path, { method: 'GET', useGateway }),
   post: (path: string, data: any, useGateway: boolean = false) =>
     apiRequest(path, { method: 'POST', body: JSON.stringify(data), useGateway }),
-  put: (path: string, data: any, useGateway: boolean = false) => 
+  put: (path: string, data: any, useGateway: boolean = false) =>
     apiRequest(path, { method: 'PUT', body: JSON.stringify(data), useGateway }),
-  delete: (path: string, useGateway: boolean = false) => 
+  patch: (path: string, data: any, useGateway: boolean = false) =>
+    apiRequest(path, { method: 'PATCH', body: JSON.stringify(data), useGateway }),
+  delete: (path: string, useGateway: boolean = false) =>
     apiRequest(path, { method: 'DELETE', useGateway }),
 };

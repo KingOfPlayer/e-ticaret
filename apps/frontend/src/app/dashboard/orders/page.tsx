@@ -35,7 +35,7 @@ export default function OrdersPage() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const data = await api.get('/orders');
+      const data = await api.get('/orders/orders');
       setOrders(data);
     } catch (err) {
       console.error('Siparişler yüklenemedi:', err);
@@ -63,9 +63,10 @@ export default function OrdersPage() {
     setIsModalOpen(true);
   };
 
-  const filteredOrders = orders.filter((o) =>
-    o.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    o.status.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredOrders = orders.filter(
+    (o) =>
+      o.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      o.status.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -232,4 +233,3 @@ function getStatusIcon(status: string) {
       return null;
   }
 }
-

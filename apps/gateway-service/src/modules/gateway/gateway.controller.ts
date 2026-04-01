@@ -1,10 +1,10 @@
-import { Controller, All, Req, Res } from '@nestjs/common';
+import { Controller, All, Req, Res, Param, NotFoundException } from '@nestjs/common';
 import * as express from 'express';
 import { GatewayService } from './gateway.service';
-import { RouteResolverService } from './route-resolver.service';
 import { LoggerService } from '@e-ticaret/logger';
+import { RouteResolverService } from '../resolver/route.resolver.service';
 
-@Controller()
+@Controller('api')
 export class GatewayController {
   constructor(
     private readonly gatewayService: GatewayService,
@@ -12,11 +12,22 @@ export class GatewayController {
     private readonly logger: LoggerService,
   ) {}
 
-  @All('*')
-  async handleRequest(@Req() req: express.Request, @Res() res: express.Response) {
-    const targetBase = this.routeResolverService.resolveService(req.path);
-    const servicePath = req.path.replace(targetBase.prefix, '');
-    const targetUrl = `${targetBase.url.replace(/\/$/, '')}/${servicePath.replace(/^\//, '')}`;
+  @All('*path')
+  async handleRequest(
+    @Req() req: express.Request,
+    @Res() res: express.Response,
+    @Param('path') path: any,
+  ) {
+    const target = await this.routeResolverService.resolveRoute(path[0]);
+
+    if (!target) {
+      this.logger.warn(`No route found for path: ${path}`, 'GatewayController');
+      return new NotFoundException(`No route found`);
+    }
+    const targetUrl = target.target + path.join('/').substring(target.prefix.length);
+
+    const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    req.headers['x-forwarded-for'] = clientIp;
 
     try {
       const response = await this.gatewayService.proxyRequest(targetUrl, {
@@ -28,20 +39,22 @@ export class GatewayController {
       });
       return res.status(200).json(response);
     } catch (error: any) {
-      const errorMessage = error.message || 'Unknown proxy error';
-      this.logger.error(
-        `Error proxying request to ${targetUrl}: ${errorMessage}`,
-        'GatewayService',
-        error.stack || undefined,
-        {
-          method: req.method,
-          url: req.originalUrl,
-          targetUrl,
-          error: error.response?.data || errorMessage,
-        },
-      );
+      if (error.status >= 400) {
+        const errorMessage = error.message || 'Unknown proxy error';
+        this.logger.error(
+          `Error proxying request to ${targetUrl}: ${errorMessage}`,
+          'GatewayService',
+          error.stack || undefined,
+          {
+            method: req.method,
+            url: req.originalUrl,
+            targetUrl,
+            error: error.response?.data || errorMessage,
+          },
+        );
+      }
       const statusCode = error.status || 500;
-      return res.status(statusCode).json(error.response?.data || { message: errorMessage });
+      return res.status(statusCode).json(error.response?.data);
     }
   }
 }

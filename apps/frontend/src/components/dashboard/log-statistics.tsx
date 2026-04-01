@@ -140,16 +140,24 @@ export function LogStatistics() {
 
         <div className="divide-y divide-slate-800">
           {routeEntries.map(([route, stats]) => (
-            <div key={route} className="grid grid-cols-12 gap-3 px-4 py-3 text-sm hover:bg-slate-800/20">
+            <div
+              key={route}
+              className="grid grid-cols-12 gap-3 px-4 py-3 text-sm hover:bg-slate-800/20"
+            >
               <div className="col-span-4 text-indigo-300 truncate" title={route}>
                 {route}
               </div>
               <div className="col-span-2 text-right text-slate-200">{stats.totalRequests}</div>
-              <div className="col-span-2 text-right text-cyan-400">{stats.averageResponseTime.toFixed(2)}</div>
+              <div className="col-span-2 text-right text-cyan-400">
+                {stats.averageResponseTime.toFixed(2)}
+              </div>
               <div className="col-span-1 text-right text-green-400">{stats.minResponseTime}</div>
               <div className="col-span-1 text-right text-orange-400">{stats.maxResponseTime}</div>
               <div
-                className={cn('col-span-2 text-right font-medium', getPerformanceClass(stats.averageResponseTime))}
+                className={cn(
+                  'col-span-2 text-right font-medium',
+                  getPerformanceClass(stats.averageResponseTime),
+                )}
               >
                 {getPerformanceText(stats.averageResponseTime)}
               </div>

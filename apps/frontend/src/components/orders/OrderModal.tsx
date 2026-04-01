@@ -119,7 +119,7 @@ export default function OrderModal({ isOpen, onClose, onSuccess, order }: OrderM
   };
 
   const filteredProducts = availableProducts.filter((p) =>
-    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    p.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -188,7 +188,9 @@ export default function OrderModal({ isOpen, onClose, onSuccess, order }: OrderM
                   Toplam Tutar
                 </p>
                 <p className="text-3xl font-bold text-white">${totalAmount.toLocaleString()}</p>
-                <p className="text-[10px] text-slate-500">{formData.productIds.length} Ürün Seçildi</p>
+                <p className="text-[10px] text-slate-500">
+                  {formData.productIds.length} Ürün Seçildi
+                </p>
               </div>
             </div>
 
