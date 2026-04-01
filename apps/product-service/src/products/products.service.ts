@@ -17,11 +17,11 @@ export class ProductsService implements OnModuleInit {
     const count = await this.productModel.countDocuments();
     if (count === 0) {
       const sampleProducts = [
-        { name: 'Gamer Laptop RTX 4080', price: 54999, description: 'Yüksek performanslı oyun bilgisayarı.', category: 'Elektronik' },
-        { name: 'Ultra-Wide Curved Monitor', price: 12500, description: '49 inç kavisli ekran.', category: 'Elektronik' },
-        { name: 'Mechanical Keyboard RGB', price: 2450, description: 'Mavi switch mekanik klavye.', category: 'Aksesuar' },
-        { name: 'Wireless Gaming Mouse', price: 1800, description: '25k DPI hassasiyet.', category: 'Aksesuar' },
-        { name: 'Pro Studio Headphones', price: 4200, description: 'Aktif gürültü engelleyici.', category: 'Ses' },
+        { userId: 'admin', name: 'Gamer Laptop RTX 4080', price: 54999, description: 'Yüksek performanslı oyun bilgisayarı.', category: 'Elektronik' },
+        { userId: 'admin', name: 'Ultra-Wide Curved Monitor', price: 12500, description: '49 inç kavisli ekran.', category: 'Elektronik' },
+        { userId: 'admin', name: 'Mechanical Keyboard RGB', price: 2450, description: 'Mavi switch mekanik klavye.', category: 'Aksesuar' },
+        { userId: 'admin', name: 'Wireless Gaming Mouse', price: 1800, description: '25k DPI hassasiyet.', category: 'Aksesuar' },
+        { userId: 'admin', name: 'Pro Studio Headphones', price: 4200, description: 'Aktif gürültü engelleyici.', category: 'Ses' },
       ];
       await this.productModel.insertMany(sampleProducts);
     }

@@ -1,33 +1,9 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { Activity } from 'lucide-react';
-
-interface Node {
-  id: string;
-  name: string;
-  x: number;
-  y: number;
-  color: string;
-}
-
-interface Particle {
-  from: string;
-  to: string;
-  progress: number;
-  speed: number;
-}
-
-const nodes: Node[] = [
-  { id: 'gateway', name: 'Gateway', x: 100, y: 175, color: '#6366f1' },
-  { id: 'auth', name: 'Auth Service', x: 400, y: 75, color: '#3b82f6' },
-  { id: 'product', name: 'Product Service', x: 400, y: 175, color: '#10b981' },
-  { id: 'order', name: 'Order Service', x: 400, y: 275, color: '#8b5cf6' },
-];
 
 export function TrafficFlow() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particles = useRef<Particle[]>([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -36,88 +12,113 @@ export function TrafficFlow() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationId: number;
+    let animationFrameId: number;
+    
+    // Services positions
+    const gateway = { x: 60, y: 150, label: 'GATEWAY' };
+    const services = [
+      { id: 'auth', x: 280, y: 60, label: 'AUTH', color: '#8b5cf6' },
+      { id: 'product', x: 280, y: 150, label: 'PRODUCT', color: '#6366f1' },
+      { id: 'order', x: 280, y: 240, label: 'ORDER', color: '#a855f7' },
+    ];
 
-    const render = () => {
-      // Clear canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const particles: any[] = [];
 
-      // Draw connections
-      ctx.setLineDash([5, 5]);
-      ctx.lineWidth = 1;
-      nodes.slice(1).forEach((node) => {
-        ctx.beginPath();
-        ctx.strokeStyle = '#334155';
-        ctx.moveTo(nodes[0].x, nodes[0].y);
-        ctx.lineTo(node.x, node.y);
-        ctx.stroke();
+    const createParticle = (targetIndex: number) => {
+      particles.push({
+        x: gateway.x,
+        y: gateway.y,
+        target: services[targetIndex],
+        progress: 0,
+        speed: 0.008 + Math.random() * 0.012,
+        size: 3 + Math.random() * 2,
       });
-      ctx.setLineDash([]);
-
-      // Update and draw particles
-      if (Math.random() < 0.05) {
-        const targetIndex = Math.floor(Math.random() * (nodes.length - 1)) + 1;
-        particles.current.push({
-          from: 'gateway',
-          to: nodes[targetIndex].id,
-          progress: 0,
-          speed: 0.01 + Math.random() * 0.02,
-        });
-      }
-
-      particles.current = particles.current.filter((p) => p.progress < 1);
-      particles.current.forEach((p) => {
-        p.progress += p.speed;
-        const targetNode = nodes.find((n) => n.id === p.to)!;
-        const x = nodes[0].x + (targetNode.x - nodes[0].x) * p.progress;
-        const y = nodes[0].y + (targetNode.y - nodes[0].y) * p.progress;
-
-        ctx.beginPath();
-        ctx.fillStyle = targetNode.color;
-        ctx.arc(x, y, 3, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = targetNode.color;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      });
-
-      // Draw nodes
-      nodes.forEach((node) => {
-        // Node circle
-        ctx.beginPath();
-        ctx.fillStyle = '#0f172a';
-        ctx.strokeStyle = node.color;
-        ctx.lineWidth = 2;
-        ctx.arc(node.x, node.y, 10, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
-
-        // Node Label
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = '12px Inter, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(node.name, node.x, node.y + 25);
-      });
-
-      animationId = requestAnimationFrame(render);
     };
 
-    render();
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw Paths with glow
+      services.forEach(service => {
+        ctx.beginPath();
+        ctx.moveTo(gateway.x, gateway.y);
+        ctx.lineTo(service.x, service.y);
+        ctx.strokeStyle = 'rgba(99, 102, 241, 0.05)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
 
-    return () => cancelAnimationFrame(animationId);
+      // Draw Gateway Node
+      ctx.beginPath();
+      ctx.arc(gateway.x, gateway.y, 8, 0, Math.PI * 2);
+      ctx.fillStyle = '#6366f1';
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = '#6366f1';
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      
+      ctx.font = 'bold 9px Inter, sans-serif';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.textAlign = 'center';
+      ctx.fillText(gateway.label, gateway.x, gateway.y + 20);
+
+      // Draw Service Nodes
+      services.forEach(service => {
+        ctx.beginPath();
+        ctx.arc(service.x, service.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = service.color;
+        ctx.fill();
+        
+        ctx.font = 'bold 9px Inter, sans-serif';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.textAlign = 'left';
+        ctx.fillText(service.label, service.x + 12, service.y + 4);
+      });
+
+      // Update and Draw Particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.progress += p.speed;
+
+        if (p.progress >= 1) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        const eased = p.progress < 0.5 
+          ? 2 * p.progress * p.progress 
+          : 1 - Math.pow(-2 * p.progress + 2, 2) / 2;
+
+        const currentX = gateway.x + (p.target.x - gateway.x) * eased;
+        const currentY = gateway.y + (p.target.y - gateway.y) * eased;
+
+        ctx.beginPath();
+        ctx.arc(currentX, currentY, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.target.color;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = p.target.color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      if (Math.random() < 0.06) createParticle(Math.floor(Math.random() * services.length));
+
+      animationFrameId = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
   return (
-    <div className="relative w-full h-full min-h-[350px] flex items-center justify-center">
-      <div className="absolute top-4 left-4 flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-        <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">
-          Canlı Trafik Akışı
-        </span>
-      </div>
-      <canvas ref={canvasRef} width={500} height={350} className="w-full h-auto max-w-[500px]" />
+    <div className="w-full h-full flex items-center justify-center bg-indigo-500/[0.02] rounded-2xl overflow-hidden animate-in fade-in duration-700">
+      <canvas 
+        ref={canvasRef} 
+        width={350} 
+        height={300} 
+        className="w-full h-full opacity-80"
+      />
     </div>
   );
 }
