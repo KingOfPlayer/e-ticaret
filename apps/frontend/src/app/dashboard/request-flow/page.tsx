@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Database, Monitor, ShieldCheck, Zap, Share2, ArrowRight, CheckCircle2, XCircle } from 'lucide-react';
+import { Database, Monitor, ShieldCheck, Zap, Share2, ArrowRight, CheckCircle2, XCircle, Activity } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function RequestFlowPage() {
