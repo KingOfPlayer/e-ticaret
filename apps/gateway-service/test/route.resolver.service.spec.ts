@@ -94,13 +94,21 @@ describe('RouteResolverService', () => {
 
   it('should route seeding', async () => {
     await service.seedRoutes();
-    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: 'auth', target: process.env.AUTH_SERVICE_URL || 'http://localhost:5001' });
-    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: 'products', target: process.env.PRODUCT_SERVICE_URL || 'http://localhost:5002' });
-    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: 'orders', target: process.env.ORDER_SERVICE_URL || 'http://localhost:5003' });
+    expect(mongodbMonk.create).toHaveBeenCalledWith({
+      prefix: 'auth',
+      target: process.env.AUTH_SERVICE_URL || 'http://localhost:5001',
+    });
+    expect(mongodbMonk.create).toHaveBeenCalledWith({
+      prefix: 'products',
+      target: process.env.PRODUCT_SERVICE_URL || 'http://localhost:5002',
+    });
+    expect(mongodbMonk.create).toHaveBeenCalledWith({
+      prefix: 'orders',
+      target: process.env.ORDER_SERVICE_URL || 'http://localhost:5003',
+    });
   });
 
   it('should not seed routes if they already exist', async () => {
-
     mongodbMonk.find.mockReturnValue({
       exec: jest.fn().mockResolvedValue([
         { prefix: 'auth', target: 'http://localhost:5001' },

@@ -66,4 +66,3 @@ export class ProductsController {
     await this.productsService.remove(id, userId);
   }
 }
-

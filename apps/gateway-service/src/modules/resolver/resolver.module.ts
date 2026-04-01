@@ -5,11 +5,9 @@ import { RouteResolverController } from './resolver.controller';
 import { RouteResolverService } from './route.resolver.service';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: Route.name, schema: RouteSchema }]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: Route.name, schema: RouteSchema }])],
   controllers: [RouteResolverController],
-  providers: [ RouteResolverService],
+  providers: [RouteResolverService],
   exports: [RouteResolverService],
 })
 export class ResolverModule {}

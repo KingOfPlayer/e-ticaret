@@ -63,9 +63,10 @@ export default function OrdersPage() {
     setIsModalOpen(true);
   };
 
-  const filteredOrders = orders.filter((o) =>
-    o.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    o.status.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredOrders = orders.filter(
+    (o) =>
+      o.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      o.status.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -232,4 +233,3 @@ function getStatusIcon(status: string) {
       return null;
   }
 }
-

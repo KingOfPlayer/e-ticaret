@@ -6,10 +6,7 @@ import { Route, RouteSchema } from '../resolver/schemas/route.schema';
 import { ResolverModule } from '../resolver/resolver.module';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: Route.name, schema: RouteSchema }]),
-    ResolverModule,
-  ],
+  imports: [MongooseModule.forFeature([{ name: Route.name, schema: RouteSchema }]), ResolverModule],
   controllers: [GatewayController],
   providers: [GatewayService],
   exports: [GatewayService],

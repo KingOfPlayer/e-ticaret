@@ -4,7 +4,7 @@ import { GatewayService } from './gateway.service';
 import { LoggerService } from '@e-ticaret/logger';
 import { RouteResolverService } from '../resolver/route.resolver.service';
 
-@Controller("api")
+@Controller('api')
 export class GatewayController {
   constructor(
     private readonly gatewayService: GatewayService,
@@ -13,8 +13,11 @@ export class GatewayController {
   ) {}
 
   @All('*path')
-  async handleRequest(@Req() req: express.Request, @Res() res: express.Response, @Param('path') path: any) {
-    
+  async handleRequest(
+    @Req() req: express.Request,
+    @Res() res: express.Response,
+    @Param('path') path: any,
+  ) {
     const target = await this.routeResolverService.resolveRoute(path[0]);
 
     if (!target) {

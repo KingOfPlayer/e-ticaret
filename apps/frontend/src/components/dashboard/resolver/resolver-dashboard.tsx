@@ -127,10 +127,7 @@ export function ResolverDashboard() {
               <p className="text-red-400 font-medium">Error</p>
               <p className="text-red-300 text-sm">{error}</p>
             </div>
-            <button
-              onClick={() => setError(null)}
-              className="text-red-400 hover:text-red-300"
-            >
+            <button onClick={() => setError(null)} className="text-red-400 hover:text-red-300">
               ✕
             </button>
           </div>
@@ -139,10 +136,7 @@ export function ResolverDashboard() {
         {/* Add Route Form */}
         {showAddForm && (
           <div className="mb-6">
-            <AddRouteForm
-              onAdd={handleAddRoute}
-              onCancel={() => setShowAddForm(false)}
-            />
+            <AddRouteForm onAdd={handleAddRoute} onCancel={() => setShowAddForm(false)} />
           </div>
         )}
 

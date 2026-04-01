@@ -22,7 +22,11 @@ export class OrdersService {
     return this.orderModel.findOne({ _id: id, userId }).exec();
   }
 
-  async update(id: string, userId: string, updateOrderDto: any): Promise<Order | null> {
+  async update(
+    id: string,
+    userId: string,
+    updateOrderDto: any,
+  ): Promise<Order | null> {
     return this.orderModel
       .findOneAndUpdate({ _id: id, userId }, updateOrderDto, { new: true })
       .exec();

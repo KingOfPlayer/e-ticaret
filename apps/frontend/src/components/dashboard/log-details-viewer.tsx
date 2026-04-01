@@ -87,18 +87,22 @@ export function LogDetailsViewer() {
 
   const extractPrimaryMeta = (log: LogEntry) => {
     const firstObjectMeta = Object.values(log.metadata ?? {}).find(
-      (meta) => meta && typeof meta === 'object'
+      (meta) => meta && typeof meta === 'object',
     ) as LogMetadata | undefined;
 
     const methodFromMessage = log.message.split(' ')[0] || '-';
     const urlFromMessage = log.message.split(' ')[1] || '-';
 
     const method =
-      typeof firstObjectMeta?.method === 'string' ? String(firstObjectMeta.method) : methodFromMessage;
-    const url = typeof firstObjectMeta?.url === 'string' ? String(firstObjectMeta.url) : urlFromMessage;
+      typeof firstObjectMeta?.method === 'string'
+        ? String(firstObjectMeta.method)
+        : methodFromMessage;
+    const url =
+      typeof firstObjectMeta?.url === 'string' ? String(firstObjectMeta.url) : urlFromMessage;
     const statusCode =
       typeof firstObjectMeta?.statusCode === 'number' ? Number(firstObjectMeta.statusCode) : 0;
-    const duration = typeof firstObjectMeta?.duration === 'number' ? Number(firstObjectMeta.duration) : 0;
+    const duration =
+      typeof firstObjectMeta?.duration === 'number' ? Number(firstObjectMeta.duration) : 0;
     const ip = typeof firstObjectMeta?.ip === 'string' ? String(firstObjectMeta.ip) : '-';
 
     return { method, url, statusCode, duration, ip };
@@ -165,7 +169,6 @@ export function LogDetailsViewer() {
     }));
   };
 
-
   const summary = useMemo(() => {
     const statusCodes = safeLogs.map((log) => extractPrimaryMeta(log).statusCode);
     return {
@@ -229,7 +232,7 @@ export function LogDetailsViewer() {
               'px-4 py-2 rounded-lg text-sm font-medium transition-all',
               filter === level
                 ? 'bg-indigo-500 text-white'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                : 'bg-slate-800 text-slate-300 hover:bg-slate-700',
             )}
           >
             {level.charAt(0).toUpperCase() + level.slice(1)}
@@ -333,7 +336,12 @@ export function LogDetailsViewer() {
                         {formatTime(log.timestamp)}
                       </span>
 
-                      <span className={cn('px-2 py-0.5 rounded font-bold text-xs', getMethodColor(metadata.method))}>
+                      <span
+                        className={cn(
+                          'px-2 py-0.5 rounded font-bold text-xs',
+                          getMethodColor(metadata.method),
+                        )}
+                      >
                         {metadata.method}
                       </span>
 
@@ -345,7 +353,9 @@ export function LogDetailsViewer() {
                     <div className="flex items-center gap-3 flex-shrink-0">
                       {/* Status Code */}
                       <div className="flex items-center gap-1">
-                        <span className={cn('text-sm font-bold', getStatusColor(metadata.statusCode))}>
+                        <span
+                          className={cn('text-sm font-bold', getStatusColor(metadata.statusCode))}
+                        >
                           {metadata.statusCode}
                         </span>
                       </div>
@@ -373,7 +383,12 @@ export function LogDetailsViewer() {
                       <MapPin className="w-3 h-3 text-slate-500" />
                       <span className="text-slate-400 font-mono">{metadata.ip}</span>
 
-                      <span className={cn('px-2 py-0.5 rounded border', getLevelColor(normalizeLevel(log.level)))}>
+                      <span
+                        className={cn(
+                          'px-2 py-0.5 rounded border',
+                          getLevelColor(normalizeLevel(log.level)),
+                        )}
+                      >
                         {normalizeLevel(log.level).toUpperCase() || 'UNKNOWN'}
                       </span>
                     </div>
@@ -386,7 +401,9 @@ export function LogDetailsViewer() {
                         onClick={() => toggleMeta(rowKey)}
                         className="w-full flex items-center justify-between bg-slate-800/40 hover:bg-slate-800/60 rounded px-3 py-2 transition-colors"
                       >
-                        <span className="text-xs text-slate-300 font-medium">Metadata ({Object.keys(log.metadata).length})</span>
+                        <span className="text-xs text-slate-300 font-medium">
+                          Metadata ({Object.keys(log.metadata).length})
+                        </span>
                         {isExpanded ? (
                           <ChevronDown className="w-4 h-4 text-slate-400" />
                         ) : (
@@ -399,7 +416,9 @@ export function LogDetailsViewer() {
                           {Object.entries(log.metadata).map(([metaKey, metaValue]) => (
                             <div key={metaKey} className="bg-slate-800/40 rounded px-2 py-1">
                               <p className="text-[11px] text-slate-500">metadata.{metaKey}</p>
-                              <p className="text-xs text-slate-300 break-all">{stringifyValue(metaValue)}</p>
+                              <p className="text-xs text-slate-300 break-all">
+                                {stringifyValue(metaValue)}
+                              </p>
                             </div>
                           ))}
                         </div>

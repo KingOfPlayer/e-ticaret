@@ -20,7 +20,9 @@ export function LogsDashboard() {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-white">System Logs</h1>
-              <p className="text-slate-400 text-sm">Real-time API requests and performance monitoring</p>
+              <p className="text-slate-400 text-sm">
+                Real-time API requests and performance monitoring
+              </p>
             </div>
           </div>
 

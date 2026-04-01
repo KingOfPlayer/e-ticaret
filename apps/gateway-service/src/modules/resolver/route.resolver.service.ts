@@ -5,13 +5,9 @@ import { Route } from './schemas/route.schema';
 
 @Injectable()
 export class RouteResolverService implements OnModuleInit {
-
   private cachedRoutes: Route[] = [];
 
-  constructor(
-    @InjectModel(Route.name) private routeModel: Model<Route>,
-  ) {
-  }
+  constructor(@InjectModel(Route.name) private routeModel: Model<Route>) {}
 
   async onModuleInit() {
     await this.seedRoutes();
@@ -36,12 +32,11 @@ export class RouteResolverService implements OnModuleInit {
   }
 
   async resolveRoute(path: string): Promise<{ prefix: string; target: string } | null> {
-    
     if (!this.cachedRoutes || this.cachedRoutes.length === 0) {
       await this.refleshRoutes();
     }
 
-    const route = this.cachedRoutes.find(r => path === r.prefix);
+    const route = this.cachedRoutes.find((r) => path === r.prefix);
     if (!route) {
       return null;
     }
@@ -58,7 +53,7 @@ export class RouteResolverService implements OnModuleInit {
 
     const existingRoutes = await this.routeModel.find().exec();
     if (existingRoutes && existingRoutes.length > 0) {
-      return; 
+      return;
     }
 
     for (const route of RouteSeed) {
