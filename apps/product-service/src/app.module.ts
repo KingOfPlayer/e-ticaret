@@ -11,7 +11,7 @@ import { MicroserviceMiddleware } from '@e-ticaret/microservice';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      process.env.MONGO_URI || 'mongodb://localhost:27017/products',
+      process.env.MONGO_URI || 'mongodb://127.0.0.1:27012/products',
     ),
     ProductsModule,
     LoggerModule.register({ serviceName: 'product-service' }),

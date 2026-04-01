@@ -8,7 +8,7 @@ import { ResolverModule } from './modules/resolver/resolver.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27017/gateway'),
+    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://127.0.0.1:27014/gateway'),
     LoggerModule.register({ serviceName: 'gateway-service' }),
     StatisticsModule.register(),
     JwtModule.register({

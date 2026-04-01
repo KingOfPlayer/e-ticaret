@@ -16,7 +16,7 @@ import { MicroserviceMiddleware } from '@e-ticaret/microservice';
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(
-      process.env.MONGO_URI || 'mongodb://localhost:27017/auth',
+      process.env.MONGO_URI || 'mongodb://127.0.0.1:27011/auth',
     ),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.register({

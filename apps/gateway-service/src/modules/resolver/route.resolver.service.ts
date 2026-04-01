@@ -46,18 +46,20 @@ export class RouteResolverService implements OnModuleInit {
 
   async seedRoutes() {
     const RouteSeed: { prefix: string; target: string }[] = [
-      { prefix: 'auth', target: 'http://localhost:5001' },
-      { prefix: 'products', target: 'http://localhost:5002' },
-      { prefix: 'orders', target: 'http://localhost:5003' },
+      { prefix: 'auth', target: 'http://127.0.0.1:5001' },
+      { prefix: 'products', target: 'http://127.0.0.1:5002' },
+      { prefix: 'orders', target: 'http://127.0.0.1:5003' },
     ];
 
-    const existingRoutes = await this.routeModel.find().exec();
-    if (existingRoutes && existingRoutes.length > 0) {
-      return;
-    }
-
-    for (const route of RouteSeed) {
-      await this.addRoute(route);
+    for (const seed of RouteSeed) {
+      const existing = await this.routeModel.findOne({ prefix: seed.prefix }).exec();
+      if (existing) {
+        if (existing.target !== seed.target) {
+          await this.routeModel.updateOne({ prefix: seed.prefix }, { target: seed.target }).exec();
+        }
+      } else {
+        await this.addRoute(seed);
+      }
     }
   }
 }
