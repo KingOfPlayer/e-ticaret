@@ -12,6 +12,12 @@ describe('RouteResolverService', () => {
       find: jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue([]),
       }),
+      findOne: jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue([]),
+      }),
+      updateOne: jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue([]),
+      }),
       create: jest.fn(),
       save: jest.fn(),
     };
@@ -94,32 +100,41 @@ describe('RouteResolverService', () => {
 
   it('should route seeding', async () => {
     await service.seedRoutes();
-    expect(mongodbMonk.create).toHaveBeenCalledWith({
-      prefix: 'auth',
-      target: process.env.AUTH_SERVICE_URL || 'http://localhost:5001',
+    expect(mongodbMonk.findOne).toHaveBeenCalledWith({
+      prefix: 'auth'
     });
-    expect(mongodbMonk.create).toHaveBeenCalledWith({
-      prefix: 'products',
-      target: process.env.PRODUCT_SERVICE_URL || 'http://localhost:5002',
+    expect(mongodbMonk.findOne).toHaveBeenCalledWith({
+      prefix: 'products'
     });
-    expect(mongodbMonk.create).toHaveBeenCalledWith({
-      prefix: 'orders',
-      target: process.env.ORDER_SERVICE_URL || 'http://localhost:5003',
+    expect(mongodbMonk.findOne).toHaveBeenCalledWith({
+      prefix: 'orders'
+    });
+    expect(mongodbMonk.updateOne).toHaveBeenCalledWith({
+      prefix: 'auth'}, {
+      target: process.env.AUTH_SERVICE_URL || 'http://127.0.0.1:5001',
+    });
+    expect(mongodbMonk.updateOne).toHaveBeenCalledWith({
+      prefix: 'products'}, {
+      target: process.env.PRODUCT_SERVICE_URL || 'http://127.0.0.1:5002',
+    });
+    expect(mongodbMonk.updateOne).toHaveBeenCalledWith({
+      prefix: 'orders'}, {
+      target: process.env.ORDER_SERVICE_URL || 'http://127.0.0.1:5003',
     });
   });
 
   it('should not seed routes if they already exist', async () => {
     mongodbMonk.find.mockReturnValue({
       exec: jest.fn().mockResolvedValue([
-        { prefix: 'auth', target: 'http://localhost:5001' },
-        { prefix: 'products', target: 'http://localhost:5002' },
-        { prefix: 'orders', target: 'http://localhost:5003' },
+        { prefix: 'auth', target: 'http://127.0.0.1:5001' },
+        { prefix: 'products', target: 'http://127.0.0.1:5002' },
+        { prefix: 'orders', target: 'http://127.0.0.1:5003' },
       ]),
     });
 
     await service.seedRoutes();
-    expect(mongodbMonk.find).toHaveBeenCalled();
-    expect(mongodbMonk.create).not.toHaveBeenCalled();
+    expect(mongodbMonk.findOne).toHaveBeenCalledTimes(3);
+    expect(mongodbMonk.updateOne).toHaveBeenCalledTimes(3);
   });
 
   it('should get available routes', async () => {
