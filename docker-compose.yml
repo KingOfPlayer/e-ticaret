@@ -25,6 +25,8 @@ services:
 
   db-dispatcher:
     image: mongo:latest
+    ports:
+      - '27014:27017'
     volumes:
       - mongo-dispatcher-data:/data/db
     networks:
@@ -49,6 +51,8 @@ services:
 
   db-auth:
     image: mongo:latest
+    ports:
+      - '27011:27017'
     volumes:
       - mongo-auth-data:/data/db
     networks:
@@ -72,6 +76,8 @@ services:
 
   db-product:
     image: mongo:latest
+    ports:
+      - '27012:27017'
     volumes:
       - mongo-product-data:/data/db
     networks:
@@ -95,6 +101,8 @@ services:
 
   db-order:
     image: mongo:latest
+    ports:
+      - '27013:27017'
     volumes:
       - mongo-order-data:/data/db
     networks:
