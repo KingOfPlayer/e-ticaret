@@ -64,8 +64,8 @@ const mockLogs: Log[] = [
 
 export function LogTable() {
   return (
-    <div className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden">
-      <div className="p-6 border-b border-slate-800 flex items-center justify-between bg-slate-900/30">
+    <div className="w-full bg-transparent overflow-hidden">
+      <div className="p-6 border-b border-white/10 flex items-center justify-between bg-white/5">
         <div className="flex items-center gap-3">
           <ActivityIcon className="w-5 h-5 text-indigo-400" />
           <h3 className="text-lg font-semibold text-white">Sistem Logları</h3>
@@ -80,7 +80,7 @@ export function LogTable() {
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-950/50">
+            <tr className="bg-black/20">
               <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
                 Method
               </th>
@@ -98,9 +98,9 @@ export function LogTable() {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800">
+          <tbody className="divide-y divide-white/5">
             {mockLogs.map((log) => (
-              <tr key={log.id} className="hover:bg-slate-800/30 transition-colors group">
+              <tr key={log.id} className="hover:bg-white/[0.03] transition-colors group">
                 <td className="px-6 py-4">
                   <span
                     className={cn(
@@ -146,7 +146,7 @@ export function LogTable() {
         </table>
       </div>
 
-      <div className="p-4 bg-slate-900/30 border-t border-slate-800 flex justify-center">
+      <div className="p-4 bg-white/5 border-t border-white/10 flex justify-center">
         <button className="text-xs font-medium text-slate-500 hover:text-indigo-400 transition-colors flex items-center gap-2">
           Hepsini Gör <Clock className="w-3 h-3" />
         </button>

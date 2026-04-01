@@ -31,7 +31,7 @@ export class GatewayService {
         ...config,
         timeout: 5000,
       });
-      return response.data;
+      return { status: response.status, data: response.data };
     } catch (error: any) {
       if (axios.isAxiosError(error) && error.response) {
         // Reflect the actual status and data from the downstream service

@@ -2,7 +2,7 @@ import { Controller, Get, UseGuards } from '@nestjs/common';
 import { StatisticsService } from './statistics.service';
 import { RoleGuard, Roles, UserRole } from '@e-ticaret/role';
 
-@Controller('statistics')
+@Controller('admin/stats')
 @UseGuards(RoleGuard)
 export class StatisticsController {
   constructor(private readonly statisticsService: StatisticsService) {}

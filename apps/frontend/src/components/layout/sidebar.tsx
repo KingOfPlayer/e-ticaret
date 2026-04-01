@@ -10,12 +10,14 @@ import {
   ChevronRight,
   LogOut,
   RefreshCw,
+  TerminalSquare
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SystemStatus } from '../dashboard/SystemStatus';
 
 const sidebarItems = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'API Tester', href: '/dashboard/api-tester', icon: TerminalSquare },
   { name: 'Ürünler', href: '/dashboard/products', icon: Package },
   { name: 'Siparişler', href: '/dashboard/orders', icon: ShoppingCart },
   { name: 'Sistem Logları', href: '/dashboard/logs', icon: Activity },
@@ -41,7 +43,7 @@ export function Sidebar() {
   };
 
   return (
-    <div className="flex flex-col h-screen w-64 bg-slate-950 border-r border-slate-800 text-slate-300">
+    <div className="flex flex-col h-screen w-64 glass-panel rounded-none border-t-0 border-b-0 border-l-0 border-r border-white/10 text-slate-300">
       <div className="p-6 flex items-center gap-3">
         <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-600/20">
           <Activity className="w-5 h-5 text-white" />

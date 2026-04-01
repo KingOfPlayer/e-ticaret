@@ -4,6 +4,8 @@ import { GatewayService } from './gateway.service';
 import { LoggerService } from '@e-ticaret/logger';
 import { RouteResolverService } from '../resolver/route.resolver.service';
 
+import { addHateoasLinks } from '../../common/utils/hateoas.util';
+
 @Controller('api')
 export class GatewayController {
   constructor(
@@ -30,14 +32,17 @@ export class GatewayController {
     req.headers['x-forwarded-for'] = clientIp;
 
     try {
-      const response = await this.gatewayService.proxyRequest(targetUrl, {
+      const { status, data } = await this.gatewayService.proxyRequest(targetUrl, {
         method: req.method,
         data: req.body,
         headers: req.headers,
         params: req.query,
         req, // Passing original request for IP forwarding
       });
-      return res.status(200).json(response);
+      
+      const hateoasData = addHateoasLinks(req.originalUrl, data);
+      
+      return res.status(status).json(hateoasData);
     } catch (error: any) {
       if (error.status >= 400) {
         const errorMessage = error.message || 'Unknown proxy error';

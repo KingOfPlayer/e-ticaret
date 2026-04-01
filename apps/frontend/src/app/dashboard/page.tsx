@@ -2,14 +2,15 @@ import React from 'react';
 import { Activity, Package, ShoppingCart, TrendingUp } from 'lucide-react';
 import { TrafficFlow } from '@/components/dashboard/traffic-flow';
 import { LogTable } from '@/components/dashboard/log-table';
+import { QuickStatsChart } from '@/components/dashboard/quick-stats-chart';
 import { cn } from '@/lib/utils';
 
 export default function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-white tracking-tight">Sistem Genel Bakış</h1>
-        <p className="text-slate-400 mt-2">
+        <h1 className="text-3xl font-bold tracking-tight text-white/90 drop-shadow-sm">Sistem Genel Bakış</h1>
+        <p className="text-indigo-200/60 mt-2">
           Mikroservis ekosisteminizin anlık durumu ve trafik akışı.
         </p>
       </div>
@@ -20,65 +21,63 @@ export default function DashboardPage() {
           value="1,280"
           change="+12%"
           icon={Package}
-          color="bg-blue-600"
+          color="bg-indigo-500/20 text-indigo-400 border border-indigo-500/30"
         />
         <StatCard
           title="Günlük Sipariş"
           value="45"
           change="+5%"
           icon={ShoppingCart}
-          color="bg-emerald-600"
+          color="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
         />
         <StatCard
           title="Aktif Servisler"
           value="4/4"
           change="Stabil"
           icon={Activity}
-          color="bg-indigo-600"
+          color="bg-violet-500/20 text-violet-400 border border-violet-500/30"
         />
         <StatCard
           title="Sistem Yükü"
           value="12%"
           change="-2%"
           icon={TrendingUp}
-          color="bg-violet-600"
+          color="bg-rose-500/20 text-rose-400 border border-rose-500/30"
         />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 rounded-2xl bg-slate-900/50 border border-slate-800 p-8 h-[400px] flex items-center justify-center">
+        <div className="lg:col-span-2 glass-panel rounded-2xl p-8 h-[400px] flex items-center justify-center relative overflow-hidden">
+          {/* Subtle glow behind the flow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-indigo-500/20 blur-[100px] rounded-full pointer-events-none" />
           <TrafficFlow />
         </div>
 
-        <div className="rounded-2xl bg-slate-900/50 border border-slate-800 p-8 h-[400px] flex items-center justify-center border-dashed">
-          <div className="text-center">
-            <TrendingUp className="w-12 h-12 text-slate-700 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-slate-300">Hızlı İstatistikler</h3>
-            <p className="text-sm text-slate-500 text-balance">
-              Servis bazlı detaylı metrikler yakında.
-            </p>
-          </div>
+        <div className="glass-panel rounded-2xl p-8 h-[400px] flex flex-col">
+          <QuickStatsChart />
         </div>
       </div>
 
-      <LogTable />
+      <div className="glass-panel overflow-hidden rounded-2xl">
+         <LogTable />
+      </div>
     </div>
   );
 }
 
 function StatCard({ title, value, change, icon: Icon, color }: any) {
   return (
-    <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 transition-all hover:bg-slate-900">
+    <div className="glass-panel rounded-2xl p-6 transition-all hover:bg-white/[0.04]">
       <div className="flex items-center justify-between mb-4">
-        <div className={cn('p-2 rounded-lg', color)}>
-          <Icon className="w-5 h-5 text-white" />
+        <div className={cn('p-2.5 rounded-xl', color)}>
+          <Icon className="w-5 h-5" />
         </div>
         <span
           className={cn(
-            'text-xs font-medium px-2 py-1 rounded-full',
-            change.startsWith('+')
-              ? 'bg-emerald-500/10 text-emerald-400'
-              : 'bg-slate-500/10 text-slate-400',
+            'text-xs font-semibold px-2.5 py-1 rounded-full border',
+            change.startsWith('+') || change === 'Stabil'
+              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+              : 'bg-rose-500/10 text-rose-400 border-rose-500/20',
           )}
         >
           {change}
@@ -86,7 +85,7 @@ function StatCard({ title, value, change, icon: Icon, color }: any) {
       </div>
       <div>
         <p className="text-sm text-slate-400 font-medium">{title}</p>
-        <h4 className="text-2xl font-bold text-white mt-1">{value}</h4>
+        <h4 className="text-3xl font-bold text-white/90 mt-1.5">{value}</h4>
       </div>
     </div>
   );
