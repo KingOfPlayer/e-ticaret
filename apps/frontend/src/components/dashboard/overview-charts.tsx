@@ -137,7 +137,7 @@ export function StatusDonutChart({ data = [] }: { data?: any[] }) {
         {data.map((s) => (
            <div key={s.name} className="flex items-center gap-1.5 shrink-0">
               <div className="w-1.5 h-1.5 rounded-full" style={{backgroundColor: s.color}} />
-              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest truncate max-w-[60px]">{s.name.split(' ')[0]}</span>
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest truncate max-w-[80px]">{s.name.split(' ')[0]}</span>
            </div>
         ))}
       </div>
