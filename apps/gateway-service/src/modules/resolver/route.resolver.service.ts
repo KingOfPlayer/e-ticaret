@@ -36,7 +36,12 @@ export class RouteResolverService implements OnModuleInit {
       await this.refleshRoutes();
     }
 
-    const route = this.cachedRoutes.find((r) => path === r.prefix);
+    // Find the longest matching prefix
+    const matchingRoutes = this.cachedRoutes
+      .filter((r) => path === r.prefix || path.startsWith(r.prefix + '/'))
+      .sort((a, b) => b.prefix.length - a.prefix.length);
+
+    const route = matchingRoutes[0];
     if (!route) {
       return null;
     }
@@ -57,6 +62,10 @@ export class RouteResolverService implements OnModuleInit {
       {
         prefix: 'orders',
         target: process.env.ORDER_SERVICE_URL || 'http://127.0.0.1:5003',
+      },
+      {
+        prefix: 'admin/logs',
+        target: process.env.LOGS_SERVICE_URL || 'http://127.0.0.1:5000/log',
       },
     ];
 

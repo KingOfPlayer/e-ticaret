@@ -20,13 +20,14 @@ export class GatewayController {
     @Res() res: express.Response,
     @Param('path') path: any,
   ) {
-    const target = await this.routeResolverService.resolveRoute(path[0]);
+    const fullPath = path.join('/');
+    const target = await this.routeResolverService.resolveRoute(fullPath);
 
     if (!target) {
-      this.logger.warn(`No route found for path: ${path}`, 'GatewayController');
-      return new NotFoundException(`No route found`);
+      this.logger.warn(`No route found for path: ${fullPath}`, 'GatewayController');
+      throw new NotFoundException(`No route found`);
     }
-    const targetUrl = target.target + path.join('/').substring(target.prefix.length);
+    const targetUrl = target.target + fullPath.substring(target.prefix.length);
 
     const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     req.headers['x-forwarded-for'] = clientIp;
