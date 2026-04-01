@@ -1,103 +1,68 @@
 'use client';
 
 import React from 'react';
-import { Database, TrendingUp, Search, Clock, LogOut } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { MethodChart, RouteChart } from '@/components/dashboard/overview-charts';
+import { Search, Clock } from 'lucide-react';
+import { StatsCards } from '@/components/dashboard/stats-cards';
+import { LatencyLineChart, StatusDonutChart, RouteChart, MethodChart } from '@/components/dashboard/overview-charts';
+import { LogTable } from '@/components/dashboard/log-table';
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1200 pb-12">
-      {/* 1. Header (Görseldeki gibi sağ üst saat/search/user placeholder) */}
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-12">
+      {/* 1. Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight text-white/90 drop-shadow-sm uppercase">Özet</h1>
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2 text-indigo-400 font-mono text-sm bg-indigo-500/10 px-3 py-1.5 rounded-lg border border-indigo-500/20">
+        <div>
+          <h1 className="text-2xl font-black tracking-tighter text-white drop-shadow-md uppercase italic">Gösterge Paneli</h1>
+          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Sistem Durumu: Çevrimiçi</p>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <div className="relative group hidden md:block">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-indigo-400 transition-colors" />
+            <input 
+              type="text" 
+              placeholder="Rota veya Log ara..." 
+              className="bg-white/[0.03] border border-white/5 rounded-xl py-2 pl-10 pr-4 text-xs text-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500/30 w-64 transition-all"
+            />
+          </div>
+          <div className="flex items-center gap-2 text-indigo-400 font-mono text-sm bg-indigo-500/10 px-4 py-2 rounded-xl border border-indigo-500/20 shadow-lg shadow-indigo-500/5">
              <Clock className="w-4 h-4" />
              <span>18:41:22</span>
           </div>
-          <div className="flex items-center gap-2 glass-panel px-4 py-2 rounded-xl text-xs font-bold text-slate-300">
-             <span>Oğuzhan</span>
-             <span className="bg-rose-500 text-white px-1.5 py-0.5 rounded text-[8px] uppercase tracking-widest font-black">Admin</span>
-          </div>
         </div>
       </div>
 
-      {/* 2. Three Service Cards (Image 1 Layout) */}
+      {/* 2. Top Stats Row */}
+      <StatsCards />
+
+      {/* 3. Main Analytics Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <ServiceCard
-          title="Dispatcher"
-          port="8000"
-          requests="156"
-          latency="3ms"
-          errors="0"
-          db="MongoDB"
-          color="text-emerald-400"
-        />
-        <ServiceCard
-          title="Auth Service"
-          port="5001"
-          requests="42"
-          latency="8ms"
-          errors="1"
-          db="MongoDB"
-          color="text-emerald-400"
-        />
-        <ServiceCard
-          title="Product Service"
-          port="5002"
-          requests="12"
-          latency="12ms"
-          errors="0"
-          db="MongoDB"
-          color="text-emerald-400"
-        />
+        <div className="lg:col-span-2 glass-panel rounded-3xl h-[400px] border border-white/5 bg-white/[0.01]">
+           <LatencyLineChart />
+        </div>
+        <div className="glass-panel rounded-3xl h-[400px] border border-white/5 bg-white/[0.01]">
+           <StatusDonutChart />
+        </div>
       </div>
 
-      {/* 3. Overview Charts (Image 1 Layout) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="glass-panel rounded-2xl h-[400px]">
-           <MethodChart />
+      {/* 4. Detailed Insights Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="glass-panel rounded-3xl h-[450px] border border-white/5 bg-white/[0.01] overflow-hidden flex flex-col">
+           <div className="p-6 border-b border-white/5 flex items-center justify-between">
+              <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">CANLI İŞLEM AKIŞI</h3>
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+           </div>
+           <div className="flex-1 overflow-auto scrollbar-hide">
+              <LogTable />
+           </div>
         </div>
-        <div className="glass-panel rounded-2xl h-[400px]">
-           <RouteChart />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ServiceCard({ title, port, requests, latency, errors, db, color }: any) {
-  return (
-    <div className="glass-panel rounded-2xl p-6 transition-all border border-white/5 bg-white/[0.01]">
-      <div className="flex items-center justify-between mb-8">
-        <h4 className="text-lg font-bold text-slate-100 tracking-tight">{title}</h4>
-        <div className="flex items-center gap-2">
-           <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-           <span className="text-emerald-400 font-mono text-xs font-black">:{port}</span>
-        </div>
-      </div>
-      
-      <div className="space-y-4">
-        <div className="flex justify-between items-center text-xs">
-          <span className="text-slate-500 font-bold uppercase tracking-widest">İstek Sayısı</span>
-          <span className="text-slate-200 font-mono text-sm">{requests}</span>
-        </div>
-        <div className="flex justify-between items-center text-xs">
-          <span className="text-slate-500 font-bold uppercase tracking-widest">Ort. Süre</span>
-          <span className="text-slate-200 font-mono text-sm">{latency}</span>
-        </div>
-        <div className="flex justify-between items-center text-xs">
-          <span className="text-slate-500 font-bold uppercase tracking-widest">Hata</span>
-          <span className={cn("font-mono text-sm", parseInt(errors) > 0 ? "text-rose-500" : "text-slate-200 text-emerald-500")}>
-            {errors}
-          </span>
-        </div>
-        <div className="pt-6 mt-4 border-t border-white/5 flex justify-between items-center text-xs">
-          <span className="text-slate-500 font-bold uppercase tracking-widest">DB</span>
-          <span className="text-indigo-400 font-bold tracking-widest uppercase flex items-center gap-1.5">
-            <Database className="w-3 h-3" /> {db}
-          </span>
+        <div className="space-y-6">
+           <div className="glass-panel rounded-3xl h-[213px] border border-white/5 bg-white/[0.01]">
+              <RouteChart />
+           </div>
+           <div className="glass-panel rounded-3xl h-[213px] border border-white/5 bg-white/[0.01]">
+              <MethodChart />
+           </div>
         </div>
       </div>
     </div>
