@@ -146,10 +146,10 @@ export default function DashboardPage() {
 
           {/* 3. Main Analytics Row */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 glass-panel rounded-3xl h-[400px] border border-white/5 bg-white/[0.01]">
+            <div className="lg:col-span-2 glass-panel rounded-3xl h-[400px] border border-white/5 bg-white/[0.01] flex flex-col overflow-hidden">
                <LatencyLineChart data={stats?.latencySeries} />
             </div>
-            <div className="glass-panel rounded-3xl h-[400px] border border-white/5 bg-white/[0.01]">
+            <div className="glass-panel rounded-3xl h-[400px] border border-white/5 bg-white/[0.01] flex flex-col overflow-hidden">
                <StatusDonutChart data={stats?.statusDistribution} />
             </div>
           </div>
@@ -166,10 +166,10 @@ export default function DashboardPage() {
                </div>
             </div>
             <div className="space-y-6">
-               <div className="glass-panel rounded-3xl h-[213px] border border-white/5 bg-white/[0.01]">
+               <div className="glass-panel rounded-3xl h-[213px] border border-white/5 bg-white/[0.01] flex flex-col overflow-hidden">
                   <RouteChart data={stats?.routes} />
                </div>
-               <div className="glass-panel rounded-3xl h-[213px] border border-white/5 bg-white/[0.01]">
+               <div className="glass-panel rounded-3xl h-[213px] border border-white/5 bg-white/[0.01] flex flex-col overflow-hidden">
                   <MethodChart data={stats?.statusDistribution} />
                </div>
             </div>

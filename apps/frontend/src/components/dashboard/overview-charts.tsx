@@ -7,18 +7,17 @@ import {
 } from 'recharts';
 
 export function MethodChart({ data = [] }: { data?: any[] }) {
-  const displayData = data.length > 0 ? data : [
-    { name: 'GET', value: 0, color: '#3b82f6' },
-    { name: 'POST', value: 0, color: '#10b981' },
-    { name: 'PUT', value: 0, color: '#f59e0b' },
-  ];
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
+  if (!mounted || !data || data.length === 0) return <NoData label="HTTP METOD DAĞILIMI" />;
 
   return (
-    <div className="w-full h-full flex flex-col p-4">
-      <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-6">HTTP METOD DAĞILIMI</h3>
-      <div className="flex-1 min-h-0">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={displayData}>
+    <div className="w-full h-full flex flex-col p-4 overflow-hidden min-h-[180px]">
+      <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 shrink-0">HTTP METOD DAĞILIMI</h3>
+      <div className="flex-1 min-h-0 relative w-full">
+        <ResponsiveContainer width="99%" height="100%">
+          <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
             <XAxis dataKey="name" stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} />
             <YAxis stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} />
@@ -27,7 +26,7 @@ export function MethodChart({ data = [] }: { data?: any[] }) {
               contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '8px' }}
             />
             <Bar dataKey="value" radius={[4, 4, 0, 0]} barSize={50}>
-              {displayData.map((entry, index) => (
+              {data.map((entry: any, index: number) => (
                 <Cell key={`cell-${index}`} fill={entry.color || '#3b82f6'} />
               ))}
             </Bar>
@@ -39,13 +38,16 @@ export function MethodChart({ data = [] }: { data?: any[] }) {
 }
 
 export function RouteChart({ data = [] }: { data?: any[] }) {
-  if (!data || data.length === 0) return <NoData label="ROTA BAZLI İSTEK SAYISI" />;
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
+  if (!mounted || !data || data.length === 0) return <NoData label="ROTA BAZLI İSTEK SAYISI" />;
 
   return (
-    <div className="w-full h-full flex flex-col p-4">
-      <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-6">ROTA BAZLI İSTEK SAYISI</h3>
-      <div className="flex-1 min-h-0">
-        <ResponsiveContainer width="100%" height="100%">
+    <div className="w-full h-full flex flex-col p-4 overflow-hidden min-h-[180px]">
+      <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 shrink-0">ROTA BAZLI İSTEK SAYISI</h3>
+      <div className="flex-1 min-h-0 relative w-full">
+        <ResponsiveContainer width="99%" height="100%">
           <BarChart data={data} layout="vertical" margin={{ left: 20 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" horizontal={false} />
             <XAxis type="number" hide />
@@ -63,18 +65,21 @@ export function RouteChart({ data = [] }: { data?: any[] }) {
 }
 
 export function LatencyLineChart({ data = [] }: { data?: any[] }) {
-  if (!data || data.length === 0) return <NoData label="YANIT SÜRESİ ANALİZİ" />;
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
+  if (!mounted || !data || data.length === 0) return <NoData label="YANIT SÜRESİ ANALİZİ" />;
 
   return (
-    <div className="w-full h-full flex flex-col p-6">
-      <div className="flex items-center justify-between mb-8">
+    <div className="w-full h-full flex flex-col p-6 overflow-hidden min-h-[300px]">
+      <div className="flex items-center justify-between mb-8 shrink-0">
         <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">YANIT SÜRESİ ANALİZİ (ms)</h3>
         <span className="flex items-center gap-1.5 text-[8px] font-black text-emerald-400 uppercase tracking-widest bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
           <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" /> Canlı
         </span>
       </div>
-      <div className="flex-1 min-h-0">
-        <ResponsiveContainer width="100%" height="100%">
+      <div className="flex-1 min-h-0 relative w-full">
+        <ResponsiveContainer width="99%" height="100%">
           <AreaChart data={data}>
             <defs>
               <linearGradient id="latencyGradient" x1="0" y1="0" x2="0" y2="1">
@@ -104,13 +109,16 @@ export function LatencyLineChart({ data = [] }: { data?: any[] }) {
 }
 
 export function StatusDonutChart({ data = [] }: { data?: any[] }) {
-  if (!data || data.length === 0) return <NoData label="DURUM DAĞILIMI" />;
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
+  if (!mounted || !data || data.length === 0) return <NoData label="DURUM DAĞILIMI" />;
 
   return (
-    <div className="w-full h-full flex flex-col p-6">
-      <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-8">DURUM DAĞILIMI</h3>
-      <div className="flex-1 min-h-0">
-        <ResponsiveContainer width="100%" height="100%">
+    <div className="w-full h-full flex flex-col p-6 overflow-hidden min-h-[300px]">
+      <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-8 shrink-0">DURUM DAĞILIMI</h3>
+      <div className="flex-1 min-h-0 relative w-full">
+        <ResponsiveContainer width="99%" height="100%">
           <PieChart>
             <Pie
               data={data}
@@ -123,7 +131,7 @@ export function StatusDonutChart({ data = [] }: { data?: any[] }) {
               animationBegin={500}
               animationDuration={1500}
             >
-              {data.map((entry, index) => (
+              {data.map((entry: any, index: number) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
