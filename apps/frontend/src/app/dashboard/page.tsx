@@ -25,10 +25,6 @@ export default function DashboardPage() {
               className="bg-white/[0.03] border border-white/5 rounded-xl py-2 pl-10 pr-4 text-xs text-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500/30 w-64 transition-all"
             />
           </div>
-          <div className="flex items-center gap-2 text-indigo-400 font-mono text-sm bg-indigo-500/10 px-4 py-2 rounded-xl border border-indigo-500/20 shadow-lg shadow-indigo-500/5">
-             <Clock className="w-4 h-4" />
-             <span>18:41:22</span>
-          </div>
         </div>
       </div>
 
