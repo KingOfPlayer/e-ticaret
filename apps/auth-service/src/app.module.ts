@@ -14,10 +14,14 @@ import { MicroserviceMiddleware } from '@e-ticaret/microservice';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    MongooseModule.forRoot(
-      process.env.MONGO_URI || 'mongodb://127.0.0.1:27011/auth',
-    ),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MongooseModule.forRootAsync({
+      useFactory: () => ({
+        uri: process.env.MONGO_URI || 'mongodb://127.0.0.1:27011/auth',
+      }),
+    }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'super-secret-key',

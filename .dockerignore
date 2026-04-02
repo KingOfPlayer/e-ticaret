@@ -7,3 +7,4 @@ dist
 .github
 *.log
 docker.compose.yml
+.env

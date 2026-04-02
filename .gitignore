@@ -5,6 +5,7 @@
 skill/
 test.http
 **/logs/
+.env
 
 !/apps/frontend/src/app/dashboard/logs/
 !/apps/frontend/src/app/dashboard/logs/**
