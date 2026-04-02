@@ -1,5 +1,5 @@
 $kind: http-request
-name: Login
+name: User Login
 url: "{{HOST}}api/auth/login"
 method: POST
 body:
@@ -16,4 +16,4 @@ scripts:
 
       pm.environment.set('access_token',access_token);
     language: text/javascript
-order: 1774574727988
+order: 3720463899758247
