@@ -162,4 +162,16 @@ describe('RouteResolverService', () => {
     const routes = await service.getAllRoutes();
     expect(routes).toEqual(routesFromDb);
   });
+
+  it('should handle delete route', async () => {
+    const routeToDelete = { prefix: 'test1', target: 'http://localhost:3001' };
+
+    mongodbMonk.find.mockReturnValue({
+      exec: jest.fn().mockResolvedValue([routeToDelete]),
+    });
+
+    await service.deleteRoute('test1');
+    expect(mongodbMonk.find).toHaveBeenCalledWith({ prefix: 'test1' });
+    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: 'test1', target: '' });
+  }
 });
