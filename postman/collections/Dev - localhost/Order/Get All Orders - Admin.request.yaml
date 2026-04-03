@@ -1,0 +1,10 @@
+$kind: http-request
+name: Get All Orders - Admin
+url: "{{HOST}}api/orders/admin/all"
+method: GET
+auth:
+  credentials:
+    - key: token
+      value: "{{access_token}}"
+  type: bearer
+order: 536780520048037

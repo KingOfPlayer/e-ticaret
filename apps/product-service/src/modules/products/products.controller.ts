@@ -18,8 +18,10 @@ import { UpdateProductDto } from './dto/product.update.dto';
 import { ProductQueryDto } from './dto/product.query.dto';
 import { ProductIdDto } from './dto/product.id.dto';
 import { CreateProductDto } from './dto/product.create.dto';
+import { RoleGuard, Roles, UserRole } from '@e-ticaret/role';
 
 @Controller()
+@UseGuards(RoleGuard)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
@@ -36,6 +38,7 @@ export class ProductsController {
   }
 
   @Post()
+  @Roles(UserRole.Moderator, UserRole.Admin)
   async create(
     @Body() createProductDto: CreateProductDto,
   ): Promise<Product> {
@@ -43,6 +46,8 @@ export class ProductsController {
   }
 
   @Put(':id')
+  @Roles(UserRole.Moderator, UserRole.Admin)
+  @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: ProductIdDto,
     @Body() updateProductDto: UpdateProductDto,
@@ -51,6 +56,7 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @Roles(UserRole.Moderator, UserRole.Admin)
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(
     @Param('id') id: ProductIdDto,

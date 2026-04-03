@@ -1,0 +1,18 @@
+$kind: http-request
+name: Create Order
+url: "{{HOST}}api/orders"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "customerName": "John Doe",
+      "productIds": ["507f1f77bcf86cd799439011"],
+      "totalAmount": 99.99,
+      "address": "123 Main St, City, State 12345"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+order: 3

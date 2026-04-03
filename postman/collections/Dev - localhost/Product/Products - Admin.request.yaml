@@ -1,5 +1,5 @@
 $kind: http-request
 name: Products - Admin
-url: ""
-method: GET
+url: "{{HOST}}api/products/asdasd"
+method: PUT
 order: 1320274650873715

@@ -1,0 +1,9 @@
+$kind: http-request
+name: Get My Order by ID
+url: "{{HOST}}api/orders/{{order_id}}"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+order: 2

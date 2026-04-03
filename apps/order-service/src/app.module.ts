@@ -1,6 +1,6 @@
 import { Module, NestModule, MiddlewareConsumer, Type } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { OrdersModule } from './orders/orders.module';
+import { OrdersModule } from './modules/orders/orders.module';
 import {
   HttpLoggerMiddleware,
   LoggerModule,
