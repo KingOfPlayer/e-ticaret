@@ -11,7 +11,7 @@ import { ProductIdDto } from './dto/product.id.dto';
 export class ProductsService {
   constructor(
     @InjectModel(Product.name) private productModel: Model<ProductDocument>,
-  ) { }
+  ) {}
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const createdProduct = new this.productModel(createProductDto);
@@ -27,10 +27,16 @@ export class ProductsService {
       filter.category = query.category;
     }
     if (query.minPrice) {
-      filter.price = { ...filter.price, $gte: query.minPrice ? query.minPrice : 0 };
+      filter.price = {
+        ...filter.price,
+        $gte: query.minPrice ? query.minPrice : 0,
+      };
     }
     if (query.maxPrice) {
-      filter.price = { ...filter.price, $lte: query.maxPrice ? query.maxPrice : Number.MAX_SAFE_INTEGER };
+      filter.price = {
+        ...filter.price,
+        $lte: query.maxPrice ? query.maxPrice : Number.MAX_SAFE_INTEGER,
+      };
     }
 
     const limit = query.Limit || 20;
@@ -39,7 +45,12 @@ export class ProductsService {
       ? { [query.sortBy]: query.sortOrder === 'desc' ? -1 : 1 }
       : { createdAt: -1 };
 
-    return await this.productModel.find(filter).limit(limit).skip(skip).sort(sort).exec();
+    return await this.productModel
+      .find(filter)
+      .limit(limit)
+      .skip(skip)
+      .sort(sort)
+      .exec();
   }
 
   async findOne(getProductDto: ProductIdDto): Promise<ProductDto> {
@@ -59,7 +70,9 @@ export class ProductsService {
     updateProductDto: any,
   ): Promise<Product | null> {
     return this.productModel
-      .findOneAndUpdate({ _id: productIdDto.id }, updateProductDto, { new: true })
+      .findOneAndUpdate({ _id: productIdDto.id }, updateProductDto, {
+        new: true,
+      })
       .exec();
   }
 

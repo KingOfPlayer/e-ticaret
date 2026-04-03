@@ -32,7 +32,7 @@ export function StatsCards({ stats }: { stats?: StatsData }) {
     successRate: 0,
     avgLatency: 0,
     errorCount: 0,
-    trends: {}
+    trends: {},
   };
 
   return (
@@ -84,24 +84,37 @@ function StatCard({ title, value, subtitle, icon: Icon, color, trend }: StatCard
   return (
     <div className="glass-panel group overflow-hidden relative p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-300">
       {/* Background Glow */}
-      <div className={cn(
-        "absolute -right-4 -top-4 w-24 h-24 blur-[40px] opacity-20 rounded-full transition-all duration-500 group-hover:opacity-40",
-        color === 'blue' && "bg-blue-500",
-        color === 'emerald' && "bg-emerald-500",
-        color === 'amber' && "bg-amber-500",
-        color === 'rose' && "bg-rose-500",
-      )} />
+      <div
+        className={cn(
+          'absolute -right-4 -top-4 w-24 h-24 blur-[40px] opacity-20 rounded-full transition-all duration-500 group-hover:opacity-40',
+          color === 'blue' && 'bg-blue-500',
+          color === 'emerald' && 'bg-emerald-500',
+          color === 'amber' && 'bg-amber-500',
+          color === 'rose' && 'bg-rose-500',
+        )}
+      />
 
       <div className="relative flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <div className={cn("p-2.5 rounded-xl border transition-transform duration-300 group-hover:scale-110", colorMap[color])}>
+          <div
+            className={cn(
+              'p-2.5 rounded-xl border transition-transform duration-300 group-hover:scale-110',
+              colorMap[color],
+            )}
+          >
             <Icon className="w-5 h-5" />
           </div>
           {trend && (
-            <span className={cn(
-              "text-[10px] font-bold px-2 py-0.5 rounded-full",
-              trend.startsWith('+') ? "bg-emerald-500/10 text-emerald-500" : (trend.startsWith('-') ? "bg-amber-500/10 text-amber-500" : "bg-rose-500/10 text-rose-500")
-            )}>
+            <span
+              className={cn(
+                'text-[10px] font-bold px-2 py-0.5 rounded-full',
+                trend.startsWith('+')
+                  ? 'bg-emerald-500/10 text-emerald-500'
+                  : trend.startsWith('-')
+                    ? 'bg-amber-500/10 text-amber-500'
+                    : 'bg-rose-500/10 text-rose-500',
+              )}
+            >
               {trend}
             </span>
           )}
@@ -112,12 +125,8 @@ function StatCard({ title, value, subtitle, icon: Icon, color, trend }: StatCard
             {title}
           </h4>
           <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-black text-white tracking-tight">
-              {value}
-            </span>
-            <span className="text-[10px] font-medium text-slate-400">
-              {subtitle}
-            </span>
+            <span className="text-2xl font-black text-white tracking-tight">{value}</span>
+            <span className="text-[10px] font-medium text-slate-400">{subtitle}</span>
           </div>
         </div>
       </div>

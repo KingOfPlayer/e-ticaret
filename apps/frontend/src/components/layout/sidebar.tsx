@@ -10,7 +10,7 @@ import {
   ChevronRight,
   LogOut,
   RefreshCw,
-  TerminalSquare
+  TerminalSquare,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SystemStatus } from '../dashboard/SystemStatus';
@@ -33,9 +33,7 @@ const categories = [
   },
   {
     title: 'ARAÇLAR',
-    items: [
-      { name: 'API Test', href: '/dashboard/api-tester', icon: TerminalSquare },
-    ],
+    items: [{ name: 'API Test', href: '/dashboard/api-tester', icon: TerminalSquare }],
   },
 ];
 

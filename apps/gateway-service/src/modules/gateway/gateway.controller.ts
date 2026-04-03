@@ -40,9 +40,9 @@ export class GatewayController {
         params: req.query,
         req, // Passing original request for IP forwarding
       });
-      
+
       const hateoasData = addHateoasLinks(req.originalUrl, data);
-      
+
       return res.status(status).json(hateoasData);
     } catch (error: any) {
       if (error.status >= 400) {

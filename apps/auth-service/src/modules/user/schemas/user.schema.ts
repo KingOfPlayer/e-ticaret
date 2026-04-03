@@ -8,7 +8,7 @@ export class User extends Document {
 
   @Prop({ required: true })
   name!: string;
-  
+
   @Prop({ required: true })
   surname!: string;
 
@@ -23,7 +23,6 @@ export class User extends Document {
 
   @Prop()
   phone?: string;
-
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

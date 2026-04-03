@@ -6,16 +6,17 @@ import { OrderQueryDto } from './dto/order.query.dto';
 
 @Injectable()
 export class OrdersService {
-  constructor(
-    @InjectModel(Order.name) private orderModel: Model<Order>,
-  ) {}
+  constructor(@InjectModel(Order.name) private orderModel: Model<Order>) {}
 
   async create(createOrderDto: any): Promise<Order> {
     const createdOrder = new this.orderModel(createOrderDto);
     return createdOrder.save();
   }
 
-  async findAllWithUserId(userId: string, query: OrderQueryDto): Promise<Order[]> {
+  async findAllWithUserId(
+    userId: string,
+    query: OrderQueryDto,
+  ): Promise<Order[]> {
     const filter: any = { userId };
     if (query.productId) {
       filter.productIds = { $in: [query.productId] };
@@ -43,7 +44,12 @@ export class OrdersService {
     const sortOrder = query.sortOrder === 'asc' ? 1 : -1;
     const sort: any = { [sortField]: sortOrder };
 
-    return this.orderModel.find(filter).limit(limit).skip(skip).sort(sort).exec();
+    return this.orderModel
+      .find(filter)
+      .limit(limit)
+      .skip(skip)
+      .sort(sort)
+      .exec();
   }
 
   async findOne(id: string, userId: string): Promise<Order | null> {
@@ -52,9 +58,11 @@ export class OrdersService {
 
   async cancelOrder(id: string, userId: string): Promise<void> {
     const order = await this.orderModel.findOne({ _id: id, userId }).exec();
-    
+
     if (!order) {
-      throw new BadRequestException('Order not found or does not belong to this user');
+      throw new BadRequestException(
+        'Order not found or does not belong to this user',
+      );
     }
 
     if (order.status === 'cancelled') {
@@ -62,7 +70,9 @@ export class OrdersService {
     }
 
     if (order.status === 'shipped' || order.status === 'completed') {
-      throw new BadRequestException(`Cannot cancel order with status: ${order.status}`);
+      throw new BadRequestException(
+        `Cannot cancel order with status: ${order.status}`,
+      );
     }
 
     await this.orderModel.findByIdAndUpdate(id, { status: 'cancelled' }).exec();
@@ -70,7 +80,7 @@ export class OrdersService {
 
   async findAll(query?: OrderQueryDto): Promise<Order[]> {
     const filter: any = {};
-    
+
     if (query?.userId) {
       filter.userId = query.userId;
     }
@@ -101,17 +111,19 @@ export class OrdersService {
     const sortOrder = query?.sortOrder === 'asc' ? 1 : -1;
     const sort: any = { [sortField]: sortOrder };
 
-    return this.orderModel.find(filter).limit(limit).skip(skip).sort(sort).exec();
+    return this.orderModel
+      .find(filter)
+      .limit(limit)
+      .skip(skip)
+      .sort(sort)
+      .exec();
   }
 
   async findOrderById(id: string): Promise<Order | null> {
     return this.orderModel.findById(id).exec();
   }
 
-  async updateOrder(
-    id: string,
-    updateOrderDto: any,
-  ): Promise<Order | null> {
+  async updateOrder(id: string, updateOrderDto: any): Promise<Order | null> {
     return this.orderModel
       .findByIdAndUpdate(id, updateOrderDto, { new: true })
       .exec();

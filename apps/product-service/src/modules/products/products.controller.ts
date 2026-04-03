@@ -31,17 +31,13 @@ export class ProductsController {
   }
 
   @Get(':id')
-  async findOne(
-    @Param() id: ProductIdDto,
-  ): Promise<Product | null> {
+  async findOne(@Param() id: ProductIdDto): Promise<Product | null> {
     return this.productsService.findOne(id);
   }
 
   @Post()
   @Roles(UserRole.Moderator, UserRole.Admin)
-  async create(
-    @Body() createProductDto: CreateProductDto,
-  ): Promise<Product> {
+  async create(@Body() createProductDto: CreateProductDto): Promise<Product> {
     return this.productsService.create(createProductDto);
   }
 
@@ -58,9 +54,7 @@ export class ProductsController {
   @Delete(':id')
   @Roles(UserRole.Moderator, UserRole.Admin)
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(
-    @Param('id') id: ProductIdDto,
-  ): Promise<void> {
+  async remove(@Param('id') id: ProductIdDto): Promise<void> {
     await this.productsService.remove(id);
   }
 }

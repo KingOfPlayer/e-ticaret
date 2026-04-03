@@ -1,5 +1,5 @@
-import { IsNumber, IsOptional } from "class-validator";
-import { Type } from "class-transformer";
+import { IsNumber, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class ProductQueryDto {
   @IsOptional()
@@ -26,9 +26,9 @@ export class ProductQueryDto {
   category?: string;
 
   @IsOptional()
-  sortBy?: "name" | "price" | "stock";
+  sortBy?: 'name' | 'price' | 'stock';
   @IsOptional()
-  sortOrder?: "asc" | "desc";
+  sortOrder?: 'asc' | 'desc';
 
   @IsOptional()
   @Type(() => Number)

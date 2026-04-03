@@ -60,9 +60,7 @@ export class OrdersController {
 
   @Get('admin/all')
   @Roles(UserRole.Moderator, UserRole.Admin)
-  async findAllOrders(
-    @Query() query: OrderQueryDto,
-  ): Promise<Order[]> {
+  async findAllOrders(@Query() query: OrderQueryDto): Promise<Order[]> {
     return this.ordersService.findAll(query);
   }
 
@@ -77,9 +75,7 @@ export class OrdersController {
 
   @Get('admin/:id')
   @Roles(UserRole.Moderator, UserRole.Admin)
-  async findOrderById(
-    @Param('id') id: string,
-  ): Promise<Order | null> {
+  async findOrderById(@Param('id') id: string): Promise<Order | null> {
     return this.ordersService.findOrderById(id);
   }
 }

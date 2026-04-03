@@ -32,7 +32,7 @@ export function ServiceStatus() {
           } catch {
             return { ...s, status: 'offline' as const };
           }
-        })
+        }),
       );
       setServices(updatedServices);
     };
@@ -45,35 +45,43 @@ export function ServiceStatus() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {services.map((service) => (
-        <div 
+        <div
           key={service.id}
           className="glass-panel p-4 flex items-center justify-between rounded-xl transition-all hover:bg-white/[0.05]"
         >
           <div className="flex items-center gap-3">
-            <div className={cn(
-               "p-2 rounded-lg bg-indigo-500/10 text-indigo-400",
-               service.status === 'offline' && "bg-rose-500/10 text-rose-400"
-            )}>
+            <div
+              className={cn(
+                'p-2 rounded-lg bg-indigo-500/10 text-indigo-400',
+                service.status === 'offline' && 'bg-rose-500/10 text-rose-400',
+              )}
+            >
               <service.icon className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{service.name}</p>
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                {service.name}
+              </p>
               <p className="text-sm font-mono text-white/50">Port: {service.port}</p>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-2">
-            <span className={cn(
-              "relative flex h-3 w-3",
-              service.status === 'online' ? "text-emerald-400" : "text-rose-400"
-            )}>
+            <span
+              className={cn(
+                'relative flex h-3 w-3',
+                service.status === 'online' ? 'text-emerald-400' : 'text-rose-400',
+              )}
+            >
               {service.status === 'online' && (
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               )}
-              <span className={cn(
-                "relative inline-flex rounded-full h-3 w-3",
-                service.status === 'online' ? "bg-emerald-500" : "bg-rose-500"
-              )}></span>
+              <span
+                className={cn(
+                  'relative inline-flex rounded-full h-3 w-3',
+                  service.status === 'online' ? 'bg-emerald-500' : 'bg-rose-500',
+                )}
+              ></span>
             </span>
             <span className="text-xs font-medium text-slate-300">
               {service.status.toUpperCase()}

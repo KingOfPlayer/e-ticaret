@@ -12,6 +12,6 @@ import { UserAdminController } from './user.admin.controller';
   ],
   controllers: [UserController, UserAdminController],
   providers: [UserService, UserSeedService],
-  exports: [UserService, MongooseModule]
+  exports: [UserService, MongooseModule],
 })
-export class UserModule { }
+export class UserModule {}

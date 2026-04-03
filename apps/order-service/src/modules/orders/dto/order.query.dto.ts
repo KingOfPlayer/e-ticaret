@@ -1,4 +1,12 @@
-import { IsOptional, IsString, IsIn, IsInt, Min, IsMongoId, IsISO8601 } from 'class-validator';
+import {
+  IsOptional,
+  IsString,
+  IsIn,
+  IsInt,
+  Min,
+  IsMongoId,
+  IsISO8601,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class OrderQueryDto {
@@ -44,6 +52,3 @@ export class OrderQueryDto {
   @IsIn(['asc', 'desc'])
   sortOrder?: 'asc' | 'desc' = 'desc';
 }
-
-
-  

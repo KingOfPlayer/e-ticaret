@@ -23,9 +23,7 @@ export class AuthService implements OnModuleInit {
     private userService: UserService,
   ) {}
 
-  async onModuleInit() {
-    
-  }
+  async onModuleInit() {}
 
   async login(loginDto: LoginAuthDto): Promise<any> {
     const user = await this.userModel.findOne({ email: loginDto.email }).exec();
@@ -41,7 +39,7 @@ export class AuthService implements OnModuleInit {
   }
 
   async logout(): Promise<any> {
-    return "Logout successful";
+    return 'Logout successful';
   }
 
   async register(registerDto: any): Promise<any> {
@@ -49,7 +47,7 @@ export class AuthService implements OnModuleInit {
   }
 
   async registerAsAdmin(registerDto: any, role: string): Promise<any> {
-    switch(role) {
+    switch (role) {
       case 'admin':
         this.userService.createAdmin(registerDto);
         break;

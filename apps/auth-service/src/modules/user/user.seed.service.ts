@@ -11,9 +11,7 @@ import { User } from './schemas/user.schema';
 
 @Injectable()
 export class UserSeedService implements OnModuleInit {
-  constructor(
-    @InjectModel(User.name) private userModel: Model<User>
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async onModuleInit() {
     await this.seedAdmin();
@@ -36,7 +34,7 @@ export class UserSeedService implements OnModuleInit {
     }
   }
 
-  async seedUser(){
+  async seedUser() {
     const userEmail = 'user@ecosystem.com';
     const existing = await this.userModel.findOne({ email: userEmail }).exec();
     if (!existing) {
@@ -51,9 +49,11 @@ export class UserSeedService implements OnModuleInit {
     }
   }
 
-  async seedModerator(){
+  async seedModerator() {
     const moderatorEmail = 'moderator@ecosystem.com';
-    const existing = await this.userModel.findOne({ email: moderatorEmail }).exec();
+    const existing = await this.userModel
+      .findOne({ email: moderatorEmail })
+      .exec();
     if (!existing) {
       const hashedPassword = await bcrypt.hash('moderator123', 10);
       await this.userModel.create({

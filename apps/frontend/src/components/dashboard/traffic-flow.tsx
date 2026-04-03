@@ -13,7 +13,7 @@ export function TrafficFlow() {
     if (!ctx) return;
 
     let animationFrameId: number;
-    
+
     // Services positions
     const gateway = { x: 60, y: 150, label: 'GATEWAY' };
     const services = [
@@ -37,9 +37,9 @@ export function TrafficFlow() {
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       // Draw Paths with glow
-      services.forEach(service => {
+      services.forEach((service) => {
         ctx.beginPath();
         ctx.moveTo(gateway.x, gateway.y);
         ctx.lineTo(service.x, service.y);
@@ -56,19 +56,19 @@ export function TrafficFlow() {
       ctx.shadowColor = '#6366f1';
       ctx.fill();
       ctx.shadowBlur = 0;
-      
+
       ctx.font = 'bold 9px Inter, sans-serif';
       ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
       ctx.textAlign = 'center';
       ctx.fillText(gateway.label, gateway.x, gateway.y + 20);
 
       // Draw Service Nodes
-      services.forEach(service => {
+      services.forEach((service) => {
         ctx.beginPath();
         ctx.arc(service.x, service.y, 5, 0, Math.PI * 2);
         ctx.fillStyle = service.color;
         ctx.fill();
-        
+
         ctx.font = 'bold 9px Inter, sans-serif';
         ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
         ctx.textAlign = 'left';
@@ -85,9 +85,8 @@ export function TrafficFlow() {
           continue;
         }
 
-        const eased = p.progress < 0.5 
-          ? 2 * p.progress * p.progress 
-          : 1 - Math.pow(-2 * p.progress + 2, 2) / 2;
+        const eased =
+          p.progress < 0.5 ? 2 * p.progress * p.progress : 1 - Math.pow(-2 * p.progress + 2, 2) / 2;
 
         const currentX = gateway.x + (p.target.x - gateway.x) * eased;
         const currentY = gateway.y + (p.target.y - gateway.y) * eased;
@@ -113,12 +112,7 @@ export function TrafficFlow() {
 
   return (
     <div className="w-full h-full flex items-center justify-center bg-indigo-500/[0.02] rounded-2xl overflow-hidden animate-in fade-in duration-700">
-      <canvas 
-        ref={canvasRef} 
-        width={350} 
-        height={300} 
-        className="w-full h-full opacity-80"
-      />
+      <canvas ref={canvasRef} width={350} height={300} className="w-full h-full opacity-80" />
     </div>
   );
 }

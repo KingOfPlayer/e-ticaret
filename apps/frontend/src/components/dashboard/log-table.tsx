@@ -92,7 +92,9 @@ export function LogTable({ logs = [] }: { logs?: any[] }) {
             {displayLogs.length === 0 ? (
               <tr>
                 <td colSpan={5} className="px-6 py-20 text-center">
-                   <p className="text-xs font-bold text-slate-600 uppercase tracking-widest italic">Veri akışı bekleniyor...</p>
+                  <p className="text-xs font-bold text-slate-600 uppercase tracking-widest italic">
+                    Veri akışı bekleniyor...
+                  </p>
                 </td>
               </tr>
             ) : (
@@ -133,7 +135,9 @@ export function LogTable({ logs = [] }: { logs?: any[] }) {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
-                      <span className="text-[10px] text-slate-300 font-mono italic">{log.responseTime || '0'}ms</span>
+                      <span className="text-[10px] text-slate-300 font-mono italic">
+                        {log.responseTime || '0'}ms
+                      </span>
                       <Zap className="w-3 h-3 text-amber-500" />
                     </div>
                   </td>

@@ -10,7 +10,7 @@
 body {
   color: var(--foreground);
   background-color: var(--background);
-  background-image: 
+  background-image:
     radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
@@ -23,7 +23,7 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .glass-panel {
     background: rgba(17, 19, 24, 0.6);
     backdrop-filter: blur(12px);

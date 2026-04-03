@@ -1,13 +1,13 @@
-import { IsNumber, IsOptional } from "class-validator";
+import { IsNumber, IsOptional } from 'class-validator';
 
 export class UserQueryDto {
   @IsOptional()
   _id?: string;
   @IsOptional()
   name?: string;
-    @IsOptional()
+  @IsOptional()
   surname?: string;
-    @IsOptional()
+  @IsOptional()
   email?: string;
   @IsOptional()
   address?: string;
@@ -15,10 +15,10 @@ export class UserQueryDto {
   phone?: string;
 
   @IsOptional()
-      @IsNumber()
+  @IsNumber()
   limit?: number;
 
   @IsOptional()
-      @IsNumber()
+  @IsNumber()
   offset?: number;
 }

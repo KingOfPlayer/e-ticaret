@@ -7,7 +7,7 @@ export class Order {
 
   @Prop({ required: true })
   address!: string;
-  
+
   @Prop({ required: true })
   customerName!: string;
 
@@ -15,7 +15,7 @@ export class Order {
   productIds!: string[];
 
   @Prop({ default: 'pending' })
-  status!: "pending" | "processing" | "shipped" | "completed" | "cancelled";
+  status!: 'pending' | 'processing' | 'shipped' | 'completed' | 'cancelled';
   @Prop({ default: Date.now })
   createdAt!: Date;
   @Prop({ default: Date.now })

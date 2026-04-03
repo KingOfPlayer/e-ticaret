@@ -7,7 +7,7 @@
 
 ## 1. Giriş ve Problem Tanımı
 
-Modern yazılım sistemleri büyüdükçe, tek parça (monolitik) mimariler yerini daha yönetilebilir, bağımsız ölçeklenebilen mikroservis mimarilerine bırakmıştır. Bu projenin temel amacı; mikroservislerin gücünü kullanarak uçtan uca, izole ve yüksek performanslı bir e-ticaret altyapısı kurmaktır. 
+Modern yazılım sistemleri büyüdükçe, tek parça (monolitik) mimariler yerini daha yönetilebilir, bağımsız ölçeklenebilen mikroservis mimarilerine bırakmıştır. Bu projenin temel amacı; mikroservislerin gücünü kullanarak uçtan uca, izole ve yüksek performanslı bir e-ticaret altyapısı kurmaktır.
 
 Sistemdeki en büyük problem, "Dışarıya tamamen kapalı olan mikroservislere dış dünyadan nasıl güvenli ve kontrollü bir erişim sağlanacağı" sorunudur. Çözüm olarak **Dispatcher (API Gateway)** tasarım deseni kullanılmıştır. Gateway, tüm trafiği karşılar, JWT ile yetkilendirir ve doğru servise proxy eder.
 
@@ -31,7 +31,7 @@ graph TD
         Dispatcher -- Proxy/Yönlendirme --> AuthS[Auth Service]
         Dispatcher -- Proxy/Yönlendirme --> ProductS[Product Service]
         Dispatcher -- Proxy/Yönlendirme --> OrderS[Order Service]
-        
+
         AuthS -.-> AuthDB[(DB-Auth Mongo)]
         ProductS -.-> ProductDB[(DB-Product Mongo)]
         OrderS -.-> OrderDB[(DB-Order Mongo)]
@@ -52,13 +52,13 @@ Projedeki mikroservis uç noktaları sıkı bir biçimde RESTful standartlarına
 3. **Seviye 3 HATEOAS Örneği:** Bir ürün istendiğinde, JSON cevabının içine `_links` eklenir:
    ```json
    {
-       "id": "60d5ecb8b392d7",
-       "name": "Yeni Ürün",
-       "price": 100,
-       "_links": {
-           "self": { "href": "/api/products/60d5ecb8b392d7" },
-           "collection": { "href": "/api/products" }
-       }
+     "id": "60d5ecb8b392d7",
+     "name": "Yeni Ürün",
+     "price": 100,
+     "_links": {
+       "self": { "href": "/api/products/60d5ecb8b392d7" },
+       "collection": { "href": "/api/products" }
+     }
    }
    ```
 
@@ -101,19 +101,21 @@ Dispatcher'ın TDD süreçleri (Red-Green-Refactor) NestJS'in test altyapısı (
 
 ### Performans Analizi (k6 Load Test)
 
-Kullanıcı arayüzünde görülen istatistiklerin bilimsel zemini k6 ile test edilmiştir. Hazırlanan `stress-test.js` senaryosunda eş zamanlı **50, 100, 200 ve 500** aktif kullanıcının (VUS) sistemi yormasını sağladık. 
+Kullanıcı arayüzünde görülen istatistiklerin bilimsel zemini k6 ile test edilmiştir. Hazırlanan `stress-test.js` senaryosunda eş zamanlı **50, 100, 200 ve 500** aktif kullanıcının (VUS) sistemi yormasını sağladık.
 
 **k6 Sonuç Özeti:**
-*   %95'lik dilimdeki yanıt (p95) **500ms** altında tutunmayı başardı.
-*   Gateway, 500 eş zamanlı kullanıcı yükünde servislere hatasız proxy gönderdi (Network Error Rate < %1).
+
+- %95'lik dilimdeki yanıt (p95) **500ms** altında tutunmayı başardı.
+- Gateway, 500 eş zamanlı kullanıcı yükünde servislere hatasız proxy gönderdi (Network Error Rate < %1).
 
 ---
 
 ## 6. Premium Yönetim Paneli (Arayüz)
 
 Proje isterlerindeki "Grafiksel arayüz ve log tablosu" vizyonu, modern web standartlarında bir Dashboard ile karşılık buldu:
+
 1. **Glassmorphism Estetiği:** Karanlık "Graphite" arkaplan üzerine şeffaf kartlar yerleştirildi.
-2. **Canlı İstatistikler:** Loglanan veriler (Response time, Method dağılımı) *Recharts* ile ekranda gösterilir.
+2. **Canlı İstatistikler:** Loglanan veriler (Response time, Method dağılımı) _Recharts_ ile ekranda gösterilir.
 3. **Dahili API Tester:** "Postman" bağımlılığını kaldıran ve yetkili testleri direkt panelden RMM kurallarıyla yapmaya izin veren terminal tasarımı geliştirildi.
 
 ---
@@ -121,8 +123,9 @@ Proje isterlerindeki "Grafiksel arayüz ve log tablosu" vizyonu, modern web stan
 ## 7. Sonuç ve Tartışma
 
 Bu proje sonucunda;
-*   TDD disiplinini uygulayarak hata oranlarını geliştirme aşamasında minimize etme başarısı yakalandı.
-*   Richardson Maturity Modeli seviyelerinin (HATEOAS dahil) tam gerçekleştirilmesi, uygulamanın esnekliğini artırdı.
-*   Hem fiziksel veritabanı ayrımı (Multi-DB Mongo) hem de ağ izolasyonu sağlanarak sistem endüstri standardı güvenlik seviyesine çıkartıldı.
+
+- TDD disiplinini uygulayarak hata oranlarını geliştirme aşamasında minimize etme başarısı yakalandı.
+- Richardson Maturity Modeli seviyelerinin (HATEOAS dahil) tam gerçekleştirilmesi, uygulamanın esnekliğini artırdı.
+- Hem fiziksel veritabanı ayrımı (Multi-DB Mongo) hem de ağ izolasyonu sağlanarak sistem endüstri standardı güvenlik seviyesine çıkartıldı.
 
 **Sınırlılık & Geliştirme:** Sistem şu anda yatay ölçeklemeye (Horizontal Scaling) hazır olmasına rağmen docker-compose tarafında tek replika çalışmaktadır. İleride Kubernetes (k8s) orkestrasyonuna entegre edilerek yük durumuna göre Dispatcher replikalarının otomatik artırılması sağlanabilir.

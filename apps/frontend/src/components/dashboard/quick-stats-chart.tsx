@@ -29,7 +29,13 @@ export function QuickStatsChart() {
                 <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <XAxis dataKey="time" stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
+            <XAxis
+              dataKey="time"
+              stroke="#475569"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+            />
             <YAxis stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
             <Tooltip
               contentStyle={{

@@ -101,26 +101,38 @@ describe('RouteResolverService', () => {
   it('should route seeding', async () => {
     await service.seedRoutes();
     expect(mongodbMonk.findOne).toHaveBeenCalledWith({
-      prefix: 'auth'
+      prefix: 'auth',
     });
     expect(mongodbMonk.findOne).toHaveBeenCalledWith({
-      prefix: 'products'
+      prefix: 'products',
     });
     expect(mongodbMonk.findOne).toHaveBeenCalledWith({
-      prefix: 'orders'
+      prefix: 'orders',
     });
-    expect(mongodbMonk.updateOne).toHaveBeenCalledWith({
-      prefix: 'auth'}, {
-      target: process.env.AUTH_SERVICE_URL || 'http://127.0.0.1:5001',
-    });
-    expect(mongodbMonk.updateOne).toHaveBeenCalledWith({
-      prefix: 'products'}, {
-      target: process.env.PRODUCT_SERVICE_URL || 'http://127.0.0.1:5002',
-    });
-    expect(mongodbMonk.updateOne).toHaveBeenCalledWith({
-      prefix: 'orders'}, {
-      target: process.env.ORDER_SERVICE_URL || 'http://127.0.0.1:5003',
-    });
+    expect(mongodbMonk.updateOne).toHaveBeenCalledWith(
+      {
+        prefix: 'auth',
+      },
+      {
+        target: process.env.AUTH_SERVICE_URL || 'http://127.0.0.1:5001',
+      },
+    );
+    expect(mongodbMonk.updateOne).toHaveBeenCalledWith(
+      {
+        prefix: 'products',
+      },
+      {
+        target: process.env.PRODUCT_SERVICE_URL || 'http://127.0.0.1:5002',
+      },
+    );
+    expect(mongodbMonk.updateOne).toHaveBeenCalledWith(
+      {
+        prefix: 'orders',
+      },
+      {
+        target: process.env.ORDER_SERVICE_URL || 'http://127.0.0.1:5003',
+      },
+    );
   });
 
   it('should not seed routes if they already exist', async () => {

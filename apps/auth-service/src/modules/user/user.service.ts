@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  ConflictException,
-} from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
@@ -13,7 +10,7 @@ import { UpdateUserDto } from './dtos/user.update.dto';
 import { UserQueryDto } from './dtos/user.query.dto';
 
 @Injectable()
-export class UserService{
+export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private loggerService: LoggerService,
@@ -23,8 +20,13 @@ export class UserService{
     return await bcrypt.hash(password, 10);
   }
 
-  private async create(createUserDto: CreateUserDto, role: string): Promise<User> {
-    const existing = await this.userModel.findOne({ email: createUserDto.email }).exec();
+  private async create(
+    createUserDto: CreateUserDto,
+    role: string,
+  ): Promise<User> {
+    const existing = await this.userModel
+      .findOne({ email: createUserDto.email })
+      .exec();
     if (existing) {
       throw new ConflictException('This email is already registered.');
     }
@@ -64,11 +66,18 @@ export class UserService{
     };
   }
 
-  async update(userId: string, userUpdateDto: UpdateUserDto): Promise<UserProfileDto> {
+  async update(
+    userId: string,
+    userUpdateDto: UpdateUserDto,
+  ): Promise<UserProfileDto> {
     if (userUpdateDto.password) {
-      userUpdateDto.password = await this.EncryptPassword(userUpdateDto.password);
+      userUpdateDto.password = await this.EncryptPassword(
+        userUpdateDto.password,
+      );
     }
-    const user = await this.userModel.findByIdAndUpdate(userId, userUpdateDto, { new: true });
+    const user = await this.userModel.findByIdAndUpdate(userId, userUpdateDto, {
+      new: true,
+    });
     return {
       name: user!.name,
       surname: user!.surname,

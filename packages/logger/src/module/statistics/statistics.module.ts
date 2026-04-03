@@ -10,7 +10,7 @@ export class StatisticsModule {
   static register(): DynamicModule {
     return {
       module: StatisticsModule,
-      imports: [ScheduleModule.forRoot(),LoggerModule],
+      imports: [ScheduleModule.forRoot(), LoggerModule],
       controllers: [StatisticsController],
       providers: [StatisticsService],
       exports: [StatisticsService],

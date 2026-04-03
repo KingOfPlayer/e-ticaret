@@ -11,7 +11,6 @@ type EndpointStatistics = {
 
 @Injectable()
 export class StatisticsService implements OnModuleInit {
-
   private timeSeries: EndpointStatistics[] = [];
   private endpointStats: Record<string, EndpointStatistics> = {};
 
@@ -22,40 +21,55 @@ export class StatisticsService implements OnModuleInit {
         averageResponseTime: 0,
         minResponseTime: 0,
         maxResponseTime: 0,
-        statusCodeDistribution: {}
+        statusCodeDistribution: {},
       });
     }
   }
 
-  addRequestStatistics(endpoint: string, statusCode: number, responseTime: number) {
+  addRequestStatistics(
+    endpoint: string,
+    statusCode: number,
+    responseTime: number,
+  ) {
     this.addTimeSeriesStatistics(statusCode, responseTime);
     this.addEndpointStatistics(endpoint, statusCode, responseTime);
-  } 
+  }
 
   addTimeSeriesStatistics(statusCode: number, responseTime: number) {
-    
-    if(this.timeSeries[0].totalRequests === 0) {
+    if (this.timeSeries[0].totalRequests === 0) {
       this.timeSeries[0].minResponseTime = responseTime;
       this.timeSeries[0].maxResponseTime = responseTime;
     }
-    
+
     this.timeSeries[0].totalRequests++;
     this.timeSeries[0].averageResponseTime =
-      (this.timeSeries[0].averageResponseTime * (this.timeSeries[0].totalRequests - 1) + responseTime) /
+      (this.timeSeries[0].averageResponseTime *
+        (this.timeSeries[0].totalRequests - 1) +
+        responseTime) /
       this.timeSeries[0].totalRequests;
-    this.timeSeries[0].minResponseTime = Math.min(this.timeSeries[0].minResponseTime, responseTime);
-    this.timeSeries[0].maxResponseTime = Math.max(this.timeSeries[0].maxResponseTime, responseTime);
+    this.timeSeries[0].minResponseTime = Math.min(
+      this.timeSeries[0].minResponseTime,
+      responseTime,
+    );
+    this.timeSeries[0].maxResponseTime = Math.max(
+      this.timeSeries[0].maxResponseTime,
+      responseTime,
+    );
     this.timeSeries[0].statusCodeDistribution[statusCode] =
       (this.timeSeries[0].statusCodeDistribution[statusCode] || 0) + 1;
   }
 
-  addEndpointStatistics(endpoint: string, statusCode: number, responseTime: number) {
+  addEndpointStatistics(
+    endpoint: string,
+    statusCode: number,
+    responseTime: number,
+  ) {
     this.endpointStats[endpoint] = this.endpointStats[endpoint] || {
       totalRequests: 0,
       averageResponseTime: 0,
       minResponseTime: responseTime,
       maxResponseTime: responseTime,
-      statusCodeDistribution: {}
+      statusCodeDistribution: {},
     };
     const stats = this.endpointStats[endpoint];
     stats.totalRequests++;
@@ -76,7 +90,7 @@ export class StatisticsService implements OnModuleInit {
       averageResponseTime: 0,
       minResponseTime: 0,
       maxResponseTime: 0,
-      statusCodeDistribution: {}
+      statusCodeDistribution: {},
     });
     this.timeSeries.pop();
   }
