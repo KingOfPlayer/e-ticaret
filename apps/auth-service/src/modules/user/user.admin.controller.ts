@@ -13,17 +13,17 @@ export class UserAdminController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  async get(@Headers('x-user-id') userId: string, @Body() userQueryDto: UserQueryDto): Promise<any> {
-    return this.userService.getProfiles(userQueryDto);
+  async get( @Body() userQueryDto: UserQueryDto): Promise<any> {
+    return this.userService.findAll(userQueryDto);
   }
 
   @Get(':id')
   async getProfile(@Param('id') id: string): Promise<UserProfileDto> {
-    return this.userService.getProfileById(id);
+    return this.userService.findById(id);
   }
 
   @Patch(':id')
   async updateProfile(@Param('id') id: string, @Body() userUpdateDto: UpdateUserDto): Promise<UserProfileDto> {
-    return this.userService.updateProfile(id, userUpdateDto);
+    return this.userService.update(id, userUpdateDto);
   }
 }

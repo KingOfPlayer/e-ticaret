@@ -1,7 +1,7 @@
 import { Module, NestModule, MiddlewareConsumer, Type } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ProductsModule } from './products/products.module';
+import { ProductsModule } from './modules/products/products.module';
 import {
   HttpLoggerMiddleware,
   LoggerModule,

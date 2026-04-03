@@ -53,7 +53,7 @@ export class UserService{
     return this.create(createUserDto, 'moderator');
   }
 
-  async getProfileById(userId: string): Promise<UserProfileDto> {
+  async findById(userId: string): Promise<UserProfileDto> {
     const user = await this.userModel.findById(userId);
     return {
       name: user!.name,
@@ -64,7 +64,7 @@ export class UserService{
     };
   }
 
-  async updateProfile(userId: string, userUpdateDto: UpdateUserDto): Promise<UserProfileDto> {
+  async update(userId: string, userUpdateDto: UpdateUserDto): Promise<UserProfileDto> {
     if (userUpdateDto.password) {
       userUpdateDto.password = await this.EncryptPassword(userUpdateDto.password);
     }
@@ -78,7 +78,7 @@ export class UserService{
     };
   }
 
-  async getProfiles(query: UserQueryDto): Promise<UserProfileDto[]> {
+  async findAll(query: UserQueryDto): Promise<UserProfileDto[]> {
     const filter: any = {};
     if (query.email) {
       filter.email = query.email;

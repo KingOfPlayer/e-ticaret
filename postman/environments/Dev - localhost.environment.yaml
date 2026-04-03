@@ -10,11 +10,11 @@ values:
     value: ''
     enabled: true
   - key: HOST
-    value: ''
+    value: 'http://localhost:5000/'
     enabled: true
   - key: user_name
     value: ''
     enabled: true
   - key: user_surname
     value: ''
-    enabled: true
+    enabled: false

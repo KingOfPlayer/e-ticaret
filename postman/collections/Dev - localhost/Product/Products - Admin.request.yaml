@@ -1,0 +1,5 @@
+$kind: http-request
+name: Products - Admin
+url: ""
+method: GET
+order: 1320274650873715

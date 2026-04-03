@@ -5,13 +5,11 @@ export type ProductDocument = HydratedDocument<Product>;
 
 @Schema({ timestamps: true })
 export class Product {
-  @Prop({ required: true, index: true })
-  userId!: string;
 
   @Prop({ required: true })
   name!: string;
 
-  @Prop()
+  @Prop({ required: true })
   description!: string;
 
   @Prop({ required: true })
@@ -20,7 +18,7 @@ export class Product {
   @Prop({ default: 0 })
   stock!: number;
 
-  @Prop()
+  @Prop({ required: true })
   category!: string;
 }
 
