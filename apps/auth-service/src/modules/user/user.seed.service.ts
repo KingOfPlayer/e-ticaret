@@ -17,6 +17,8 @@ export class UserSeedService implements OnModuleInit {
 
   async onModuleInit() {
     await this.seedAdmin();
+    await this.seedUser();
+    await this.seedModerator();
   }
 
   async seedAdmin() {
@@ -26,6 +28,8 @@ export class UserSeedService implements OnModuleInit {
       const hashedPassword = await bcrypt.hash('admin123', 10);
       await this.userModel.create({
         email: adminEmail,
+        name: 'Admin',
+        surname: 'User',
         password: hashedPassword,
         role: 'admin',
       });
@@ -39,6 +43,8 @@ export class UserSeedService implements OnModuleInit {
       const hashedPassword = await bcrypt.hash('user123', 10);
       await this.userModel.create({
         email: userEmail,
+        name: 'Test',
+        surname: 'User',
         password: hashedPassword,
         role: 'user',
       });
@@ -52,6 +58,8 @@ export class UserSeedService implements OnModuleInit {
       const hashedPassword = await bcrypt.hash('moderator123', 10);
       await this.userModel.create({
         email: moderatorEmail,
+        name: 'Moderator',
+        surname: 'User',
         password: hashedPassword,
         role: 'moderator',
       });

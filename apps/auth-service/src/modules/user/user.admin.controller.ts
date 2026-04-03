@@ -1,5 +1,5 @@
 import { RoleGuard, Roles, UserRole } from "@e-ticaret/role";
-import { Body, Controller, Get, Headers, Param, Patch, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Headers, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { UserProfileDto } from "./dtos/user.profile.dto";
 import { UpdateUserDto } from "./dtos/user.update.dto";
@@ -12,8 +12,8 @@ import { User } from "./schemas/user.schema";
 export class UserAdminController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  async get( @Body() userQueryDto: UserQueryDto): Promise<any> {
+  @Get()
+  async get(@Query() userQueryDto: UserQueryDto): Promise<any> {
     return this.userService.findAll(userQueryDto);
   }
 
