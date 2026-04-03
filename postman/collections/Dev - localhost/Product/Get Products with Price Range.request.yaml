@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get Products with Price Range
+url: "{{HOST}}api/products?minPrice=10&maxPrice=100"
+method: GET
+order: 5

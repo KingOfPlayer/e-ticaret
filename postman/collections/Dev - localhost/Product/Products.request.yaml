@@ -1,5 +1,5 @@
 $kind: http-request
-name: Products
+name: Get All Products
 url: "{{HOST}}api/products"
 method: GET
-order: 1775179230196
+order: 1

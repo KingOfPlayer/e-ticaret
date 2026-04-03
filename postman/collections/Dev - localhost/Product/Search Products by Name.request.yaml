@@ -1,0 +1,5 @@
+$kind: http-request
+name: Search Products by Name
+url: "{{HOST}}api/products?name=product"
+method: GET
+order: 4

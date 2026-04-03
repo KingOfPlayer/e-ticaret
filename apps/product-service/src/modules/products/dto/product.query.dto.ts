@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsOptional } from "class-validator";
+import { IsNumber, IsOptional } from "class-validator";
+import { Type } from "class-transformer";
 
 export class ProductQueryDto {
   @IsOptional()
@@ -6,15 +7,19 @@ export class ProductQueryDto {
   @IsOptional()
   description?: string;
   @IsOptional()
+  @Type(() => Number)
   @IsNumber()
   minPrice?: number;
   @IsOptional()
+  @Type(() => Number)
   @IsNumber()
   maxPrice?: number;
   @IsOptional()
+  @Type(() => Number)
   @IsNumber()
   minStock?: number;
   @IsOptional()
+  @Type(() => Number)
   @IsNumber()
   maxStock?: number;
   @IsOptional()
@@ -26,7 +31,11 @@ export class ProductQueryDto {
   sortOrder?: "asc" | "desc";
 
   @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
   Limit?: number;
   @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
   offset?: number;
 }
