@@ -20,10 +20,10 @@ export class AuthController {
     return await this.authService.login(loginDto);
   }
 
-  @Post('logout')
+  /*@Post('logout')
   async logout(): Promise<any> {
     return "Logout successful";
-  }
+  }*/
 
   @Post('register')
   async register(@Body() registerDto: RegisterAuthDto): Promise<any> {
