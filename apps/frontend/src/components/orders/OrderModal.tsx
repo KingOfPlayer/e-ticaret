@@ -44,7 +44,7 @@ export default function OrderModal({ isOpen, onClose, onSuccess, order }: OrderM
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await api.get('/products');
+        const data = await api.get('/products', false);
         setAvailableProducts(data);
       } catch (err) {
         console.error('Ürünler yüklenemedi:', err);
@@ -94,11 +94,11 @@ export default function OrderModal({ isOpen, onClose, onSuccess, order }: OrderM
         await api.post('/orders', {
           ...formData,
           totalAmount,
-        });
+        }, true);
       } else {
         await api.put(`/orders/${order?._id}`, {
           status: formData.status,
-        });
+        }, true);
       }
       onSuccess();
       onClose();

@@ -25,7 +25,7 @@ export function LogStatistics() {
   useEffect(() => {
     const fetchStatistics = async () => {
       try {
-        const data = await api.get('/statistics', true);
+        const data = await api.get('/api/statistics', true);
         setStatistics(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');

@@ -26,7 +26,7 @@ export default function ProductsPage() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const data = await api.get('/products/product');
+      const data = await api.get('/products', false);
       setProducts(data);
       setError(null);
     } catch (err: any) {
@@ -44,7 +44,7 @@ export default function ProductsPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Bu ürünü silmek istediğinize emin misiniz?')) return;
     try {
-      await api.delete(`/products/${id}`);
+      await api.delete(`/products/${id}`, true);
       setProducts(products.filter((p) => p._id !== id));
     } catch (err) {
       alert('Silme işlemi başarısız oldu.');

@@ -35,6 +35,10 @@ export class AuthService implements OnModuleInit {
     const payload = { userId: user._id, email: user.email, role: user.role };
     return {
       access_token: await this.jwtService.signAsync(payload),
+      user: {
+        email: user.email,
+        role: user.role,
+      },
     };
   }
 

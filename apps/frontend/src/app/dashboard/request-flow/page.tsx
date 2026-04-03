@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Database,
   Monitor,
@@ -13,8 +13,120 @@ import {
   Activity,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { api } from '@/lib/api';
+
+interface TrafficLog {
+  method: string;
+  path: string;
+  status: number;
+  latency: string;
+  time: string;
+}
+
+interface LogEntry {
+  message: string;
+  context: string;
+  metadata?: Record<string, any>;
+  timestamp?: string;
+  level?: string;
+}
 
 export default function RequestFlowPage() {
+  const [traffic, setTraffic] = useState<TrafficLog[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [stats, setStats] = useState({
+    totalRequests: 0,
+    successCount: 0,
+    errorCount: 0,
+    avgLatency: 0,
+  });
+
+  const parseLogsToTraffic = useCallback((logs: LogEntry[]): TrafficLog[] => {
+    return logs
+      .filter((log) => log.context === 'HttpLoggerMiddleware')
+      .map((log) => {
+        // Extract metadata from the nested structure
+        const metadataEntry = log.metadata?.['0'] || {};
+        const method = metadataEntry.method || 'UNKNOWN';
+        const url = metadataEntry.url || 'unknown';
+        const statusCode = metadataEntry.statusCode || 0;
+        const duration = metadataEntry.duration || 0;
+
+        const timestamp = log.timestamp ? new Date(log.timestamp) : new Date();
+        const time = timestamp.toLocaleTimeString('tr-TR', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        });
+
+        return {
+          method,
+          path: url,
+          status: statusCode,
+          latency: `${duration}ms`,
+          time,
+        };
+      })
+      .sort((a, b) => {
+        // Sort by time descending (most recent first)
+        return new Date(`1970/01/01 ${b.time}`).getTime() - new Date(`1970/01/01 ${a.time}`).getTime();
+      });
+  }, []);
+
+  const calculateStats = useCallback((logs: TrafficLog[]) => {
+    const totalRequests = logs.length;
+    const successCount = logs.filter((l) => l.status < 400).length;
+    const errorCount = logs.filter((l) => l.status >= 400).length;
+    const avgLatency = Math.round(
+      logs.reduce((sum, log) => {
+        const latency = parseInt(log.latency);
+        return sum + latency;
+      }, 0) / (logs.length || 1)
+    );
+
+    setStats({
+      totalRequests,
+      successCount,
+      errorCount,
+      avgLatency,
+    });
+  }, []);
+
+  const fetchLogs = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Fetch from gateway log endpoint using API library
+      const data = await api.get('/log', true, {
+        limit: 50,
+        order: 'desc',
+      });
+
+      // Extract logs from the nested structure (logs.file is an array)
+      const logsArray = data.logs?.file || [];
+      const parsedTraffic = parseLogsToTraffic(logsArray);
+      setTraffic(parsedTraffic);
+      calculateStats(parsedTraffic);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      setError(errorMessage);
+      console.error('Error fetching logs:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [parseLogsToTraffic, calculateStats]);
+
+  useEffect(() => {
+    fetchLogs();
+
+    // Poll for new logs every 5 seconds
+    const interval = setInterval(fetchLogs, 5000);
+
+    return () => clearInterval(interval);
+  }, [fetchLogs]);
+
   return (
     <div className="space-y-12 animate-in fade-in duration-700 pb-12">
       <div>
@@ -24,6 +136,20 @@ export default function RequestFlowPage() {
         <p className="text-xs text-slate-500 mt-2 font-medium uppercase tracking-widest">
           Sistem Hiyerarşisi ve Güvenlik Adımları
         </p>
+      </div>
+
+      {error && (
+        <div className="glass-panel rounded-2xl border border-rose-500/20 bg-rose-500/5 p-4 text-rose-400 text-sm">
+          <p>Loglar alınamadı: {error}</p>
+        </div>
+      )}
+
+      {/* Statistikler */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <StatCard label="Toplam İstek" value={stats.totalRequests} loading={loading} />
+        <StatCard label="Başarılı" value={stats.successCount} loading={loading} color="text-emerald-400" />
+        <StatCard label="Hata" value={stats.errorCount} loading={loading} color="text-rose-400" />
+        <StatCard label="Ort. Latency" value={`${stats.avgLatency}ms`} loading={loading} color="text-amber-400" />
       </div>
 
       {/* 1. İSTEK AKIŞ DİYAGRAMI (Image 3 Layout) */}
@@ -157,6 +283,19 @@ function StepNode({ number, label, icon: Icon, active }: any) {
       </div>
       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-indigo-400 transition-colors">
         {label}
+      </p>
+    </div>
+  );
+}
+
+function StatCard({ label, value, loading, color = 'text-slate-400' }: any) {
+  return (
+    <div className="glass-panel rounded-xl p-4 border border-white/5">
+      <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">
+        {label}
+      </p>
+      <p className={cn('text-2xl font-bold', color)}>
+        {loading ? '...' : value}
       </p>
     </div>
   );

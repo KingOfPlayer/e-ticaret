@@ -35,7 +35,7 @@ export default function OrdersPage() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const data = await api.get('/orders/orders');
+      const data = await api.get('/orders', false);
       setOrders(data);
     } catch (err) {
       console.error('Siparişler yüklenemedi:', err);
@@ -51,7 +51,7 @@ export default function OrdersPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Bu siparişi silmek istediğinize emin misiniz?')) return;
     try {
-      await api.delete(`/orders/${id}`);
+      await api.delete(`/orders/${id}`, true);
       setOrders(orders.filter((o) => o._id !== id));
     } catch (err) {
       alert('Silme işlemi başarısız oldu.');

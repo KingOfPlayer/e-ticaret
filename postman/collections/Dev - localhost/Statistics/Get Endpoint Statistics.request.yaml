@@ -1,10 +1,9 @@
 $kind: http-request
 name: Get Endpoint Statistics
-url: "{{HOST}}api/statistics"
+url: "{{HOST}}statistics"
 method: GET
 auth:
   type: bearer
   credentials:
     token: "{{access_token}}"
 order: 2
-

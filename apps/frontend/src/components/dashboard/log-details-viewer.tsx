@@ -63,13 +63,15 @@ export function LogDetailsViewer() {
 
   const fetchLogs = useCallback(async () => {
     try {
-      const options: QueryOptions = {
-        ...queryOptions,
-        from: fromInput ? new Date(fromInput) : undefined,
-        until: untilInput ? new Date(untilInput) : undefined,
+      const query: Record<string, any> = {
+        limit: queryOptions.limit || 10,
+        order: queryOptions.order || 'desc',
       };
+      if (queryOptions.start !== undefined) query.start = queryOptions.start;
+      if (fromInput) query.from = new Date(fromInput).toISOString();
+      if (untilInput) query.until = new Date(untilInput).toISOString();
 
-      const data: LogsResponse = await api.post('/log', { options }, true);
+      const data: LogsResponse = await api.post('/log', {}, true, query);
       setLogs(normalizeLogs(data));
       setError(null);
     } catch (err) {

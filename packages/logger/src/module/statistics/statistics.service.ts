@@ -15,7 +15,7 @@ export class StatisticsService implements OnModuleInit {
   private endpointStats: Record<string, EndpointStatistics> = {};
 
   onModuleInit() {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) {
       this.timeSeries.push({
         totalRequests: 0,
         averageResponseTime: 0,

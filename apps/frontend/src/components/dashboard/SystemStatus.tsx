@@ -13,7 +13,7 @@ export function SystemStatus() {
     const start = Date.now();
     try {
       // Pinging the health or logs endpoint as a proxy for system status
-      await api.get('/products');
+      await api.get('/products', false);
       setLatency(Date.now() - start);
       setStatus('online');
     } catch (err) {

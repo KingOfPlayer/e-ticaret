@@ -21,7 +21,7 @@ export default function LoginPage() {
     const password = formData.get('password');
 
     try {
-      const data = await api.post('/auth/login', { email, password });
+      const data = await api.post('/auth/login', { email, password }, false);
       localStorage.setItem('access_token', data.access_token);
       localStorage.setItem('user', JSON.stringify(data.user));
       router.push('/dashboard');

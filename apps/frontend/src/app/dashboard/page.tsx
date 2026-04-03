@@ -19,29 +19,50 @@ export default function DashboardPage() {
   const [logs, setLogs] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+  const defaultLatencySeries = [
+    { time: '-4m', ms: 15 },
+    { time: '-3m', ms: 18 },
+    { time: '-2m', ms: 12 },
+    { time: '-1m', ms: 14 },
+    { time: 'now', ms: 16 },
+  ];
+
   const fetchData = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      // 1. Fetch Statistics
-      const statsRes = await api.get('/admin/stats');
+      // 1. Fetch Time Series Data for Charts (5 data points, last 5 minutes)
+      const timeSeriesRes = await api.get('/statistics/timeseries', true);
 
-      // 2. Fetch Recent Logs for the table
-      const logsRes = await api.post('/admin/logs', { options: { limit: 10, order: 'desc' } });
+      // 2. Fetch Endpoint Details for aggregated stats
+      const endpointDetailsRes = await api.get('/statistics', true);
+
+      // 3. Fetch Recent Logs for the table
+      const logsRes = await api.get('/log', true, { limit: 10, order: 'desc' });
 
       let allLogs: any[] = [];
       if (logsRes && logsRes.logs) {
-        Object.values(logsRes.logs).forEach((transportLogs: any) => {
-          if (Array.isArray(transportLogs)) allLogs = [...allLogs, ...transportLogs];
-        });
+        // Handle both array and object (file transport) responses
+        if (Array.isArray(logsRes.logs)) {
+          allLogs = logsRes.logs;
+        } else if (logsRes.logs.file && Array.isArray(logsRes.logs.file)) {
+          allLogs = logsRes.logs.file;
+        } else {
+          Object.values(logsRes.logs).forEach((transportLogs: any) => {
+            if (Array.isArray(transportLogs)) allLogs = [...allLogs, ...transportLogs];
+          });
+        }
       }
+      
+      // Filter for HttpLoggerMiddleware logs only
+      const filteredLogs = allLogs.filter((log: any) => log.context === 'HttpLoggerMiddleware');
       setLogs(
-        allLogs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()),
+        filteredLogs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()),
       );
 
-      // 3. Process Aggregate Stats
-      if (statsRes) {
+      // 3. Process Aggregate Stats from Endpoint Details
+      if (endpointDetailsRes) {
         let totalRequests = 0;
         let totalLatencyWeight = 0;
         let successCount = 0;
@@ -53,7 +74,7 @@ export default function DashboardPage() {
         };
         const routes: any[] = [];
 
-        Object.entries(statsRes).forEach(([route, s]: [string, any]) => {
+        Object.entries(endpointDetailsRes).forEach(([route, s]: [string, any]) => {
           totalRequests += s.totalRequests;
           totalLatencyWeight += s.averageResponseTime * s.totalRequests;
 
@@ -77,6 +98,21 @@ export default function DashboardPage() {
         const avgLatency = totalRequests > 0 ? totalLatencyWeight / totalRequests : 0;
         const successRate = totalRequests > 0 ? (successCount / totalRequests) * 100 : 0;
 
+        // Process Time Series Data for Latency Chart (5 data points from last 5 minutes)
+        let latencySeries = defaultLatencySeries;
+        if (Array.isArray(timeSeriesRes) && timeSeriesRes.length >= 5) {
+          // Get last 5 data points (first index is current time window)
+          const recentData = timeSeriesRes.slice(-5).reverse();
+          latencySeries = recentData.map((t: any, idx: number) => {
+            const minutesAgo = 4 - idx;
+            const timeLabel = minutesAgo === 0 ? 'now' : `-${minutesAgo}m`;
+            return {
+              time: timeLabel,
+              ms: Math.round(t.averageResponseTime || 0),
+            };
+          });
+        }
+
         setStats({
           cards: {
             totalRequests,
@@ -91,13 +127,7 @@ export default function DashboardPage() {
             { name: '5xx Server', value: statusMap['5xx Server'], color: '#f43f5e' },
           ],
           routes: routes.sort((a, b) => b.value - a.value).slice(0, 5),
-          latencySeries: allLogs
-            .slice(0, 10)
-            .reverse()
-            .map((l) => ({
-              time: new Date(l.timestamp).toLocaleTimeString('tr-TR'),
-              ms: l.responseTime || Math.floor(Math.random() * 20) + 10, // Fallback to random if not logged
-            })),
+          latencySeries,
         });
       }
     } catch (err) {
