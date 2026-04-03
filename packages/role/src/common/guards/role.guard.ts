@@ -28,9 +28,6 @@ export class RoleGuard implements CanActivate {
     const userId = request.headers['x-user-id'];
     const userRolesHeader = request.headers['x-user-role'];
 
-    console.log('RoleGuard: Required Roles:', requiredRoles);
-    console.log('RoleGuard: User Roles:', userRolesHeader);
-
     const userRoles = userRolesHeader
       ? (userRolesHeader
           .split(',')

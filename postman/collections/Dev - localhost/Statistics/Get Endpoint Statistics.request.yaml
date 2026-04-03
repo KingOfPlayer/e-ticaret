@@ -1,9 +1,10 @@
 $kind: http-request
-name: Gateway
-url: "{{HOST}}statistics"
+name: Get Endpoint Statistics
+url: "{{HOST}}api/statistics"
 method: GET
 auth:
   type: bearer
   credentials:
     token: "{{access_token}}"
-order: 1774645632551
+order: 2
+

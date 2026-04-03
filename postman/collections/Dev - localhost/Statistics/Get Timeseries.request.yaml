@@ -1,9 +1,10 @@
 $kind: http-request
-name: Auth
-url: "{{HOST}}api/auth/statistics"
+name: Get Timeseries Statistics
+url: "{{HOST}}api/statistics/timeseries"
 method: GET
 auth:
   type: bearer
   credentials:
     token: "{{access_token}}"
-order: 136883798004698
+order: 1
+

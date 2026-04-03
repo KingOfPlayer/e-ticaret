@@ -4,29 +4,29 @@ values:
     value: 'http://localhost:5000/'
     enabled: true
   - key: user_id
-    value: '507f1f77bcf86cd799439011'
+    value: 507f1f77bcf86cd799439011
     enabled: true
   - key: admin_id
-    value: '507f1f77bcf86cd799439010'
+    value: 507f1f77bcf86cd799439010
     enabled: true
   - key: order_id
-    value: '507f1f77bcf86cd799439012'
+    value: 507f1f77bcf86cd799439012
     enabled: true
   - key: access_token
-    value: 'your_user_token_here'
+    value: your_user_token_here
     enabled: true
   - key: admin_access_token
-    value: 'your_admin_token_here'
+    value: your_admin_token_here
     enabled: true
   - key: user_email
-    value: 'user@example.com'
+    value: user@example.com
     enabled: true
   - key: user_password
-    value: 'password123'
+    value: password123
     enabled: true
   - key: user_name
-    value: 'John'
+    value: John
     enabled: true
   - key: user_surname
-    value: 'Doe'
+    value: Doe
     enabled: true

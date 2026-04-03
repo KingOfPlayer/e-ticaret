@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit, Res } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 
 type EndpointStatistics = {
   totalRequests: number;
@@ -9,21 +10,54 @@ type EndpointStatistics = {
 };
 
 @Injectable()
-export class StatisticsService {
-  private statistics: Record<string, EndpointStatistics> = {};
+export class StatisticsService implements OnModuleInit {
 
-  RecordStatistics(endpoint: string, statusCode: number, responseTime: number) {
-    if (!this.statistics[endpoint]) {
-      this.statistics[endpoint] = {
+  private timeSeries: EndpointStatistics[] = [];
+  private endpointStats: Record<string, EndpointStatistics> = {};
+
+  onModuleInit() {
+    for (let i = 0; i < 10; i++) {
+      this.timeSeries.push({
         totalRequests: 0,
         averageResponseTime: 0,
-        minResponseTime: responseTime,
-        maxResponseTime: responseTime,
-        statusCodeDistribution: {},
-      };
+        minResponseTime: 0,
+        maxResponseTime: 0,
+        statusCodeDistribution: {}
+      });
     }
+  }
 
-    const stats = this.statistics[endpoint];
+  addRequestStatistics(endpoint: string, statusCode: number, responseTime: number) {
+    this.addTimeSeriesStatistics(statusCode, responseTime);
+    this.addEndpointStatistics(endpoint, statusCode, responseTime);
+  } 
+
+  addTimeSeriesStatistics(statusCode: number, responseTime: number) {
+    
+    if(this.timeSeries[0].totalRequests === 0) {
+      this.timeSeries[0].minResponseTime = responseTime;
+      this.timeSeries[0].maxResponseTime = responseTime;
+    }
+    
+    this.timeSeries[0].totalRequests++;
+    this.timeSeries[0].averageResponseTime =
+      (this.timeSeries[0].averageResponseTime * (this.timeSeries[0].totalRequests - 1) + responseTime) /
+      this.timeSeries[0].totalRequests;
+    this.timeSeries[0].minResponseTime = Math.min(this.timeSeries[0].minResponseTime, responseTime);
+    this.timeSeries[0].maxResponseTime = Math.max(this.timeSeries[0].maxResponseTime, responseTime);
+    this.timeSeries[0].statusCodeDistribution[statusCode] =
+      (this.timeSeries[0].statusCodeDistribution[statusCode] || 0) + 1;
+  }
+
+  addEndpointStatistics(endpoint: string, statusCode: number, responseTime: number) {
+    this.endpointStats[endpoint] = this.endpointStats[endpoint] || {
+      totalRequests: 0,
+      averageResponseTime: 0,
+      minResponseTime: responseTime,
+      maxResponseTime: responseTime,
+      statusCodeDistribution: {}
+    };
+    const stats = this.endpointStats[endpoint];
     stats.totalRequests++;
     stats.averageResponseTime =
       (stats.averageResponseTime * (stats.totalRequests - 1) + responseTime) /
@@ -34,7 +68,24 @@ export class StatisticsService {
       (stats.statusCodeDistribution[statusCode] || 0) + 1;
   }
 
-  GetTrafficSummary() {
-    return this.statistics;
+  // Every minute shift
+  @Cron('0 * * * * *')
+  shiftTimeSeries() {
+    this.timeSeries.unshift({
+      totalRequests: 0,
+      averageResponseTime: 0,
+      minResponseTime: 0,
+      maxResponseTime: 0,
+      statusCodeDistribution: {}
+    });
+    this.timeSeries.pop();
+  }
+
+  getTimeSeries() {
+    return this.timeSeries;
+  }
+
+  getEndpointStatistics() {
+    return this.endpointStats;
   }
 }
