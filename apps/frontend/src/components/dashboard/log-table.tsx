@@ -14,56 +14,20 @@ interface Log {
   createdAt: string | Date;
 }
 
-const mockLogs: Log[] = [
-  {
-    id: '1',
-    path: '/api/auth/login',
-    method: 'POST',
-    statusCode: 200,
-    latencyMs: 45,
-    service: 'auth-service',
-    createdAt: new Date(),
-  },
-  {
-    id: '2',
-    path: '/api/products',
-    method: 'GET',
-    statusCode: 200,
-    latencyMs: 12,
-    service: 'product-service',
-    createdAt: new Date(),
-  },
-  {
-    id: '3',
-    path: '/api/orders',
-    method: 'POST',
-    statusCode: 201,
-    latencyMs: 89,
-    service: 'order-service',
-    createdAt: new Date(),
-  },
-  {
-    id: '4',
-    path: '/api/products/123',
-    method: 'DELETE',
-    statusCode: 204,
-    latencyMs: 34,
-    service: 'product-service',
-    createdAt: new Date(),
-  },
-  {
-    id: '5',
-    path: '/api/auth/register',
-    method: 'POST',
-    statusCode: 400,
-    latencyMs: 23,
-    service: 'auth-service',
-    createdAt: new Date(),
-  },
-];
-
 export function LogTable({ logs = [] }: { logs?: any[] }) {
-  const displayLogs = logs.length > 0 ? logs : [];
+  const displayLogs = logs.length > 0 ? logs.map((log) => {
+    // Extract metadata from nested structure
+    const metadata = log.metadata?.['0'] || {};
+    
+    return {
+      method: metadata.method || 'UNKNOWN',
+      url: metadata.url || '/',
+      label: log.label || 'system',
+      statusCode: metadata.statusCode || 200,
+      responseTime: metadata.duration || 0,
+      timestamp: log.timestamp,
+    };
+  }) : [];
 
   return (
     <div className="w-full bg-transparent overflow-hidden">
@@ -77,9 +41,6 @@ export function LogTable({ logs = [] }: { logs?: any[] }) {
               <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">
                 Path
               </th>
-              <th className="w-32 px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                Servis
-              </th>
               <th className="w-20 px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-center">
                 Durum
               </th>
@@ -91,7 +52,7 @@ export function LogTable({ logs = [] }: { logs?: any[] }) {
           <tbody className="divide-y divide-white/5">
             {displayLogs.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-6 py-20 text-center">
+                <td colSpan={4} className="px-6 py-20 text-center">
                   <p className="text-xs font-bold text-slate-600 uppercase tracking-widest italic">
                     Veri akışı bekleniyor...
                   </p>
@@ -104,39 +65,31 @@ export function LogTable({ logs = [] }: { logs?: any[] }) {
                     <span
                       className={cn(
                         'px-2 py-0.5 rounded text-[9px] font-black tracking-widest border',
-                        getMethodColor(log.method || 'GET'),
+                        getMethodColor(log.method),
                       )}
                     >
-                      {log.method || 'GET'}
+                      {log.method}
                     </span>
                   </td>
                   <td className="px-6 py-4 truncate">
                     <code className="text-xs text-slate-300 font-mono group-hover:text-indigo-300 transition-colors">
-                      {log.url || '/'}
+                      {log.url}
                     </code>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-1 h-1 rounded-full bg-indigo-500/40" />
-                      <span className="text-[10px] text-slate-400 uppercase font-black truncate">
-                        {log.label || 'system'}
-                      </span>
-                    </div>
                   </td>
                   <td className="px-6 py-4 text-center">
                     <span
                       className={cn(
                         'text-xs font-black font-mono',
-                        (log.statusCode || 200) >= 400 ? 'text-rose-500' : 'text-emerald-500',
+                        log.statusCode >= 400 ? 'text-rose-500' : 'text-emerald-500',
                       )}
                     >
-                      {log.statusCode || 200}
+                      {log.statusCode}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
                       <span className="text-[10px] text-slate-300 font-mono italic">
-                        {log.responseTime || '0'}ms
+                        {log.responseTime}ms
                       </span>
                       <Zap className="w-3 h-3 text-amber-500" />
                     </div>
