@@ -9,3 +9,12 @@ values:
   - key: access_token
     value: ''
     enabled: true
+  - key: HOST
+    value: ''
+    enabled: true
+  - key: user_name
+    value: ''
+    enabled: true
+  - key: user_surname
+    value: ''
+    enabled: true

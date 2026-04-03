@@ -1,0 +1,14 @@
+$kind: http-request
+name: User Register
+url: "{{HOST}}api/auth/register"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "email": "1{{user_email}}",
+        "password": "{{user_password}}",
+        "name": "{{user_name}}",
+        "surname": "{{user_surname}}"
+    }
+order: 1755663555689
