@@ -1,0 +1,16 @@
+{
+  "name": "load-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:load": "k6 run load-test.js",
+    "test:load:summary": "k6 run --summary-export=result.json load-test.js",
+    "test:suite": "k6 run test-suite.js",
+    "test:suite:summary": "k6 run --summary-export=test-suite-result.json test-suite.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1"
+}

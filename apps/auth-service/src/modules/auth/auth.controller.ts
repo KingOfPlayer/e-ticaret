@@ -1,11 +1,12 @@
 import { RoleGuard, Roles, UserRole } from "@e-ticaret/role";
-import { Body, Controller, Get, Post, Headers, UseGuards} from "@nestjs/common";
+import { Body, Controller, Get, Post, Headers, UseGuards, HttpCode, HttpStatus} from "@nestjs/common";
 import { LoginAuthDto } from "./dtos/auth.login.dto";
 import { User } from "../user/schemas/user.schema";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { AuthService } from "./auth.service";
 import { RegisterAuthDto } from "./dtos/auth.register.dto";
+import { HTTP_CODE_METADATA } from "@nestjs/common/constants";
 
 @Controller('')
 @UseGuards(RoleGuard)
@@ -16,6 +17,7 @@ export class AuthController {
   ) { }
 
   @Post('login')
+  @HttpCode(HttpStatus.OK)
   async login(@Body() loginDto: LoginAuthDto): Promise<any> {
     return await this.authService.login(loginDto);
   }

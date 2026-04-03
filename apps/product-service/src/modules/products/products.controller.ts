@@ -32,7 +32,7 @@ export class ProductsController {
 
   @Get(':id')
   async findOne(
-    @Param('id') id: ProductIdDto,
+    @Param() id: ProductIdDto,
   ): Promise<Product | null> {
     return this.productsService.findOne(id);
   }
