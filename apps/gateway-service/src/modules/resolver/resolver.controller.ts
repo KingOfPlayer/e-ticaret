@@ -10,6 +10,8 @@ import {
   Post,
   Patch,
   BadRequestException,
+  Delete,
+  HttpCode,
 } from '@nestjs/common';
 import * as express from 'express';
 import { ResolverService } from './resolver.service';
@@ -47,5 +49,13 @@ export class RouteResolverController {
     await this.routeResolverService.addRoute({ prefix, target });
     this.logger.info(`Added new route: ${prefix} -> ${target}`, 'RouteResolverController');
     return res.status(201).json({ message: 'Route added successfully' });
+  }
+
+  @Delete(':prefix')
+  @HttpCode(204)
+  async deleteRoute(@Param('prefix') prefix: string, @Res() res: express.Response) {
+    await this.routeResolverService.deleteRoute(prefix);
+    this.logger.info(`Deleted route: ${prefix}`, 'RouteResolverController');
+    return;
   }
 }
