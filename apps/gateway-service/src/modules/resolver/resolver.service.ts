@@ -76,4 +76,12 @@ export class ResolverService implements OnModuleInit {
       }
     }
   }
+
+  async deleteRoute(prefix: string) {
+    const result = await this.routeModel.deleteOne({ prefix }).exec();
+    if (result.deletedCount === 0) {
+      throw new NotFoundException(`Route with prefix '${prefix}' not found`);
+    }
+    this.cachedRoutes = this.cachedRoutes.filter((r) => r.prefix !== prefix);
+  }
 }

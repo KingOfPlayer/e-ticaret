@@ -18,6 +18,9 @@ describe('RouteResolverService', () => {
       updateOne: jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue([]),
       }),
+      deleteOne: jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue({}),
+      }),
       create: jest.fn(),
       save: jest.fn(),
     };
@@ -171,7 +174,6 @@ describe('RouteResolverService', () => {
     });
 
     await service.deleteRoute('test1');
-    expect(mongodbMonk.find).toHaveBeenCalledWith({ prefix: 'test1' });
-    expect(mongodbMonk.create).toHaveBeenCalledWith({ prefix: 'test1', target: '' });
-  }
+    expect(mongodbMonk.deleteOne).toHaveBeenCalledWith({ prefix: 'test1'});
+  });
 });
