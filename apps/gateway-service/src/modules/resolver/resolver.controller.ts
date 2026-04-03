@@ -12,7 +12,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import * as express from 'express';
-import { RouteResolverService } from './route.resolver.service';
+import { ResolverService } from './resolver.service';
 import { LoggerService } from '@e-ticaret/logger';
 import { RoleGuard, Roles, UserRole } from '@e-ticaret/role';
 
@@ -21,7 +21,7 @@ import { RoleGuard, Roles, UserRole } from '@e-ticaret/role';
 @Roles(UserRole.Admin)
 export class RouteResolverController {
   constructor(
-    private readonly routeResolverService: RouteResolverService,
+    private readonly routeResolverService: ResolverService,
     private readonly logger: LoggerService,
   ) {}
 

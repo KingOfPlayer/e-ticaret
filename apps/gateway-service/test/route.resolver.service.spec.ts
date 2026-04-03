@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
-import { RouteResolverService } from '../src/modules/resolver/route.resolver.service';
 import { Route } from '../src/modules/resolver/schemas/route.schema';
+import { ResolverService } from '../src/modules/resolver/resolver.service';
 
 describe('RouteResolverService', () => {
-  let service: RouteResolverService;
+  let service: ResolverService;
   let mongodbMonk: any;
 
   beforeEach(async () => {
@@ -24,7 +24,7 @@ describe('RouteResolverService', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        RouteResolverService,
+        ResolverService,
         {
           provide: getModelToken(Route.name),
           useValue: mongodbMonk,
@@ -32,7 +32,7 @@ describe('RouteResolverService', () => {
       ],
     }).compile();
 
-    service = module.get<RouteResolverService>(RouteResolverService);
+    service = module.get<ResolverService>(ResolverService);
   });
 
   it('should be defined', () => {

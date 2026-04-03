@@ -2,7 +2,7 @@ import { Controller, All, Req, Res, Param, NotFoundException } from '@nestjs/com
 import * as express from 'express';
 import { GatewayService } from './gateway.service';
 import { LoggerService } from '@e-ticaret/logger';
-import { RouteResolverService } from '../resolver/route.resolver.service';
+import { ResolverService } from '../resolver/resolver.service';
 
 import { addHateoasLinks } from '../../common/utils/hateoas.util';
 
@@ -10,7 +10,7 @@ import { addHateoasLinks } from '../../common/utils/hateoas.util';
 export class GatewayController {
   constructor(
     private readonly gatewayService: GatewayService,
-    private readonly routeResolverService: RouteResolverService,
+    private readonly routeResolverService: ResolverService,
     private readonly logger: LoggerService,
   ) {}
 
