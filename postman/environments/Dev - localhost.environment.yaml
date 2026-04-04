@@ -4,10 +4,10 @@ values:
     value: 'http://localhost:5000/'
     enabled: true
   - key: user_id
-    value: 507f1f77bcf86cd799439011
+    value: ''
     enabled: true
   - key: admin_id
-    value: 507f1f77bcf86cd799439010
+    value: ''
     enabled: true
   - key: order_id
     value: 507f1f77bcf86cd799439012
@@ -19,10 +19,10 @@ values:
     value: your_admin_token_here
     enabled: true
   - key: user_email
-    value: user@example.com
+    value: admin@ecosystem.com
     enabled: true
   - key: user_password
-    value: password123
+    value: admin123
     enabled: true
   - key: user_name
     value: John

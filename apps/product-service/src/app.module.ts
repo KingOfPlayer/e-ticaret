@@ -7,7 +7,7 @@ import {
   LoggerModule,
   StatisticsModule,
 } from '@e-ticaret/logger';
-import { MicroserviceMiddleware } from '@e-ticaret/microservice';
+import { HealthModule, MicroserviceMiddleware } from '@e-ticaret/microservice';
 
 @Module({
   imports: [
@@ -22,6 +22,7 @@ import { MicroserviceMiddleware } from '@e-ticaret/microservice';
     ProductsModule,
     LoggerModule.register({ serviceName: 'product-service' }),
     StatisticsModule.register(),
+    HealthModule,
   ],
   controllers: [],
   providers: [],

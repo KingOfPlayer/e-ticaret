@@ -6,7 +6,7 @@ import {
   LoggerModule,
   StatisticsModule,
 } from '@e-ticaret/logger';
-import { MicroserviceMiddleware } from '@e-ticaret/microservice';
+import { HealthModule, MicroserviceMiddleware } from '@e-ticaret/microservice';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -22,6 +22,7 @@ import { ConfigModule } from '@nestjs/config';
     OrdersModule,
     LoggerModule.register({ serviceName: 'order-service' }),
     StatisticsModule.register(),
+    HealthModule,
   ],
   controllers: [],
   providers: [],

@@ -7,7 +7,7 @@ import {
   LoggerModule,
   StatisticsModule,
 } from '@e-ticaret/logger';
-import { MicroserviceMiddleware } from '@e-ticaret/microservice';
+import { HealthModule, MicroserviceMiddleware } from '@e-ticaret/microservice';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -25,6 +25,7 @@ import { UserModule } from './modules/user/user.module';
     StatisticsModule.register(),
     UserModule,
     AuthModule,
+    HealthModule,
   ],
   controllers: [],
   providers: [],

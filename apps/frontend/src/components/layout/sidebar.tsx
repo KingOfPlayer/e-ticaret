@@ -14,7 +14,6 @@ import {
   Router,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { SystemStatus } from '../dashboard/SystemStatus';
 
 const categories = [
   {
@@ -67,9 +66,6 @@ export function Sidebar() {
         </div>
         <div className="flex flex-col">
           <span className="text-xl font-bold text-white tracking-widest uppercase">Dispatcher</span>
-          <span className="text-[10px] text-emerald-400 font-bold tracking-widest uppercase flex items-center gap-1">
-            <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" /> Live
-          </span>
         </div>
       </div>
 
@@ -112,7 +108,6 @@ export function Sidebar() {
       </nav>
 
       <div className="mt-auto p-4 space-y-4 border-t border-slate-800">
-        <SystemStatus />
         <div className="p-4 rounded-2xl bg-slate-900/40 flex flex-col gap-4">
           <div className="flex flex-col">
             <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest">
