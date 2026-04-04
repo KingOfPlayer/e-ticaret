@@ -1,8 +1,8 @@
 # Microservices E-Commerce & Dispatcher Platform (Yazlab-II Proje-1)
 
-**Ekip Üyeleri:**
+**Ekip Üyeleri:**  
 Erkan HAZIR - 221307003  
-Ferhat SEZGİN - 231307112
+Ferhat SEZGİN - 231307112  
 **Tarih:** Nisan 2026
 
 ---
@@ -33,15 +33,15 @@ Proje kapsamında, yoğun trafik altında test edilmeye uygun bir e-ticaret sena
 - **Ziyaretçi (Rol Gerektirmeyen):** Ürün listeleme ve ürün detaylarını görüntüleme.
 - **Kullanıcı:** Hesap oluşturma, profil yönetimi, sipariş oluşturma, sipariş takibi ve iptal işlemleri.
 - **Moderatör:** Stok yönetimi (ürün ekleme/görüntüleme) ve genel sipariş yönetimi/güncelleme işlemleri.
-- **Yönetici (Admin):** \* Kullanıcı ve rol yönetimi (CRUD işlemleri).
-  - Tam yetkili ürün ve sipariş yönetimi.
-  - **Sistem Gözlemleme:** Mikroservis ve Gateway loglarının takibi, son 5 dakikalık trafik analizi ve her bir endpoint trafik istatistiklerinin incelenmesi.
+- **Yönetici (Admin):** Kullanıcı ve rol yönetimi (CRUD işlemleri).
+    - Tam yetkili ürün ve sipariş yönetimi.
+    - **Sistem Gözlemleme:** Mikroservis ve Gateway loglarının takibi, son 5 dakikalık trafik analizi ve her bir endpoint trafik istatistiklerinin incelenmesi.
 
 ---
 
 ## Mimari ve Mikroservis İzolasyonu
 
-Uygulamanın tamamı Dockerize edilmiş olup tam ağ ve veri izolasyonuna sahiptir. Dış dünya (Client) sadece Gateway ve Frontend uygulamasına erişebilir. Auth, Product ve Order servisleri yalnızca Docker'ın dahili ağı olan `backend-network` üzerinde iletişim kurarlar ve dışarıya port açmazlar. Mikroservis mimarisinin getirdiği diğer bir özelik ise Gateway, Auth, Product ve Order servislerin ayrı kendilerine ait veri tabanlarına sahiptir.
+Uygulamanın tamamı Dockerize edilmiş olup tam ağ ve veri izolasyonuna sahiptir. Dış dünya (Client) sadece Gateway ve Frontend uygulamasına erişebilir. Auth, Product ve Order servisleri yalnızca Docker'ın dahili ağı olan `backend-network` üzerinde iletişim kurarlar ve dışarıya port açmazlar. Mikroservis mimarisinin getirdiği diğer bir özellik ise Gateway, Auth, Product ve Order servislerinin ayrı kendilerine ait veri tabanlarına sahiptir.
 
 ### Sistemin Genel Mimarisi
 
@@ -192,16 +192,16 @@ sequenceDiagram
         alt Uygun servis bulunamadıysa
             G-->>C: 404 Not Found
         else
-            G->>S: Gizli X-gateway-secret ile JWT içeriği varsa içindeki <br> kullanıcı id, rol ve email içeriği X-user-{içerik} başlığıla proxy edilmesi
-            S->>S: x-gateway-secret ile endpointe atanılan rolün Kontrolü
-            S->>DB: Siparişleri X-user-id Verisine Göre Getir
+            G->>S: Gizli X-gateway-secret ile JWT içeriği varsa içindeki <br> kullanıcı id, rol ve email içeriği X-user-{içerik} başlığıyla proxy edilmesi
+            S->>S: X-gateway-secret ile endpointe atanılan rolün kontrolü
+            S->>DB: Siparişleri X-user-id verisine göre getir
             DB-->>S: Veriler
             S-->>G: JSON Yanıt + HTTP yanıt kodu
             G->>G: HATEOAS (_links) Ekleme
             G-->>C: Gelen yanıta göre HTTP yanıtı + HATEOAS Formatlı JSON
         end
     end
-     G->>L: Yanıt sonucu ve süreleri Loglanır
+    G->>L: Yanıt sonucu ve süreleri Loglanır
 ```
 
 ---
@@ -212,16 +212,16 @@ Dispatcher'ın TDD süreçleri (Red-Green-Refactor) NestJS'in test altyapısı (
 
 ### Performans Analizi (k6 Load Test)
 
-Kullanıcı arayüzünde görülen istatistiklerin bilimsel zemini k6 ile test edilmiştir. Aşağıda belirtilen sekans diagramını belirten `load-test.js` yük testi 30s ramp-up → 1m sabit yük → 30s ramp-down profiliyle **50/100/200/500 Eş zamanlı kullanıcı** saysı olarak çalıştırılmıştır.
+Kullanıcı arayüzünde görülen istatistiklerin bilimsel zemini k6 ile test edilmiştir. Aşağıda belirtilen sekans diagramını belirten `load-test.js` yük testi 30s ramp-up → 1m sabit yük → 30s ramp-down profiliyle **50/100/200/500 eş zamanlı kullanıcı** sayısı olarak çalıştırılmıştır.
 
-Yük testi `docker compose up` komutu kullanılarak sistem çalıştırılmıştır. Sistemin docker imajları toplam 2,69GB tutumuştur. Ram kullanımı pasif kullanımında 1,73GB, 500 eş zamanlı yük testinde 2,05GB e kadar yükselmiştir.
+Yük testi `docker compose up` komutu kullanılarak sistem çalıştırılmıştır. Sistemin docker imajları toplam 2,69GB tutmuştur. Ram kullanımı pasif kullanımında 1,73GB, 500 eş zamanlı yük testinde 2,05GB'e kadar yükselmiştir.
 
 ```mermaid
 sequenceDiagram
     autonumber
     actor U as Kullanıcı (VU)
     participant G as Dispatcher (Gateway)
-    participant P as Product Serivsi
+    participant P as Product Servisi
     participant A as Auth Servisi
     participant O as Order Servisi
 
@@ -251,7 +251,7 @@ sequenceDiagram
             G->>O: Proxy GET /orders/:id
             O-->>G: 200 OK (order detail)
             G-->>U: 200 OK
-        U-->U: 1 Saniye bekle
+            U-->U: 1 Saniye bekle
         end
     else %10 - Security Check
         U->>G: GET /api/orders/admin/all (no/invalid auth)
@@ -266,9 +266,9 @@ sequenceDiagram
 |                        Target (VU) | Request Count (`http_reqs`) | Throughput (RPS) | Avg Latency (ms) | Median (ms) | p95 (ms) | Max (ms) | Data Received (KiB/s) |
 | ---------------------------------: | --------------------------: | ---------------: | ---------------: | ----------: | -------: | -------: | --------------------: |
 |  [50](./load-tests/result-50.json) |                        4423 |            36.35 |            28.14 |        8.21 |    95.23 |   349.21 |                 41.08 |
-| [100](./load-tests/result-50.json) |                        8705 |            72.28 |            43.00 |       11.73 |   149.70 |   571.39 |                 80.13 |
-| [200](./load-tests/result-50.json) |                       13913 |           114.31 |           307.81 |       40.71 |  1617.71 |  4274.87 |                128.77 |
-| [500](./load-tests/result-50.json) |                       18349 |           151.53 |          1516.00 |       23.85 |  8307.51 | 24304.59 |                169.70 |
+| [100](./load-tests/result-100.json) |                       8705 |            72.28 |            43.00 |       11.73 |   149.70 |   571.39 |                 80.13 |
+| [200](./load-tests/result-200.json) |                      13913 |           114.31 |           307.81 |       40.71 |  1617.71 |  4274.87 |                128.77 |
+| [500](./load-tests/result-500.json) |                      18349 |           151.53 |          1516.00 |       23.85 |  8307.51 | 24304.59 |                169.70 |
 
 ```mermaid
 xychart-beta
@@ -315,16 +315,16 @@ Eş zamanlı 500 istek
 <summary>Dashboard</summary>
 
 Dashboard Ana sayfa
-![VU 50](./images/50.png)
+![Dashboard ana sayfa](./images/50.png)
 
 Dashboard Gerçek Zamanlı İstek Arayüzü
-![VU 50](./images/dashboard_live.png)
+![Dashboard gerçek zamanlı istek](./images/dashboard_live.png)
 
 Dashboard Log Arayüzü
-![VU 50](./images/dashboard_log.png)
+![Dashboard log](./images/dashboard_log.png)
 
 Dashboard Yönlendirme Arayüzü
-![VU 50](./images/dashboard_route.png)
+![Dashboard yönlendirme](./images/dashboard_route.png)
 
 </details>
 
