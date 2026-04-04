@@ -52,10 +52,9 @@ export class RouteResolverController {
   }
 
   @Delete(':prefix')
-  @HttpCode(204)
   async deleteRoute(@Param('prefix') prefix: string, @Res() res: express.Response) {
     await this.routeResolverService.deleteRoute(prefix);
     this.logger.info(`Deleted route: ${prefix}`, 'RouteResolverController');
-    return;
+    return res.status(204).send();
   }
 }
