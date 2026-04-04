@@ -125,32 +125,32 @@ export function LogDetailsViewer() {
 
   const getMethodColor = (method: string) => {
     const colors: Record<string, string> = {
-      GET: 'text-blue-400',
-      POST: 'text-green-400',
-      PUT: 'text-yellow-400',
-      DELETE: 'text-red-400',
-      PATCH: 'text-purple-400',
-      HEAD: 'text-gray-400',
+      GET: 'text-blue-600',
+      POST: 'text-emerald-600',
+      PUT: 'text-amber-600',
+      DELETE: 'text-rose-600',
+      PATCH: 'text-purple-600',
+      HEAD: 'text-slate-600',
     };
     return colors[method] || 'text-slate-400';
   };
 
   const getStatusColor = (statusCode: number) => {
-    if (statusCode >= 200 && statusCode < 300) return 'text-green-400';
-    if (statusCode >= 300 && statusCode < 400) return 'text-blue-400';
-    if (statusCode >= 400 && statusCode < 500) return 'text-yellow-400';
-    return 'text-red-400';
+    if (statusCode >= 200 && statusCode < 300) return 'text-emerald-600';
+    if (statusCode >= 300 && statusCode < 400) return 'text-blue-600';
+    if (statusCode >= 400 && statusCode < 500) return 'text-amber-600';
+    return 'text-rose-600';
   };
 
   const getLevelColor = (level: string) => {
     const colors: Record<string, string> = {
-      error: 'bg-red-500/10 border-red-500/20 text-red-400',
-      warn: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400',
-      warning: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400',
-      info: 'bg-blue-500/10 border-blue-500/20 text-blue-400',
-      debug: 'bg-purple-500/10 border-purple-500/20 text-purple-400',
+      error: 'bg-rose-50 border-rose-100 text-rose-600',
+      warn: 'bg-amber-50 border-amber-100 text-amber-600',
+      warning: 'bg-amber-50 border-amber-100 text-amber-600',
+      info: 'bg-blue-50 border-blue-100 text-blue-600',
+      debug: 'bg-purple-50 border-purple-100 text-purple-600',
     };
-    return colors[level] || 'bg-slate-500/10 border-slate-500/20 text-slate-400';
+    return colors[level] || 'bg-slate-50 border-slate-100 text-slate-400';
   };
 
   const safeLogs = useMemo(() => (Array.isArray(logs) ? logs : []), [logs]);
@@ -191,21 +191,21 @@ export function LogDetailsViewer() {
 
   if (loading) {
     return (
-      <div className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl p-6 text-center">
+      <div className="w-full bg-white border border-slate-200 rounded-2xl p-6 text-center shadow-sm">
         <div className="inline-block animate-spin">
-          <Activity className="w-6 h-6 text-indigo-400" />
+          <Activity className="w-6 h-6 text-emerald-500" />
         </div>
-        <p className="text-slate-400 mt-2">Loading logs...</p>
+        <p className="text-slate-400 mt-2 font-black text-[10px] uppercase tracking-widest">VERİLER ALINIYOR...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="w-full bg-slate-900/50 border border-red-500/20 rounded-2xl p-6">
-        <div className="flex items-center gap-3 text-red-400">
+      <div className="w-full bg-rose-50 border border-rose-100 rounded-2xl p-6 shadow-sm">
+        <div className="flex items-center gap-3 text-rose-600">
           <AlertCircle className="w-5 h-5" />
-          <p>Failed to load logs: {error}</p>
+          <p className="text-[10px] font-black uppercase tracking-widest">HATA: {error}</p>
         </div>
       </div>
     );
@@ -216,10 +216,10 @@ export function LogDetailsViewer() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <Activity className="w-5 h-5 text-indigo-400" />
-          <h3 className="text-xl font-bold text-white">Request Logs</h3>
-          <span className="ml-2 px-2 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-medium border border-indigo-500/20">
-            {filteredLogs.length} {filter !== 'all' ? filter : ''} logs
+          <Activity className="w-5 h-5 text-emerald-600" />
+          <h3 className="text-xl font-black text-slate-900 uppercase italic tracking-tighter">İSTEK KÜTÜPHANESİ</h3>
+          <span className="ml-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black border border-emerald-100 uppercase tracking-widest shadow-sm">
+            {filteredLogs.length} {filter !== 'all' ? filter : ''} KAYIT
           </span>
         </div>
       </div>
@@ -231,81 +231,81 @@ export function LogDetailsViewer() {
             key={level}
             onClick={() => setFilter(level)}
             className={cn(
-              'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+              'px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 border shadow-sm',
               filter === level
-                ? 'bg-indigo-500 text-white'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700',
+                ? 'bg-emerald-600 border-emerald-500 text-white shadow-emerald-500/20 shadow-lg'
+                : 'bg-white border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-300',
             )}
           >
-            {level.charAt(0).toUpperCase() + level.slice(1)}
+            {level}
           </button>
         ))}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-6 gap-3 mb-4">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg px-3 py-2">
-          <p className="text-[11px] text-slate-400 mb-1">Rows</p>
+        <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
+          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">ROWS</p>
           <input
             type="number"
             min={1}
-            className="w-full bg-slate-800 text-slate-100 text-sm rounded px-2 py-1 outline-none"
+            className="w-full bg-slate-50 border border-slate-100 text-slate-900 text-xs font-black rounded-lg px-2 py-1 outline-none"
             value={queryOptions.rows ?? 10}
             onChange={(event) =>
               setQueryOptions((prev) => ({ ...prev, rows: Number(event.target.value) || 10 }))
             }
           />
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg px-3 py-2">
-          <p className="text-[11px] text-slate-400 mb-1">Limit</p>
+        <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
+          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">LIMIT</p>
           <input
             type="number"
             min={1}
-            className="w-full bg-slate-800 text-slate-100 text-sm rounded px-2 py-1 outline-none"
+            className="w-full bg-slate-50 border border-slate-100 text-slate-900 text-xs font-black rounded-lg px-2 py-1 outline-none"
             value={queryOptions.limit ?? 10}
             onChange={(event) =>
               setQueryOptions((prev) => ({ ...prev, limit: Number(event.target.value) || 10 }))
             }
           />
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg px-3 py-2">
-          <p className="text-[11px] text-slate-400 mb-1">Start</p>
+        <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
+          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">START</p>
           <input
             type="number"
             min={0}
-            className="w-full bg-slate-800 text-slate-100 text-sm rounded px-2 py-1 outline-none"
+            className="w-full bg-slate-50 border border-slate-100 text-slate-900 text-xs font-black rounded-lg px-2 py-1 outline-none"
             value={queryOptions.start ?? 0}
             onChange={(event) =>
               setQueryOptions((prev) => ({ ...prev, start: Number(event.target.value) || 0 }))
             }
           />
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg px-3 py-2">
-          <p className="text-[11px] text-slate-400 mb-1">Order</p>
+        <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
+          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">ORDER</p>
           <select
-            className="w-full bg-slate-800 text-slate-100 text-sm rounded px-2 py-1 outline-none"
+            className="w-full bg-slate-50 border border-slate-100 text-slate-900 text-xs font-black rounded-lg px-2 py-1 outline-none"
             value={queryOptions.order ?? 'desc'}
             onChange={(event) =>
               setQueryOptions((prev) => ({ ...prev, order: event.target.value as 'asc' | 'desc' }))
             }
           >
-            <option value="desc">desc</option>
-            <option value="asc">asc</option>
+            <option value="desc">DESC</option>
+            <option value="asc">ASC</option>
           </select>
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg px-3 py-2">
-          <p className="text-[11px] text-slate-400 mb-1">From</p>
+        <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm col-span-1 md:col-span-1">
+          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">FROM</p>
           <input
             type="datetime-local"
-            className="w-full bg-slate-800 text-slate-100 text-sm rounded px-2 py-1 outline-none"
+            className="w-full bg-slate-50 border border-slate-100 text-slate-900 text-[10px] font-black rounded-lg px-2 py-1 outline-none"
             value={fromInput}
             onChange={(event) => setFromInput(event.target.value)}
           />
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg px-3 py-2">
-          <p className="text-[11px] text-slate-400 mb-1">Until</p>
+        <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
+          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">UNTIL</p>
           <input
             type="datetime-local"
-            className="w-full bg-slate-800 text-slate-100 text-sm rounded px-2 py-1 outline-none"
+            className="w-full bg-slate-50 border border-slate-100 text-slate-900 text-[10px] font-black rounded-lg px-2 py-1 outline-none"
             value={untilInput}
             onChange={(event) => setUntilInput(event.target.value)}
           />
@@ -313,13 +313,13 @@ export function LogDetailsViewer() {
       </div>
 
       {/* Logs Container */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden max-h-96 overflow-y-auto">
+      <div className="bg-white border border-slate-200 rounded-[2rem] overflow-hidden max-h-[600px] overflow-y-auto shadow-sm">
         {filteredLogs.length === 0 ? (
-          <div className="p-6 text-center text-slate-400">
-            <p>No logs found for the selected filter.</p>
+          <div className="p-12 text-center text-slate-400">
+            <p className="text-[10px] font-black uppercase tracking-widest">GÖSTERİLECEK KAYIT BULUNAMADI</p>
           </div>
         ) : (
-          <div className="divide-y divide-slate-800">
+          <div className="divide-y divide-slate-100">
             {filteredLogs.map((log, index) => {
               const metadata = extractPrimaryMeta(log);
               const rowKey = getLogRowKey(log, index);
@@ -328,83 +328,91 @@ export function LogDetailsViewer() {
               return (
                 <div
                   key={index}
-                  className="p-4 hover:bg-slate-800/30 transition-colors border-l-4 border-l-slate-700"
+                  className="p-6 hover:bg-slate-50/50 transition-colors border-l-4 border-l-slate-200"
                 >
                   {/* Top Row: Time, Method, URL */}
                   <div className="flex items-center justify-between gap-4 mb-3">
-                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <Clock className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                      <span className="text-xs text-slate-400 whitespace-nowrap">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                      <Clock className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                      <span className="text-[11px] text-slate-400 font-bold font-mono whitespace-nowrap">
                         {formatTime(log.timestamp)}
                       </span>
 
                       <span
                         className={cn(
-                          'px-2 py-0.5 rounded font-bold text-xs',
+                          'px-3 py-1 rounded-lg font-black text-[10px] uppercase tracking-widest border shadow-sm',
                           getMethodColor(metadata.method),
+                          metadata.method === 'GET' && 'bg-blue-50 border-blue-100',
+                          metadata.method === 'POST' && 'bg-emerald-50 border-emerald-100',
+                          metadata.method === 'DELETE' && 'bg-rose-50 border-rose-100',
+                          metadata.method === 'PUT' && 'bg-amber-50 border-amber-100',
                         )}
                       >
                         {metadata.method}
                       </span>
 
-                      <code className="text-xs text-slate-300 truncate bg-slate-800/50 px-2 py-0.5 rounded">
+                      <code className="text-[12px] text-slate-600 font-black truncate bg-slate-50 border border-slate-200 px-3 py-1 rounded-xl shadow-sm">
                         {metadata.url}
                       </code>
                     </div>
 
-                    <div className="flex items-center gap-3 flex-shrink-0">
+                    <div className="flex items-center gap-6 flex-shrink-0">
                       {/* Status Code */}
-                      <div className="flex items-center gap-1">
+                      <div className="flex flex-col items-end">
+                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-0.5">STATUS</p>
                         <span
-                          className={cn('text-sm font-bold', getStatusColor(metadata.statusCode))}
+                          className={cn('text-sm font-black font-mono', getStatusColor(metadata.statusCode))}
                         >
                           {metadata.statusCode}
                         </span>
                       </div>
 
                       {/* Duration */}
-                      <div className="text-xs text-slate-400">
-                        <span className="text-cyan-400 font-semibold">{metadata.duration}ms</span>
+                      <div className="flex flex-col items-end w-16">
+                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-0.5">LATENCY</p>
+                        <span className="text-xs text-amber-600 font-black font-mono">{metadata.duration}ms</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Bottom Row: Service, IP, Log Level */}
-                  <div className="flex items-center justify-between gap-4 text-xs">
+                  <div className="flex items-center justify-between gap-4 text-xs mt-4">
                     <div className="flex items-center gap-3">
-                      <span className="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">
+                      <span className="px-3 py-1 rounded-lg bg-slate-100 text-slate-600 font-black text-[9px] uppercase tracking-widest border border-slate-200">
                         {log.label}
                       </span>
 
-                      <span className="text-slate-500">
-                        <span className="text-slate-600">{log.context}</span>
+                      <span className="text-slate-400 font-black text-[9px] uppercase tracking-widest border-l border-slate-200 pl-3">
+                        {log.context}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-3 h-3 text-slate-500" />
-                      <span className="text-slate-400 font-mono">{metadata.ip}</span>
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2">
+                         <MapPin className="w-3 h-3 text-slate-400" />
+                         <span className="text-slate-400 font-black font-mono tracking-tighter">{metadata.ip}</span>
+                      </div>
 
                       <span
                         className={cn(
-                          'px-2 py-0.5 rounded border',
+                          'px-3 py-1 rounded-lg border font-black text-[9px] uppercase tracking-widest shadow-sm',
                           getLevelColor(normalizeLevel(log.level)),
                         )}
                       >
-                        {normalizeLevel(log.level).toUpperCase() || 'UNKNOWN'}
+                        {normalizeLevel(log.level)}
                       </span>
                     </div>
                   </div>
 
                   {hasMeta && (
-                    <div className="mt-3">
+                    <div className="mt-4">
                       <button
                         type="button"
                         onClick={() => toggleMeta(rowKey)}
-                        className="w-full flex items-center justify-between bg-slate-800/40 hover:bg-slate-800/60 rounded px-3 py-2 transition-colors"
+                        className="w-full flex items-center justify-between bg-white border border-slate-200 hover:bg-slate-50 rounded-xl px-4 py-2.5 transition-all shadow-sm"
                       >
-                        <span className="text-xs text-slate-300 font-medium">
-                          Metadata ({Object.keys(log.metadata).length})
+                        <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest">
+                          SİSTEM METADATA ({Object.keys(log.metadata).length})
                         </span>
                         {isExpanded ? (
                           <ChevronDown className="w-4 h-4 text-slate-400" />
@@ -414,13 +422,13 @@ export function LogDetailsViewer() {
                       </button>
 
                       {isExpanded && (
-                        <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3 animate-in slide-in-from-top-2 duration-300">
                           {Object.entries(log.metadata).map(([metaKey, metaValue]) => (
-                            <div key={metaKey} className="bg-slate-800/40 rounded px-2 py-1">
-                              <p className="text-[11px] text-slate-500">metadata.{metaKey}</p>
-                              <p className="text-xs text-slate-300 break-all">
+                            <div key={metaKey} className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 shadow-sm">
+                              <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 underline decoration-emerald-500/20 underline-offset-2">metadata.{metaKey}</p>
+                              <pre className="text-[11px] text-slate-600 font-bold break-all whitespace-pre-wrap font-mono">
                                 {stringifyValue(metaValue)}
-                              </p>
+                              </pre>
                             </div>
                           ))}
                         </div>
@@ -435,18 +443,18 @@ export function LogDetailsViewer() {
       </div>
 
       {/* Stats Footer */}
-      <div className="grid grid-cols-3 gap-3 pt-2">
-        <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-          <p className="text-xs text-green-400 mb-1">Success</p>
-          <p className="text-lg font-bold text-green-400">{summary.success}</p>
+      <div className="grid grid-cols-3 gap-4 pt-4">
+        <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 shadow-sm group">
+          <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1 group-hover:translate-x-1 transition-transform">BAŞARILI</p>
+          <p className="text-2xl font-black text-emerald-600 font-mono tracking-tighter">{summary.success}</p>
         </div>
-        <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-          <p className="text-xs text-blue-400 mb-1">Cache</p>
-          <p className="text-lg font-bold text-blue-400">{summary.cache}</p>
+        <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 shadow-sm group">
+          <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1 group-hover:translate-x-1 transition-transform">ÖN BELLEK</p>
+          <p className="text-2xl font-black text-blue-600 font-mono tracking-tighter">{summary.cache}</p>
         </div>
-        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-          <p className="text-xs text-red-400 mb-1">Errors</p>
-          <p className="text-lg font-bold text-red-400">{summary.errors}</p>
+        <div className="bg-rose-50 border border-rose-100 rounded-2xl p-4 shadow-sm group">
+          <p className="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-1 group-hover:translate-x-1 transition-transform">HATALI</p>
+          <p className="text-2xl font-black text-rose-600 font-mono tracking-tighter">{summary.errors}</p>
         </div>
       </div>
     </div>

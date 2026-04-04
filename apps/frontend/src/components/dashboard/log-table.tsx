@@ -30,41 +30,41 @@ export function LogTable({ logs = [] }: { logs?: any[] }) {
   }) : [];
 
   return (
-    <div className="w-full bg-transparent overflow-hidden">
-      <div className="overflow-x-auto h-[350px]">
+    <div className="w-full bg-white overflow-hidden rounded-2xl border border-slate-200 shadow-xl">
+      <div className="overflow-x-auto h-[350px] custom-scrollbar">
         <table className="w-full text-left border-collapse table-fixed">
-          <thead className="sticky top-0 z-10 bg-slate-900/90 backdrop-blur-md">
-            <tr className="border-b border-white/5">
-              <th className="w-20 px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">
+          <thead className="sticky top-0 z-10 bg-slate-50/90 backdrop-blur-md">
+            <tr className="border-b border-slate-200">
+              <th className="w-20 px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
                 Method
               </th>
-              <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">
+              <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
                 Path
               </th>
-              <th className="w-20 px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-center">
-                Durum
+              <th className="w-20 px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-center">
+                Status
               </th>
-              <th className="w-24 px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-right">
-                Gecikme
+              <th className="w-24 px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">
+                Latency
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className="divide-y divide-slate-50">
             {displayLogs.length === 0 ? (
               <tr>
                 <td colSpan={4} className="px-6 py-20 text-center">
-                  <p className="text-xs font-bold text-slate-600 uppercase tracking-widest italic">
-                    Veri akışı bekleniyor...
+                  <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em] italic">
+                    VERİ AKIŞI BEKLENİYOR...
                   </p>
                 </td>
               </tr>
             ) : (
               displayLogs.map((log, index) => (
-                <tr key={index} className="hover:bg-white/[0.03] transition-colors group">
+                <tr key={index} className="hover:bg-slate-50/50 transition-colors group">
                   <td className="px-6 py-4">
                     <span
                       className={cn(
-                        'px-2 py-0.5 rounded text-[9px] font-black tracking-widest border',
+                        'px-2 py-0.5 rounded text-[9px] font-black tracking-widest border shadow-sm',
                         getMethodColor(log.method),
                       )}
                     >
@@ -72,15 +72,15 @@ export function LogTable({ logs = [] }: { logs?: any[] }) {
                     </span>
                   </td>
                   <td className="px-6 py-4 truncate">
-                    <code className="text-xs text-slate-300 font-mono group-hover:text-indigo-300 transition-colors">
+                    <code className="text-[12px] text-slate-500 font-black font-mono group-hover:text-emerald-600 transition-colors uppercase tracking-tighter">
                       {log.url}
                     </code>
                   </td>
                   <td className="px-6 py-4 text-center">
                     <span
                       className={cn(
-                        'text-xs font-black font-mono',
-                        log.statusCode >= 400 ? 'text-rose-500' : 'text-emerald-500',
+                        'text-[12px] font-black font-mono',
+                        log.statusCode >= 400 ? 'text-rose-600' : 'text-emerald-600',
                       )}
                     >
                       {log.statusCode}
@@ -88,7 +88,7 @@ export function LogTable({ logs = [] }: { logs?: any[] }) {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
-                      <span className="text-[10px] text-slate-300 font-mono italic">
+                      <span className="text-[10px] text-slate-400 font-bold tabular-nums">
                         {log.responseTime}ms
                       </span>
                       <Zap className="w-3 h-3 text-amber-500" />
@@ -107,15 +107,15 @@ export function LogTable({ logs = [] }: { logs?: any[] }) {
 function getMethodColor(method: string) {
   switch (method) {
     case 'GET':
-      return 'bg-sky-500/10 text-sky-400 border border-sky-500/20';
+      return 'bg-sky-50 text-sky-600 border-sky-100';
     case 'POST':
-      return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+      return 'bg-emerald-50 text-emerald-600 border-emerald-100';
     case 'PUT':
-      return 'bg-amber-500/10 text-amber-400 border border-amber-500/20';
+      return 'bg-amber-50 text-amber-600 border-amber-100';
     case 'DELETE':
-      return 'bg-rose-500/10 text-rose-400 border border-rose-500/20';
+      return 'bg-rose-50 text-rose-600 border-rose-100';
     default:
-      return 'bg-slate-500/10 text-slate-400 border border-slate-500/20';
+      return 'bg-slate-50 text-slate-500 border-slate-200';
   }
 }
 
