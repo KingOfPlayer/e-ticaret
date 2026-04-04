@@ -100,7 +100,7 @@ export default function LogsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic drop-shadow-xl underline decoration-emerald-500 decoration-wavy underline-offset-8">
+          <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic drop-shadow-xl">
             SİSTEM KAYITLARI (LOGS)
           </h1>
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mt-5">Sistem olaylarını ve trafik akışını gerçek zamanlı izleyin</p>
