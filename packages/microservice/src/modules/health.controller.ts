@@ -1,5 +1,5 @@
-import { RoleGuard, Roles, UserRole } from "@e-ticaret/role";
-import { Controller, Get, Global, Injectable, UseGuards } from "@nestjs/common";
+import { RoleGuard, Roles, UserRole } from '@e-ticaret/role';
+import { Controller, Get, Global, Injectable, UseGuards } from '@nestjs/common';
 
 @Global()
 @Injectable()

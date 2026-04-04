@@ -24,7 +24,9 @@ export default function Home() {
             <span className="text-2xl font-black text-white tracking-tighter uppercase italic drop-shadow-2xl">
               ECOSYSTEM <span className="text-emerald-500">X</span>
             </span>
-            <span className="text-[8px] font-black text-slate-600 uppercase tracking-[0.4em] -mt-1">ULTIMATE GATEWAY</span>
+            <span className="text-[8px] font-black text-slate-600 uppercase tracking-[0.4em] -mt-1">
+              ULTIMATE GATEWAY
+            </span>
           </div>
         </div>
         <div className="flex items-center gap-8">
@@ -46,14 +48,16 @@ export default function Home() {
         </div>
 
         <h1 className="text-6xl md:text-9xl font-black text-white tracking-tighter mb-10 leading-[0.85] uppercase italic drop-shadow-2xl animate-in fade-in fill-mode-both duration-1000">
-          MİMARİNİZİ<br />
+          MİMARİNİZİ
+          <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-500">
             HIZLANDIRIN
           </span>
         </h1>
 
         <p className="text-base text-slate-500 max-w-2xl mb-16 leading-relaxed font-black uppercase tracking-widest opacity-80 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
-          TAM İZOLE MİKROSERVİS YAPISI, GERÇEK ZAMANLI TRAFİK ANALİZİ VE AKILLI ROTA YÖNETİMİ İLE GELECEĞİN E-TİCARET ALTYAPISI.
+          TAM İZOLE MİKROSERVİS YAPISI, GERÇEK ZAMANLI TRAFİK ANALİZİ VE AKILLI ROTA YÖNETİMİ İLE
+          GELECEĞİN E-TİCARET ALTYAPISI.
         </p>
 
         <div className="flex flex-col sm:row-start-3 sm:flex-row items-center gap-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500">
@@ -63,7 +67,10 @@ export default function Home() {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             KONTROL ÜNİTESİNE GİT
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" strokeWidth={3} />
+            <ArrowRight
+              className="w-5 h-5 group-hover:translate-x-2 transition-transform"
+              strokeWidth={3}
+            />
           </Link>
 
           <button className="flex items-center gap-4 px-10 py-6 bg-white/[0.01] border border-white/5 text-slate-400 rounded-[2rem] font-black text-[11px] uppercase tracking-[0.3em] hover:text-white hover:bg-white/[0.05] transition-all active:scale-95 group">
@@ -96,12 +103,20 @@ export default function Home() {
       <footer className="relative z-10 py-16 px-10 border-t border-white/5 mt-32 bg-white/[0.01]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="flex flex-col gap-2">
-            <p className="text-[10px] font-black text-slate-700 uppercase tracking-[0.4em]">© 2026 ECOSYSTEM X PROJECT</p>
-            <p className="text-[8px] font-black text-slate-800 uppercase tracking-[0.2em]">ALL SYSTEM PROTOCOLS SECURED</p>
+            <p className="text-[10px] font-black text-slate-700 uppercase tracking-[0.4em]">
+              © 2026 ECOSYSTEM X PROJECT
+            </p>
+            <p className="text-[8px] font-black text-slate-800 uppercase tracking-[0.2em]">
+              ALL SYSTEM PROTOCOLS SECURED
+            </p>
           </div>
           <div className="flex items-center gap-12 text-[10px] font-black text-slate-600 uppercase tracking-widest">
-            <span className="hover:text-emerald-500 cursor-pointer transition-colors px-2 py-1">GİZLİLİK</span>
-            <span className="hover:text-emerald-500 cursor-pointer transition-colors px-2 py-1">KULLANIM</span>
+            <span className="hover:text-emerald-500 cursor-pointer transition-colors px-2 py-1">
+              GİZLİLİK
+            </span>
+            <span className="hover:text-emerald-500 cursor-pointer transition-colors px-2 py-1">
+              KULLANIM
+            </span>
             <div className="flex items-center gap-4 bg-emerald-500/5 border border-emerald-500/10 px-5 py-2 rounded-full shadow-2xl shadow-emerald-950/20">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
               <span className="text-emerald-500">SİSTEM ÇEVRİMİÇİ</span>
@@ -120,8 +135,12 @@ function FeatureCard({ icon: Icon, title, desc }: any) {
       <div className="w-16 h-16 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-center mb-8 group-hover:bg-emerald-500/10 transition-all">
         <Icon className="w-8 h-8 text-emerald-500" />
       </div>
-      <h3 className="text-lg font-black text-white mb-4 tracking-tight uppercase italic">{title}</h3>
-      <p className="text-slate-600 leading-relaxed text-[11px] font-black tracking-widest uppercase opacity-80 group-hover:opacity-100 transition-opacity">{desc}</p>
+      <h3 className="text-lg font-black text-white mb-4 tracking-tight uppercase italic">
+        {title}
+      </h3>
+      <p className="text-slate-600 leading-relaxed text-[11px] font-black tracking-widest uppercase opacity-80 group-hover:opacity-100 transition-opacity">
+        {desc}
+      </p>
     </div>
   );
 }

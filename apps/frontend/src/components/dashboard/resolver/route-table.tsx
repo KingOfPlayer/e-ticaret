@@ -33,18 +33,23 @@ export function RouteTable({ routes, onDelete }: RouteTableProps) {
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="bg-slate-50/50">
-            <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">ERİŞİM ÖNEKİ (PREFIX)</th>
-            <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">HEDEF SERVİS (TARGET)</th>
-            <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">SİSTEM KODU</th>
-            <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-center">KAYIT KONTROL</th>
+            <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+              ERİŞİM ÖNEKİ (PREFIX)
+            </th>
+            <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+              HEDEF SERVİS (TARGET)
+            </th>
+            <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+              SİSTEM KODU
+            </th>
+            <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-center">
+              KAYIT KONTROL
+            </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100">
           {routes.map((route) => (
-            <tr
-              key={route._id}
-              className="hover:bg-slate-50/50 transition-all duration-300 group"
-            >
+            <tr key={route._id} className="hover:bg-slate-50/50 transition-all duration-300 group">
               <td className="px-8 py-6">
                 <span className="px-4 py-2 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-100 shadow-sm">
                   /{route.prefix}

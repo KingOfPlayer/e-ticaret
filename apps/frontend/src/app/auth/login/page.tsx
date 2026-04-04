@@ -37,7 +37,7 @@ export default function LoginPage() {
       {/* Background Orbs */}
       <div className="absolute top-1/4 -left-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
-      
+
       <div className="w-full max-w-[440px] relative z-10">
         <div className="text-center mb-12">
           <Link href="/" className="inline-flex flex-col items-center gap-4 group">
@@ -45,10 +45,12 @@ export default function LoginPage() {
               <Activity className="w-8 h-8 text-emerald-600" />
             </div>
             <div className="space-y-1">
-               <span className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic block">EcoSystem</span>
-               <div className="h-[2px] w-12 bg-emerald-500/40 mx-auto rounded-full overflow-hidden">
-                  <div className="w-full h-full bg-emerald-500 animate-[slide-right_2s_infinite]" />
-               </div>
+              <span className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic block">
+                EcoSystem
+              </span>
+              <div className="h-[2px] w-12 bg-emerald-500/40 mx-auto rounded-full overflow-hidden">
+                <div className="w-full h-full bg-emerald-500 animate-[slide-right_2s_infinite]" />
+              </div>
             </div>
           </Link>
         </div>
@@ -56,8 +58,12 @@ export default function LoginPage() {
         <div className="glass-panel border border-slate-200 rounded-[2.5rem] p-10 shadow-sm bg-white backdrop-blur-3xl relative overflow-hidden">
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-2 text-center mb-4">
-               <h1 className="text-2xl font-black text-slate-900 tracking-tight uppercase italic underline decoration-emerald-500 decoration-wavy underline-offset-8">ERİŞİM PANELİ</h1>
-               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mt-4">Sistem kimlik doğrulaması gereklidir</p>
+              <h1 className="text-2xl font-black text-slate-900 tracking-tight uppercase italic underline decoration-emerald-500 decoration-wavy underline-offset-8">
+                ERİŞİM PANELİ
+              </h1>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mt-4">
+                Sistem kimlik doğrulaması gereklidir
+              </p>
             </div>
 
             {error && (
@@ -67,7 +73,9 @@ export default function LoginPage() {
             )}
 
             <div className="space-y-3">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">KULLANICI KİMLİĞİ (E-POSTA)</label>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+                KULLANICI KİMLİĞİ (E-POSTA)
+              </label>
               <div className="relative group">
                 <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
                 <input
@@ -82,7 +90,9 @@ export default function LoginPage() {
 
             <div className="space-y-3">
               <div className="flex items-center justify-between ml-1">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">ERİŞİM ANAHTARI (ŞİFRE)</label>
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                  ERİŞİM ANAHTARI (ŞİFRE)
+                </label>
               </div>
               <div className="relative group">
                 <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
@@ -95,9 +105,12 @@ export default function LoginPage() {
                 />
               </div>
               <div className="flex justify-end pr-1">
-                 <Link href="#" className="text-[10px] font-black text-emerald-600/60 hover:text-emerald-500 uppercase tracking-widest transition-colors">
-                    Şifremi Unuttum
-                 </Link>
+                <Link
+                  href="#"
+                  className="text-[10px] font-black text-emerald-600/60 hover:text-emerald-500 uppercase tracking-widest transition-colors"
+                >
+                  Şifremi Unuttum
+                </Link>
               </div>
             </div>
 
@@ -118,18 +131,18 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-10 pt-10 border-t border-slate-100 text-center">
-             <p className="text-slate-400 text-[10px] uppercase font-black tracking-[0.2em]">
-               Kayıtlı bir hesabınız bulunmuyor mu?
-             </p>
-             <Link
-               href="/auth/register"
-               className="inline-block mt-3 text-emerald-600 font-black text-[11px] uppercase tracking-[0.2em] hover:text-emerald-500 transition-colors border-b border-emerald-500/20 pb-0.5"
-             >
-               YENİ ERİŞİM TALEBİ OLUŞTUR
-             </Link>
+            <p className="text-slate-400 text-[10px] uppercase font-black tracking-[0.2em]">
+              Kayıtlı bir hesabınız bulunmuyor mu?
+            </p>
+            <Link
+              href="/auth/register"
+              className="inline-block mt-3 text-emerald-600 font-black text-[11px] uppercase tracking-[0.2em] hover:text-emerald-500 transition-colors border-b border-emerald-500/20 pb-0.5"
+            >
+              YENİ ERİŞİM TALEBİ OLUŞTUR
+            </Link>
           </div>
         </div>
-        
+
         <p className="text-center mt-12 text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">
           SECURE PROTOCOL v4.0.2
         </p>
@@ -137,4 +150,3 @@ export default function LoginPage() {
     </div>
   );
 }
-

@@ -64,7 +64,9 @@ export function SystemStatus() {
 
       <div className="flex items-center gap-1.5 border-l border-slate-100 pl-4">
         <ShieldCheck className="w-3 h-3 text-emerald-600" />
-        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Güvenli</span>
+        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+          Güvenli
+        </span>
       </div>
     </div>
   );

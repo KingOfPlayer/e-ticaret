@@ -147,15 +147,20 @@ export default function OrdersPage() {
                 {filteredOrders.length === 0 && !loading ? (
                   <tr>
                     <td colSpan={5} className="px-8 py-24 text-center">
-                       <div className="flex flex-col items-center gap-6 opacity-40">
-                          <ShoppingBag className="w-20 h-20 text-slate-300" strokeWidth={1} />
-                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">AKTİF SİPARİŞ VERİSİ YOK</p>
-                       </div>
+                      <div className="flex flex-col items-center gap-6 opacity-40">
+                        <ShoppingBag className="w-20 h-20 text-slate-300" strokeWidth={1} />
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">
+                          AKTİF SİPARİŞ VERİSİ YOK
+                        </p>
+                      </div>
                     </td>
                   </tr>
                 ) : (
                   filteredOrders.map((order) => (
-                    <tr key={order._id} className="hover:bg-slate-50/50 transition-all duration-300 group text-slate-900 font-medium">
+                    <tr
+                      key={order._id}
+                      className="hover:bg-slate-50/50 transition-all duration-300 group text-slate-900 font-medium"
+                    >
                       <td className="px-8 py-6">
                         <span className="text-[13px] font-black text-slate-900 group-hover:text-emerald-600 transition-colors uppercase tracking-tight">
                           {order.customerName}
@@ -179,28 +184,30 @@ export default function OrdersPage() {
                       </td>
                       <td className="px-8 py-6 text-right">
                         <div className="flex flex-col items-end">
-                           <span className="text-[14px] font-black text-slate-900 tabular-nums tracking-tighter">
-                             ₺{order.totalAmount.toLocaleString('tr-TR')}
-                           </span>
-                           <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mt-1">BRÜT TUTAR</span>
+                          <span className="text-[14px] font-black text-slate-900 tabular-nums tracking-tighter">
+                            ₺{order.totalAmount.toLocaleString('tr-TR')}
+                          </span>
+                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mt-1">
+                            BRÜT TUTAR
+                          </span>
                         </div>
                       </td>
                       <td className="px-8 py-6 text-right">
                         <div className="flex items-center justify-end gap-3">
-                            <button
-                              onClick={() => handleEdit(order)}
-                              className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 border border-transparent hover:border-emerald-100 transition-all duration-300"
-                              title="Güncelle"
-                            >
-                              <Edit2 className="w-4 h-4" />
-                            </button>
-                            <button
-                              onClick={() => handleDelete(order._id)}
-                              className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-100 transition-all duration-300"
-                              title="Sil"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
+                          <button
+                            onClick={() => handleEdit(order)}
+                            className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 border border-transparent hover:border-emerald-100 transition-all duration-300"
+                            title="Güncelle"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(order._id)}
+                            className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-100 transition-all duration-300"
+                            title="Sil"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -247,4 +254,3 @@ function getStatusIcon(status: string) {
       return null;
   }
 }
-

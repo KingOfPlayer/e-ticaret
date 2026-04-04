@@ -104,15 +104,17 @@ export default function ApiTesterPage() {
                 className={cn(
                   'text-[8px] font-black px-2 py-1 rounded-lg uppercase w-12 text-center border transition-all duration-300',
                   ep.method === 'POST'
-                    ? selectedEndpoint.id === ep.id ? 'bg-emerald-100 border-emerald-200 text-emerald-700' : 'bg-slate-100 border-slate-200 text-emerald-600'
-                    : selectedEndpoint.id === ep.id ? 'bg-blue-100 border-blue-200 text-blue-700' : 'bg-slate-100 border-slate-200 text-blue-600',
+                    ? selectedEndpoint.id === ep.id
+                      ? 'bg-emerald-100 border-emerald-200 text-emerald-700'
+                      : 'bg-slate-100 border-slate-200 text-emerald-600'
+                    : selectedEndpoint.id === ep.id
+                      ? 'bg-blue-100 border-blue-200 text-blue-700'
+                      : 'bg-slate-100 border-slate-200 text-blue-600',
                 )}
               >
                 {ep.method}
               </div>
-              <span className="text-[11px] font-black truncate tracking-tight">
-                {ep.label}
-              </span>
+              <span className="text-[11px] font-black truncate tracking-tight">{ep.label}</span>
             </button>
           ))}
         </div>
@@ -122,24 +124,28 @@ export default function ApiTesterPage() {
       <div className="flex-1 glass-panel rounded-[2rem] flex flex-col overflow-hidden border border-slate-200 p-8 space-y-8 shadow-sm bg-white">
         <div className="space-y-6 flex flex-col h-full">
           <div className="flex items-center justify-between">
-             <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.4em]">
-               TERMINAL KONTROL
-             </h3>
-             <div className="flex items-center gap-2">
-                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">READY TO DISPATCH</span>
-                <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)] border border-emerald-400/20" />
-             </div>
+            <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.4em]">
+              TERMINAL KONTROL
+            </h3>
+            <div className="flex items-center gap-2">
+              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                READY TO DISPATCH
+              </span>
+              <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)] border border-emerald-400/20" />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-             {/* URL Input */}
+            {/* URL Input */}
             <div className="md:col-span-3 space-y-2.5">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.22em] ml-1">
                 DAĞITIM ROTA ADRESİ (URL)
               </label>
               <div className="flex items-center gap-4 bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus-within:ring-4 focus-within:ring-emerald-500/10 transition-all shadow-sm">
                 <Globe className="w-4 h-4 text-emerald-600" />
-                <span className="text-xs text-slate-400 font-black tabular-nums opacity-50 uppercase tracking-tighter">http://gateway:5000</span>
+                <span className="text-xs text-slate-400 font-black tabular-nums opacity-50 uppercase tracking-tighter">
+                  http://gateway:5000
+                </span>
                 <input
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
@@ -178,7 +184,9 @@ export default function ApiTesterPage() {
             <div className="flex items-center gap-4 bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 opacity-70">
               <Lock className="w-4 h-4 text-emerald-600" />
               <input
-                value={token ? `BEARER_TOKEN/${token.substring(0, 48)}...` : 'YETKİ ANAHTARI BULUNAMADI'}
+                value={
+                  token ? `BEARER_TOKEN/${token.substring(0, 48)}...` : 'YETKİ ANAHTARI BULUNAMADI'
+                }
                 disabled
                 className="flex-1 bg-transparent border-none outline-none text-[11px] text-slate-400 font-black tracking-widest uppercase"
               />
@@ -226,7 +234,7 @@ export default function ApiTesterPage() {
                 ) : (
                   <div className="h-full flex flex-col items-center justify-center text-slate-700 uppercase font-black text-[10px] tracking-[0.4em] gap-4">
                     <div className="w-12 h-1 bg-slate-800 rounded-full overflow-hidden">
-                       <div className="w-1/2 h-full bg-emerald-500/20 animate-[slide-right_2s_infinite]" />
+                      <div className="w-1/2 h-full bg-emerald-500/20 animate-[slide-right_2s_infinite]" />
                     </div>
                     VERİ BEKLENİYOR
                   </div>
@@ -250,4 +258,3 @@ export default function ApiTesterPage() {
     </div>
   );
 }
-

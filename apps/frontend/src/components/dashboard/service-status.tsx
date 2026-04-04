@@ -53,7 +53,9 @@ export function ServiceStatus() {
             <div
               className={cn(
                 'p-3.5 rounded-2xl transition-all duration-500 border group-hover:scale-110 shadow-xl',
-                service.status === 'online' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-emerald-950/20' : 'bg-rose-500/10 text-rose-400 border-rose-500/20 shadow-rose-950/20',
+                service.status === 'online'
+                  ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-emerald-950/20'
+                  : 'bg-rose-500/10 text-rose-400 border-rose-500/20 shadow-rose-950/20',
               )}
             >
               <service.icon className="w-5 h-5" />
@@ -62,20 +64,22 @@ export function ServiceStatus() {
               <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-1">
                 {service.name}
               </p>
-              <p className="text-[11px] font-black font-mono text-white/30 uppercase tracking-tighter">PORT: {service.port}</p>
+              <p className="text-[11px] font-black font-mono text-white/30 uppercase tracking-tighter">
+                PORT: {service.port}
+              </p>
             </div>
           </div>
 
           <div className="flex flex-col items-end gap-2">
             <div className="flex items-center gap-2.5">
-               <span 
+              <span
                 className={cn(
-                  "text-[9px] font-black tracking-widest uppercase",
-                  service.status === 'online' ? "text-emerald-500/60" : "text-rose-500/60"
+                  'text-[9px] font-black tracking-widest uppercase',
+                  service.status === 'online' ? 'text-emerald-500/60' : 'text-rose-500/60',
                 )}
-               >
-                 {service.status === 'online' ? 'ACTIVE' : 'OFFLINE'}
-               </span>
+              >
+                {service.status === 'online' ? 'ACTIVE' : 'OFFLINE'}
+              </span>
               <span
                 className={cn(
                   'relative flex h-2 w-2',
@@ -99,4 +103,3 @@ export function ServiceStatus() {
     </div>
   );
 }
-

@@ -84,7 +84,9 @@ export function LogStatistics() {
         <div className="inline-block animate-spin">
           <Activity className="w-6 h-6 text-emerald-500" />
         </div>
-        <p className="text-slate-400 mt-3 text-[10px] font-black uppercase tracking-widest">Statistics loading...</p>
+        <p className="text-slate-400 mt-3 text-[10px] font-black uppercase tracking-widest">
+          Statistics loading...
+        </p>
       </div>
     );
   }
@@ -94,7 +96,9 @@ export function LogStatistics() {
       <div className="w-full bg-rose-50 border border-rose-100 rounded-2xl p-6 shadow-sm">
         <div className="flex items-center gap-3 text-rose-600">
           <AlertCircle className="w-5 h-5" />
-          <p className="text-xs font-black uppercase tracking-tight">Failed to load statistics: {error}</p>
+          <p className="text-xs font-black uppercase tracking-tight">
+            Failed to load statistics: {error}
+          </p>
         </div>
       </div>
     );
@@ -104,26 +108,42 @@ export function LogStatistics() {
     <div className="w-full space-y-6">
       <div className="flex items-center gap-3 mb-6">
         <TrendingUp className="w-5 h-5 text-emerald-500" />
-        <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight italic">API Statistics</h3>
+        <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight italic">
+          API Statistics
+        </h3>
       </div>
 
       <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xl">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 shadow-sm">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Routes</p>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+              Total Routes
+            </p>
             <p className="text-2xl font-black text-slate-900 tabular-nums">{overall.totalRoutes}</p>
           </div>
           <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 shadow-sm">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Requests</p>
-            <p className="text-2xl font-black text-slate-900 tabular-nums">{overall.totalRequests}</p>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+              Total Requests
+            </p>
+            <p className="text-2xl font-black text-slate-900 tabular-nums">
+              {overall.totalRequests}
+            </p>
           </div>
           <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 shadow-sm">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Error Count (300-598)</p>
-            <p className="text-2xl font-black text-rose-600 tabular-nums">{overall.errorStatusCount}</p>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+              Error Count (300-598)
+            </p>
+            <p className="text-2xl font-black text-rose-600 tabular-nums">
+              {overall.errorStatusCount}
+            </p>
           </div>
           <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 shadow-sm">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Overall Error Rate</p>
-            <p className="text-2xl font-black text-rose-600 tabular-nums">{overall.errorRate.toFixed(2)}%</p>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+              Overall Error Rate
+            </p>
+            <p className="text-2xl font-black text-rose-600 tabular-nums">
+              {overall.errorRate.toFixed(2)}%
+            </p>
           </div>
         </div>
       </div>
@@ -144,15 +164,24 @@ export function LogStatistics() {
               key={route}
               className="grid grid-cols-12 gap-3 px-6 py-4 text-[12px] hover:bg-slate-50/50 transition-colors group"
             >
-              <div className="col-span-4 text-emerald-600 font-black truncate uppercase tracking-tight" title={route}>
+              <div
+                className="col-span-4 text-emerald-600 font-black truncate uppercase tracking-tight"
+                title={route}
+              >
                 {route}
               </div>
-              <div className="col-span-2 text-right text-slate-400 font-bold tabular-nums group-hover:text-slate-900 transition-colors">{stats.totalRequests}</div>
+              <div className="col-span-2 text-right text-slate-400 font-bold tabular-nums group-hover:text-slate-900 transition-colors">
+                {stats.totalRequests}
+              </div>
               <div className="col-span-2 text-right text-slate-900 font-black tabular-nums">
                 {stats.averageResponseTime.toFixed(2)}
               </div>
-              <div className="col-span-1 text-right text-emerald-600 font-bold tabular-nums">{stats.minResponseTime}</div>
-              <div className="col-span-1 text-right text-orange-600 font-bold tabular-nums">{stats.maxResponseTime}</div>
+              <div className="col-span-1 text-right text-emerald-600 font-bold tabular-nums">
+                {stats.minResponseTime}
+              </div>
+              <div className="col-span-1 text-right text-orange-600 font-bold tabular-nums">
+                {stats.maxResponseTime}
+              </div>
               <div
                 className={cn(
                   'col-span-2 text-right font-black uppercase tracking-widest text-[10px]',

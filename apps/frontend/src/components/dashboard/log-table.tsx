@@ -15,19 +15,22 @@ interface Log {
 }
 
 export function LogTable({ logs = [] }: { logs?: any[] }) {
-  const displayLogs = logs.length > 0 ? logs.map((log) => {
-    // Extract metadata from nested structure
-    const metadata = log.metadata?.['0'] || {};
-    
-    return {
-      method: metadata.method || 'UNKNOWN',
-      url: metadata.url || '/',
-      label: log.label || 'system',
-      statusCode: metadata.statusCode || 200,
-      responseTime: metadata.duration || 0,
-      timestamp: log.timestamp,
-    };
-  }) : [];
+  const displayLogs =
+    logs.length > 0
+      ? logs.map((log) => {
+          // Extract metadata from nested structure
+          const metadata = log.metadata?.['0'] || {};
+
+          return {
+            method: metadata.method || 'UNKNOWN',
+            url: metadata.url || '/',
+            label: log.label || 'system',
+            statusCode: metadata.statusCode || 200,
+            responseTime: metadata.duration || 0,
+            timestamp: log.timestamp,
+          };
+        })
+      : [];
 
   return (
     <div className="w-full bg-white overflow-hidden rounded-2xl border border-slate-200 shadow-xl">

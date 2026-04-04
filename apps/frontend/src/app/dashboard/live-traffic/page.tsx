@@ -55,7 +55,9 @@ export default function LiveTrafficPage() {
       })
       .sort((a, b) => {
         // Sort by time descending (most recent first)
-        return new Date(`1970/01/01 ${b.time}`).getTime() - new Date(`1970/01/01 ${a.time}`).getTime();
+        return (
+          new Date(`1970/01/01 ${b.time}`).getTime() - new Date(`1970/01/01 ${a.time}`).getTime()
+        );
       });
   }, []);
 
@@ -112,14 +114,18 @@ export default function LiveTrafficPage() {
           </p>
         </div>
         <div className="px-6 py-3 glass-panel border border-emerald-100 bg-emerald-50 rounded-2xl flex items-center gap-3 shadow-sm">
-          <div className={cn(
-            'w-2.5 h-2.5 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.3)]',
-            loading ? 'bg-amber-500' : 'bg-emerald-500'
-          )} />
-          <span className={cn(
-            'text-[10px] font-black uppercase tracking-widest',
-            loading ? 'text-amber-600' : 'text-emerald-600'
-          )}>
+          <div
+            className={cn(
+              'w-2.5 h-2.5 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.3)]',
+              loading ? 'bg-amber-500' : 'bg-emerald-500',
+            )}
+          />
+          <span
+            className={cn(
+              'text-[10px] font-black uppercase tracking-widest',
+              loading ? 'text-amber-600' : 'text-emerald-600',
+            )}
+          >
             {loading ? 'YÜKLENİYOR...' : 'GERÇEK ZAMANLI AKTİF'}
           </span>
         </div>
@@ -143,7 +149,7 @@ export default function LiveTrafficPage() {
                 'px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 border shadow-sm',
                 filter === f
                   ? 'bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-500/20'
-                  : 'bg-white border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-300'
+                  : 'bg-white border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-300',
               )}
             >
               {f}
@@ -155,8 +161,10 @@ export default function LiveTrafficPage() {
         <div className="overflow-y-auto max-h-[700px] custom-scrollbar">
           {traffic.length === 0 && !loading ? (
             <div className="flex flex-col items-center justify-center py-32 gap-6 opacity-40">
-               <Activity className="w-20 h-20 text-slate-300" strokeWidth={1} />
-               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">HİÇBİR VERİ AKIŞI BULUNAMADI</p>
+              <Activity className="w-20 h-20 text-slate-300" strokeWidth={1} />
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">
+                HİÇBİR VERİ AKIŞI BULUNAMADI
+              </p>
             </div>
           ) : (
             <div className="divide-y divide-slate-100">
@@ -184,27 +192,37 @@ export default function LiveTrafficPage() {
 
                   <div className="flex items-center gap-12">
                     <div className="flex flex-col items-end">
-                       <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">DURUM</p>
-                       <span
-                         className={cn(
-                           'text-[14px] font-black font-mono tracking-tighter shadow-sm px-2 rounded-lg',
-                           t.status < 400 ? 'text-emerald-600 bg-emerald-50/30' : 'text-rose-600 bg-rose-50/30',
-                         )}
-                       >
-                         {t.status}
-                       </span>
+                      <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                        DURUM
+                      </p>
+                      <span
+                        className={cn(
+                          'text-[14px] font-black font-mono tracking-tighter shadow-sm px-2 rounded-lg',
+                          t.status < 400
+                            ? 'text-emerald-600 bg-emerald-50/30'
+                            : 'text-rose-600 bg-rose-50/30',
+                        )}
+                      >
+                        {t.status}
+                      </span>
                     </div>
-                    
+
                     <div className="flex flex-col items-end w-20">
-                       <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">LATENCY</p>
-                       <span className="text-[12px] text-slate-400 font-black font-mono">
-                         {t.latency}
-                       </span>
+                      <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                        LATENCY
+                      </p>
+                      <span className="text-[12px] text-slate-400 font-black font-mono">
+                        {t.latency}
+                      </span>
                     </div>
 
                     <div className="flex flex-col items-end w-24">
-                       <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">TIMESTAMP</p>
-                       <span className="text-[12px] text-slate-500 font-black font-mono">{t.time}</span>
+                      <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                        TIMESTAMP
+                      </p>
+                      <span className="text-[12px] text-slate-500 font-black font-mono">
+                        {t.time}
+                      </span>
                     </div>
                   </div>
                 </div>

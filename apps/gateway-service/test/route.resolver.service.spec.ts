@@ -174,6 +174,6 @@ describe('RouteResolverService', () => {
     });
 
     await service.deleteRoute('test1');
-    expect(mongodbMonk.deleteOne).toHaveBeenCalledWith({ prefix: 'test1'});
+    expect(mongodbMonk.deleteOne).toHaveBeenCalledWith({ prefix: 'test1' });
   });
 });

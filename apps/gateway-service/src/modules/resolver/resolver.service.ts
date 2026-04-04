@@ -62,7 +62,7 @@ export class ResolverService implements OnModuleInit {
       {
         prefix: 'orders',
         target: process.env.ORDER_SERVICE_URL || 'http://127.0.0.1:5003',
-      }
+      },
     ];
 
     for (const seed of RouteSeed) {

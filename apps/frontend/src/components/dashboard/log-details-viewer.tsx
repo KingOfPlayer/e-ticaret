@@ -71,7 +71,7 @@ export function LogDetailsViewer() {
       if (fromInput) query.from = new Date(fromInput).toISOString();
       if (untilInput) query.until = new Date(untilInput).toISOString();
 
-      const data: LogsResponse = await api.get('/log',true, query);
+      const data: LogsResponse = await api.get('/log', true, query);
       setLogs(normalizeLogs(data));
       setError(null);
     } catch (err) {
@@ -195,7 +195,9 @@ export function LogDetailsViewer() {
         <div className="inline-block animate-spin">
           <Activity className="w-6 h-6 text-emerald-500" />
         </div>
-        <p className="text-slate-400 mt-2 font-black text-[10px] uppercase tracking-widest">VERİLER ALINIYOR...</p>
+        <p className="text-slate-400 mt-2 font-black text-[10px] uppercase tracking-widest">
+          VERİLER ALINIYOR...
+        </p>
       </div>
     );
   }
@@ -217,7 +219,9 @@ export function LogDetailsViewer() {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <Activity className="w-5 h-5 text-emerald-600" />
-          <h3 className="text-xl font-black text-slate-900 uppercase italic tracking-tighter">İSTEK KÜTÜPHANESİ</h3>
+          <h3 className="text-xl font-black text-slate-900 uppercase italic tracking-tighter">
+            İSTEK KÜTÜPHANESİ
+          </h3>
           <span className="ml-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black border border-emerald-100 uppercase tracking-widest shadow-sm">
             {filteredLogs.length} {filter !== 'all' ? filter : ''} KAYIT
           </span>
@@ -244,7 +248,9 @@ export function LogDetailsViewer() {
 
       <div className="grid grid-cols-1 md:grid-cols-6 gap-3 mb-4">
         <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
-          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">ROWS</p>
+          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">
+            ROWS
+          </p>
           <input
             type="number"
             min={1}
@@ -256,7 +262,9 @@ export function LogDetailsViewer() {
           />
         </div>
         <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
-          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">LIMIT</p>
+          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">
+            LIMIT
+          </p>
           <input
             type="number"
             min={1}
@@ -268,7 +276,9 @@ export function LogDetailsViewer() {
           />
         </div>
         <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
-          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">START</p>
+          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">
+            START
+          </p>
           <input
             type="number"
             min={0}
@@ -280,7 +290,9 @@ export function LogDetailsViewer() {
           />
         </div>
         <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
-          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">ORDER</p>
+          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">
+            ORDER
+          </p>
           <select
             className="w-full bg-slate-50 border border-slate-100 text-slate-900 text-xs font-black rounded-lg px-2 py-1 outline-none"
             value={queryOptions.order ?? 'desc'}
@@ -293,7 +305,9 @@ export function LogDetailsViewer() {
           </select>
         </div>
         <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm col-span-1 md:col-span-1">
-          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">FROM</p>
+          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">
+            FROM
+          </p>
           <input
             type="datetime-local"
             className="w-full bg-slate-50 border border-slate-100 text-slate-900 text-[10px] font-black rounded-lg px-2 py-1 outline-none"
@@ -302,7 +316,9 @@ export function LogDetailsViewer() {
           />
         </div>
         <div className="bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
-          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">UNTIL</p>
+          <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-widest">
+            UNTIL
+          </p>
           <input
             type="datetime-local"
             className="w-full bg-slate-50 border border-slate-100 text-slate-900 text-[10px] font-black rounded-lg px-2 py-1 outline-none"
@@ -316,7 +332,9 @@ export function LogDetailsViewer() {
       <div className="bg-white border border-slate-200 rounded-[2rem] overflow-hidden max-h-[600px] overflow-y-auto shadow-sm">
         {filteredLogs.length === 0 ? (
           <div className="p-12 text-center text-slate-400">
-            <p className="text-[10px] font-black uppercase tracking-widest">GÖSTERİLECEK KAYIT BULUNAMADI</p>
+            <p className="text-[10px] font-black uppercase tracking-widest">
+              GÖSTERİLECEK KAYIT BULUNAMADI
+            </p>
           </div>
         ) : (
           <div className="divide-y divide-slate-100">
@@ -359,9 +377,14 @@ export function LogDetailsViewer() {
                     <div className="flex items-center gap-6 flex-shrink-0">
                       {/* Status Code */}
                       <div className="flex flex-col items-end">
-                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-0.5">STATUS</p>
+                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-0.5">
+                          STATUS
+                        </p>
                         <span
-                          className={cn('text-sm font-black font-mono', getStatusColor(metadata.statusCode))}
+                          className={cn(
+                            'text-sm font-black font-mono',
+                            getStatusColor(metadata.statusCode),
+                          )}
                         >
                           {metadata.statusCode}
                         </span>
@@ -369,8 +392,12 @@ export function LogDetailsViewer() {
 
                       {/* Duration */}
                       <div className="flex flex-col items-end w-16">
-                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-0.5">LATENCY</p>
-                        <span className="text-xs text-amber-600 font-black font-mono">{metadata.duration}ms</span>
+                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-0.5">
+                          LATENCY
+                        </p>
+                        <span className="text-xs text-amber-600 font-black font-mono">
+                          {metadata.duration}ms
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -389,8 +416,10 @@ export function LogDetailsViewer() {
 
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
-                         <MapPin className="w-3 h-3 text-slate-400" />
-                         <span className="text-slate-400 font-black font-mono tracking-tighter">{metadata.ip}</span>
+                        <MapPin className="w-3 h-3 text-slate-400" />
+                        <span className="text-slate-400 font-black font-mono tracking-tighter">
+                          {metadata.ip}
+                        </span>
                       </div>
 
                       <span
@@ -424,8 +453,13 @@ export function LogDetailsViewer() {
                       {isExpanded && (
                         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3 animate-in slide-in-from-top-2 duration-300">
                           {Object.entries(log.metadata).map(([metaKey, metaValue]) => (
-                            <div key={metaKey} className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 shadow-sm">
-                              <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 underline decoration-emerald-500/20 underline-offset-2">metadata.{metaKey}</p>
+                            <div
+                              key={metaKey}
+                              className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 shadow-sm"
+                            >
+                              <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 underline decoration-emerald-500/20 underline-offset-2">
+                                metadata.{metaKey}
+                              </p>
                               <pre className="text-[11px] text-slate-600 font-bold break-all whitespace-pre-wrap font-mono">
                                 {stringifyValue(metaValue)}
                               </pre>
@@ -445,16 +479,28 @@ export function LogDetailsViewer() {
       {/* Stats Footer */}
       <div className="grid grid-cols-3 gap-4 pt-4">
         <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 shadow-sm group">
-          <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1 group-hover:translate-x-1 transition-transform">BAŞARILI</p>
-          <p className="text-2xl font-black text-emerald-600 font-mono tracking-tighter">{summary.success}</p>
+          <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1 group-hover:translate-x-1 transition-transform">
+            BAŞARILI
+          </p>
+          <p className="text-2xl font-black text-emerald-600 font-mono tracking-tighter">
+            {summary.success}
+          </p>
         </div>
         <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 shadow-sm group">
-          <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1 group-hover:translate-x-1 transition-transform">ÖN BELLEK</p>
-          <p className="text-2xl font-black text-blue-600 font-mono tracking-tighter">{summary.cache}</p>
+          <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1 group-hover:translate-x-1 transition-transform">
+            ÖN BELLEK
+          </p>
+          <p className="text-2xl font-black text-blue-600 font-mono tracking-tighter">
+            {summary.cache}
+          </p>
         </div>
         <div className="bg-rose-50 border border-rose-100 rounded-2xl p-4 shadow-sm group">
-          <p className="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-1 group-hover:translate-x-1 transition-transform">HATALI</p>
-          <p className="text-2xl font-black text-rose-600 font-mono tracking-tighter">{summary.errors}</p>
+          <p className="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-1 group-hover:translate-x-1 transition-transform">
+            HATALI
+          </p>
+          <p className="text-2xl font-black text-rose-600 font-mono tracking-tighter">
+            {summary.errors}
+          </p>
         </div>
       </div>
     </div>

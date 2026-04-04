@@ -64,8 +64,12 @@ export function Sidebar() {
           <Activity className="w-6 h-6 text-emerald-600" />
         </div>
         <div className="flex flex-col">
-          <span className="text-lg font-black text-slate-900 tracking-widest uppercase italic">Dispatcher</span>
-          <span className="text-[9px] font-bold text-emerald-600/70 tracking-[0.3em] uppercase">Control Unit</span>
+          <span className="text-lg font-black text-slate-900 tracking-widest uppercase italic">
+            Dispatcher
+          </span>
+          <span className="text-[9px] font-bold text-emerald-600/70 tracking-[0.3em] uppercase">
+            Control Unit
+          </span>
         </div>
       </div>
 
@@ -131,4 +135,3 @@ export function Sidebar() {
     </div>
   );
 }
-
