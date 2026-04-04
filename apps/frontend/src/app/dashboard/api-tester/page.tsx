@@ -187,7 +187,7 @@ export default function ApiTesterPage() {
 
           <div className="flex gap-8 min-h-0 flex-1">
             {/* Body Editor */}
-            <div className="flex-1 space-y-2.5 flex flex-col">
+            <div className="flex-1 min-w-0 space-y-2.5 flex flex-col">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.22em] ml-1">
                 İSTEK GÖVDESİ (PAYLOAD JSON)
               </label>
@@ -200,7 +200,7 @@ export default function ApiTesterPage() {
             </div>
 
             {/* Response Area */}
-            <div className="flex-1 flex flex-col space-y-2.5 min-h-0">
+            <div className="flex-1 min-w-0 flex flex-col space-y-2.5">
               <div className="flex items-center justify-between ml-1 leading-none">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.22em]">
                   SUNUCU YANITI (RESPONSE)
@@ -220,7 +220,7 @@ export default function ApiTesterPage() {
               </div>
               <div className="flex-1 bg-slate-900 border border-slate-950 rounded-2xl p-6 overflow-auto custom-scrollbar shadow-inner">
                 {response ? (
-                  <pre className="text-[12px] font-bold font-mono text-emerald-400 leading-relaxed selection:bg-emerald-500/20 selection:text-emerald-100">
+                  <pre className="text-[12px] font-bold font-mono text-emerald-400 leading-relaxed selection:bg-emerald-500/20 selection:text-emerald-100 whitespace-pre-wrap break-all">
                     {JSON.stringify(response.data, null, 2)}
                   </pre>
                 ) : (
