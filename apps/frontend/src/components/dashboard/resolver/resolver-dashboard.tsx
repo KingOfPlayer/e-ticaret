@@ -131,7 +131,10 @@ export function ResolverDashboard() {
               <p className="font-black">SİSTEM HATASI</p>
               <p className="text-rose-600/60 mt-1 uppercase tracking-tighter">{error}</p>
             </div>
-            <button onClick={() => setError(null)} className="text-rose-400 hover:text-rose-600 transition-colors">
+            <button
+              onClick={() => setError(null)}
+              className="text-rose-400 hover:text-rose-600 transition-colors"
+            >
               ✕
             </button>
           </div>
@@ -148,21 +151,27 @@ export function ResolverDashboard() {
         <div className="glass-panel border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm bg-white">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-32 gap-6">
-               <div className="relative">
-                  <div className="w-16 h-16 border-4 border-emerald-50 border-t-emerald-500 rounded-full animate-spin" />
-                  <RefreshCw className="w-6 h-6 text-emerald-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-               </div>
-               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">VERİLER ALINIYOR...</p>
+              <div className="relative">
+                <div className="w-16 h-16 border-4 border-emerald-50 border-t-emerald-500 rounded-full animate-spin" />
+                <RefreshCw className="w-6 h-6 text-emerald-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+              </div>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">
+                VERİLER ALINIYOR...
+              </p>
             </div>
           ) : routes.length > 0 ? (
             <RouteTable routes={routes} onDelete={handleDeleteRoute} />
           ) : (
             <div className="flex flex-col items-center justify-center py-32 gap-8 opacity-40">
-               <RefreshCw className="w-20 h-20 text-slate-300" strokeWidth={1} />
-               <div className="text-center space-y-2">
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">GİRİŞ BULUNAMADI</p>
-                  <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest">SİSTEME ROTA EKLEYEREK BAŞLAYIN</p>
-               </div>
+              <RefreshCw className="w-20 h-20 text-slate-300" strokeWidth={1} />
+              <div className="text-center space-y-2">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">
+                  GİRİŞ BULUNAMADI
+                </p>
+                <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest">
+                  SİSTEME ROTA EKLEYEREK BAŞLAYIN
+                </p>
+              </div>
             </div>
           )}
         </div>
@@ -170,4 +179,3 @@ export function ResolverDashboard() {
     </div>
   );
 }
-

@@ -12,10 +12,10 @@ export default function ServiceStatusPage() {
           SİSTEM SAĞLIK MERKEZİ
         </h1>
         <div className="flex items-center gap-2 mt-2">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.3)]" />
-            <p className="text-[10px] font-black text-emerald-600 uppercase tracking-[0.4em]">
-              Mikroservis Bağlantı Durumu ve Port Analizi
-            </p>
+          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.3)]" />
+          <p className="text-[10px] font-black text-emerald-600 uppercase tracking-[0.4em]">
+            Mikroservis Bağlantı Durumu ve Port Analizi
+          </p>
         </div>
       </div>
 
@@ -25,7 +25,7 @@ export default function ServiceStatusPage() {
             AKTİF SERVİS MATRİSİ
           </h3>
           <span className="text-[10px] text-emerald-600 font-black tracking-[0.2em] uppercase flex items-center gap-2 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-100 shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> 
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             CANLI TAKİP MODU
           </span>
         </div>
@@ -58,4 +58,3 @@ export default function ServiceStatusPage() {
     </div>
   );
 }
-

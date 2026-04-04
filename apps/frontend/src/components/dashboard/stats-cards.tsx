@@ -87,8 +87,11 @@ function StatCard({ title, value, subtitle, icon: Icon, color, trend }: StatCard
       <div
         className={cn(
           'absolute -right-8 -top-8 w-32 h-32 blur-[50px] opacity-10 rounded-full transition-all duration-500 group-hover:opacity-30',
-          color === 'emerald' || color === 'blue' ? 'bg-emerald-500' : 
-          color === 'amber' ? 'bg-amber-500' : 'bg-rose-500'
+          color === 'emerald' || color === 'blue'
+            ? 'bg-emerald-500'
+            : color === 'amber'
+              ? 'bg-amber-500'
+              : 'bg-rose-500',
         )}
       />
 
@@ -125,12 +128,15 @@ function StatCard({ title, value, subtitle, icon: Icon, color, trend }: StatCard
             {title}
           </h4>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-slate-900 tracking-tighter tabular-nums drop-shadow-sm">{value}</span>
-            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{subtitle}</span>
+            <span className="text-3xl font-black text-slate-900 tracking-tighter tabular-nums drop-shadow-sm">
+              {value}
+            </span>
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+              {subtitle}
+            </span>
           </div>
         </div>
       </div>
     </div>
   );
 }
-

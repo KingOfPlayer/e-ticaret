@@ -17,7 +17,6 @@ import {
 } from 'recharts';
 import { Activity } from 'lucide-react';
 
-
 export function MethodChart({ data = [] }: { data?: any[] }) {
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
@@ -42,7 +41,14 @@ export function MethodChart({ data = [] }: { data?: any[] }) {
               axisLine={false}
               tick={{ fill: '#94a3b8' }}
             />
-            <YAxis stroke="#94a3b8" fontSize={9} fontWeight="black" tickLine={false} axisLine={false} tick={{ fill: '#94a3b8' }} />
+            <YAxis
+              stroke="#94a3b8"
+              fontSize={9}
+              fontWeight="black"
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: '#94a3b8' }}
+            />
             <Tooltip
               cursor={{ fill: 'rgba(0,0,0,0.02)' }}
               contentStyle={{
@@ -108,7 +114,13 @@ export function RouteChart({ data = [] }: { data?: any[] }) {
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
               }}
             />
-            <Bar dataKey="value" fill="#10b981" fillOpacity={0.7} radius={[0, 4, 4, 0]} barSize={10} />
+            <Bar
+              dataKey="value"
+              fill="#10b981"
+              fillOpacity={0.7}
+              radius={[0, 4, 4, 0]}
+              barSize={10}
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -142,8 +154,23 @@ export function LatencyLineChart({ data = [] }: { data?: any[] }) {
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" vertical={false} />
-            <XAxis dataKey="time" stroke="#94a3b8" fontSize={9} fontWeight="black" tickLine={false} axisLine={false} tick={{ fill: '#94a3b8' }} />
-            <YAxis stroke="#94a3b8" fontSize={9} fontWeight="black" tickLine={false} axisLine={false} tick={{ fill: '#94a3b8' }} />
+            <XAxis
+              dataKey="time"
+              stroke="#94a3b8"
+              fontSize={9}
+              fontWeight="black"
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: '#94a3b8' }}
+            />
+            <YAxis
+              stroke="#94a3b8"
+              fontSize={9}
+              fontWeight="black"
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: '#94a3b8' }}
+            />
             <Tooltip
               contentStyle={{
                 backgroundColor: 'rgba(255, 255, 255, 0.95)',
@@ -170,7 +197,6 @@ export function LatencyLineChart({ data = [] }: { data?: any[] }) {
     </div>
   );
 }
-
 
 export function StatusDonutChart({ data = [] }: { data?: any[] }) {
   const [mounted, setMounted] = React.useState(false);
@@ -221,9 +247,9 @@ export function StatusDonutChart({ data = [] }: { data?: any[] }) {
       <div className="flex flex-wrap justify-center gap-6 mt-8 overflow-hidden">
         {data.map((s) => (
           <div key={s.name} className="flex items-center gap-2 shrink-0">
-            <div 
-              className="w-2.5 h-2.5 rounded-full border border-black/5" 
-              style={{ backgroundColor: s.color }} 
+            <div
+              className="w-2.5 h-2.5 rounded-full border border-black/5"
+              style={{ backgroundColor: s.color }}
             />
             <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.1em] truncate max-w-[100px]">
               {s.name}
@@ -253,4 +279,3 @@ function NoData({ label }: { label: string }) {
     </div>
   );
 }
-

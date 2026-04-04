@@ -19,7 +19,9 @@ export function LogsDashboard() {
               <BarChart3 className="w-6 h-6 text-emerald-600" />
             </div>
             <div>
-              <h1 className="text-3xl font-black text-slate-900 tracking-tight italic underline decoration-emerald-500 decoration-wavy underline-offset-8">System Logs</h1>
+              <h1 className="text-3xl font-black text-slate-900 tracking-tight italic underline decoration-emerald-500 decoration-wavy underline-offset-8">
+                System Logs
+              </h1>
               <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mt-2 ml-1">
                 Real-time API requests and performance monitoring
               </p>
@@ -48,7 +50,9 @@ export function LogsDashboard() {
         {/* Status Bar */}
         <div className="flex items-center gap-3 px-5 py-2 bg-emerald-50 border border-emerald-100 rounded-full w-fit shadow-sm">
           <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-[10px] text-emerald-600 font-black uppercase tracking-widest leading-none">Real-time Monitoring Active</span>
+          <span className="text-[10px] text-emerald-600 font-black uppercase tracking-widest leading-none">
+            Real-time Monitoring Active
+          </span>
         </div>
       </div>
 

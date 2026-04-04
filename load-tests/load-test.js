@@ -1,14 +1,13 @@
 import http from 'k6/http';
 import { check, group, sleep } from 'k6';
 
-// Test data configuration
 const TEST_DATA = {
   auth: {
     user: { email: 'user@ecosystem.com', password: 'user123' },
   },
 };
 
-// Helper function to get authorization headers
+
 function getHeaders(token = null, includeContentType = true) {
   const headers = {};
   if (includeContentType) {
@@ -20,42 +19,39 @@ function getHeaders(token = null, includeContentType = true) {
   return headers;
 }
 
-// 1. YAPILANDIRMA: Dökümandaki 50, 100, 200, 500 kullanıcı hedefleri 
+
+const target = parseInt(__ENV.TARGET || '50', 10);
+
 export const options = {
   stages: [
-    { duration: '30s', target: 50 },  // Rampa: 50 kullanıcı
-    { duration: '1m', target: 50 },   // Stabil: 50 kullanıcı
-    { duration: '30s', target: 200 }, // Rampa: 200 kullanıcı
-    { duration: '1m', target: 200 },  // Stabil: 200 kullanıcı
-    { duration: '30s', target: 500 }, // Ekstrem Yük: 500 kullanıcı 
-    { duration: '1m', target: 500 },  // Dayanıklılık testi
-    { duration: '30s', target: 0 },   // Cooldown
+    { duration: '30s', target },       
+    { duration: '1m', target },        
+    { duration: '30s', target: 0 },    
   ],
   thresholds: {
-    http_req_duration: ['p(95)<500'], // Yanıt süreleri döküman için kritik 
-    http_req_failed: ['rate<0.05'],   // Hata oranları takibi 
+    http_req_duration: ['p(95)<500'],
+    http_req_failed: ['rate<0.05'],
   },
 };
 
 const BASE_URL = 'http://localhost:5000/api';
 
 export default function () {
-  // Her sanal kullanıcı (VU) için rastgele bir davranış seçerek "dallanma" sağlıyoruz
+  
   const userType = Math.random();
 
-  // --- DALLANMA 1: ÜRÜN GEZGİNİ (Sadece okuma yapar, yoğun trafik simülasyonu) ---
-  if (userType < 0.6) { // Kullanıcıların %60'ı sadece ürünlere baksın
+  // Product View %60
+  if (userType < 0.6) {
     group('Scenario: Product Discovery', function () {
       const res = http.get(`${BASE_URL}/products`);
       check(res, { 'Product list status 200': (r) => r.status === 200 });
-      sleep(Math.random() * 2 + 1);
+      sleep(1);
     });
   }
 
-  // --- DALLANMA 2: SİPARİŞ VEREN KULLANICI (Auth + Yazma işlemi) ---
+  // Login + Order Check %30
   else if (userType < 0.9) { // Kullanıcıların %30'u işlem yapsın
     group('Scenario: Order Workflow & Detail Check', function () {
-      // 1. Login (Dispatcher üzerinden Auth Service'e gider) [cite: 39, 48]
       const loginRes = http.post(
         `${BASE_URL}/auth/login`,
         JSON.stringify(TEST_DATA.auth.user),
@@ -74,11 +70,11 @@ export default function () {
         if (check(listRes, { 'Orders retrieved': (r) => r.status === 200 })) {
           const orders = listRes.json();
 
-          // --- YENİ DALLANMA: Eğer sipariş varsa, rastgele birinin detayına git ---
+          // Order Detail Check %50
           if (Array.isArray(orders) && orders.length > 0) {
             // Kullanıcıların %50'si en son siparişinin detayına baksın
             if (Math.random() > 0.5) {
-              const orderId = orders[0]._id || orders[0].id; // NoSQL ID yapısına göre [cite: 64]
+              const orderId = orders[Math.floor(Math.random() * orders.length)]._id || orders[Math.floor(Math.random() * orders.length)].id;
 
               group('Sub-Scenario: Order Detail Check', function () {
 
@@ -98,15 +94,14 @@ export default function () {
     });
   }
 
-  // --- DALLANMA 3: GÜVENLİK TESTİ (Yetkisiz erişim denemesi) ---
-  else { // Kullanıcıların %10'u hata/güvenlik senaryosu oluştursun
+  // Bot Test %10
+  else { 
     group('Scenario: Security Check', function () {
-      // Dispatcher'ın yetkisiz istekleri reddetme başarısı ölçülür [cite: 41, 48]
-      const unauthorizedRes = http.get(`${BASE_URL}/orders/admin/all`);
+      const unauthorizedRes = http.get(`${BASE_URL}/orders/admin/all`, { responseCallback: http.expectedStatuses(401, 403) });
       check(unauthorizedRes, {
         'Unauthorized access blocked (401/403)': (r) => r.status === 401 || r.status === 403,
       });
-      sleep(3);
+      sleep(1);
     });
   }
 }

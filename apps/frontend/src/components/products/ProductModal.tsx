@@ -99,7 +99,9 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
           )}
 
           <div className="space-y-3">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">ÜRÜN TANIMLAMASI</label>
+            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+              ÜRÜN TANIMLAMASI
+            </label>
             <input
               required
               type="text"
@@ -111,7 +113,9 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">DETAYLI AÇIKLAMA</label>
+            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+              DETAYLI AÇIKLAMA
+            </label>
             <textarea
               rows={3}
               value={formData.description}
@@ -123,7 +127,9 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
 
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-3">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">BİRİM FİYAT (₺)</label>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+                BİRİM FİYAT (₺)
+              </label>
               <input
                 required
                 type="number"
@@ -135,7 +141,9 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
               />
             </div>
             <div className="space-y-3">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">STOK MİKTARI</label>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+                STOK MİKTARI
+              </label>
               <input
                 required
                 type="number"
@@ -148,7 +156,9 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">SİSTEM KATEGORİSİ</label>
+            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+              SİSTEM KATEGORİSİ
+            </label>
             <div className="relative group/select">
               <input
                 type="text"

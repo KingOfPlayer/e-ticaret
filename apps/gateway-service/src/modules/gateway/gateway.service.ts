@@ -29,7 +29,7 @@ export class GatewayService {
       const response = await axios.request({
         url,
         ...config,
-        timeout: 5000,
+        timeout: 60000,
       });
       return { status: response.status, data: response.data };
     } catch (error: any) {

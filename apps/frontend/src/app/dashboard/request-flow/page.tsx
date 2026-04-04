@@ -71,7 +71,9 @@ export default function RequestFlowPage() {
       })
       .sort((a, b) => {
         // Sort by time descending (most recent first)
-        return new Date(`1970/01/01 ${b.time}`).getTime() - new Date(`1970/01/01 ${a.time}`).getTime();
+        return (
+          new Date(`1970/01/01 ${b.time}`).getTime() - new Date(`1970/01/01 ${a.time}`).getTime()
+        );
       });
   }, []);
 
@@ -83,7 +85,7 @@ export default function RequestFlowPage() {
       logs.reduce((sum, log) => {
         const latency = parseInt(log.latency);
         return sum + latency;
-      }, 0) / (logs.length || 1)
+      }, 0) / (logs.length || 1),
     );
 
     setStats({
@@ -141,7 +143,9 @@ export default function RequestFlowPage() {
         </div>
         <div className="px-6 py-3 glass-panel border border-emerald-100 bg-emerald-50 rounded-2xl flex items-center gap-3 shadow-sm">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.3)]" />
-          <span className="text-[10px] text-emerald-600 font-black uppercase tracking-widest">CANLI TOPOLOJİ AKTİF</span>
+          <span className="text-[10px] text-emerald-600 font-black uppercase tracking-widest">
+            CANLI TOPOLOJİ AKTİF
+          </span>
         </div>
       </div>
 
@@ -155,15 +159,30 @@ export default function RequestFlowPage() {
       {/* Statistikler */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         <StatCard label="İSTEK TRAFİĞİ" value={stats.totalRequests} loading={loading} />
-        <StatCard label="BAŞARILI VERİ" value={stats.successCount} loading={loading} color="text-emerald-600" />
-        <StatCard label="KRİTİK HATA" value={stats.errorCount} loading={loading} color="text-rose-600" />
-        <StatCard label="GECİKME (LATENCY)" value={`${stats.avgLatency}MS`} loading={loading} color="text-amber-600" />
+        <StatCard
+          label="BAŞARILI VERİ"
+          value={stats.successCount}
+          loading={loading}
+          color="text-emerald-600"
+        />
+        <StatCard
+          label="KRİTİK HATA"
+          value={stats.errorCount}
+          loading={loading}
+          color="text-rose-600"
+        />
+        <StatCard
+          label="GECİKME (LATENCY)"
+          value={`${stats.avgLatency}MS`}
+          loading={loading}
+          color="text-amber-600"
+        />
       </div>
 
       {/* 1. İSTEK AKIŞ DİYAGRAMI */}
       <section className="glass-panel border border-slate-200 rounded-[2.5rem] p-10 shadow-sm bg-white relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-emerald-50/30 to-transparent pointer-events-none" />
-        
+
         <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mb-12 relative">
           SİSTEM TOPOLOJİSİ / AKIŞ DİYAGRAMI
         </h3>
@@ -175,13 +194,17 @@ export default function RequestFlowPage() {
               <Monitor className="w-10 h-10 text-slate-400 group-hover:text-slate-900 transition-colors" />
             </div>
             <div className="text-center">
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">İSTEMCİ ÜNİTESİ</p>
-              <p className="text-[12px] text-slate-900 font-black mt-1 uppercase tracking-tight">BROWSER / TERMİNAL</p>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+                İSTEMCİ ÜNİTESİ
+              </p>
+              <p className="text-[12px] text-slate-900 font-black mt-1 uppercase tracking-tight">
+                BROWSER / TERMİNAL
+              </p>
             </div>
           </div>
 
           <div className="flex flex-col items-center gap-2 text-emerald-500/20 animate-pulse hidden lg:flex">
-             <ArrowRight className="w-8 h-8" strokeWidth={3} />
+            <ArrowRight className="w-8 h-8" strokeWidth={3} />
           </div>
 
           {/* Gateway Node */}
@@ -196,20 +219,40 @@ export default function RequestFlowPage() {
               </div>
             </div>
             <div className="text-center">
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">YÖNLENDİRİCİ</p>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+                YÖNLENDİRİCİ
+              </p>
               <p className="text-[14px] text-emerald-600 font-black font-mono mt-1">DP:5000</p>
             </div>
           </div>
 
           <div className="flex flex-col items-center gap-2 text-emerald-500/20 animate-pulse hidden lg:flex">
-             <ArrowRight className="w-8 h-8" strokeWidth={3} />
+            <ArrowRight className="w-8 h-8" strokeWidth={3} />
           </div>
 
           {/* Services Group */}
           <div className="flex flex-col gap-6 relative">
-            <ServiceNode name="AUTH-VERIFICATION" port="5001" db="AUTH_CLUSTER" color="text-emerald-600" icon="shield" />
-            <ServiceNode name="PRODUCT-CORE" port="5002" db="PROD_CATALOG" color="text-emerald-600" icon="package" />
-            <ServiceNode name="ORDER-EXECUTOR" port="5003" db="ORDER_LEDGER" color="text-emerald-600" icon="cart" />
+            <ServiceNode
+              name="AUTH-VERIFICATION"
+              port="5001"
+              db="AUTH_CLUSTER"
+              color="text-emerald-600"
+              icon="shield"
+            />
+            <ServiceNode
+              name="PRODUCT-CORE"
+              port="5002"
+              db="PROD_CATALOG"
+              color="text-emerald-600"
+              icon="package"
+            />
+            <ServiceNode
+              name="ORDER-EXECUTOR"
+              port="5003"
+              db="ORDER_LEDGER"
+              color="text-emerald-600"
+              icon="cart"
+            />
           </div>
         </div>
       </section>
@@ -239,7 +282,9 @@ export default function RequestFlowPage() {
             <div className="w-14 h-14 rounded-2xl bg-white border border-slate-200 flex items-center justify-center shadow-sm group transition-all duration-500 hover:border-emerald-500/20">
               <Share2 className="w-6 h-6 text-slate-400 group-hover:text-emerald-600 transition-colors" />
             </div>
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">GATEWAY YÖNLENDİRME</p>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              GATEWAY YÖNLENDİRME
+            </p>
           </div>
 
           <StepNode number="03" label="SERVİS İLETİM" icon={Zap} active />
@@ -254,18 +299,22 @@ function ServiceNode({ name, port, db, color, icon }: any) {
   return (
     <div className="flex items-center gap-6 group">
       <div className="w-56 glass-panel p-5 border-l-4 border-emerald-500 rounded-2xl bg-slate-50 hover:bg-white shadow-sm transition-all duration-300">
-        <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1">MIKROSERVİS ÜNİTESİ</p>
+        <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1">
+          MIKROSERVİS ÜNİTESİ
+        </p>
         <p className={cn('text-[13px] font-black uppercase tracking-tight', color)}>{name}</p>
-        <p className="text-[10px] font-black text-slate-500 mt-1 uppercase tracking-widest">PORT: {port}</p>
+        <p className="text-[10px] font-black text-slate-500 mt-1 uppercase tracking-widest">
+          PORT: {port}
+        </p>
       </div>
       <div className="flex flex-col items-center gap-2 text-slate-300 group-hover:text-emerald-500 transition-colors">
-         <ArrowRight className="w-4 h-4" />
+        <ArrowRight className="w-4 h-4" />
       </div>
       <div className="glass-panel p-5 rounded-2xl border border-slate-200 bg-white shadow-sm flex items-center gap-4 group-hover:border-emerald-500/20 transition-all duration-300">
         <Database className="w-5 h-5 text-emerald-500" />
         <div>
-           <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">DATABASE</p>
-           <p className="text-[11px] font-black text-slate-900 uppercase tracking-tighter">{db}</p>
+          <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">DATABASE</p>
+          <p className="text-[11px] font-black text-slate-900 uppercase tracking-tighter">{db}</p>
         </div>
       </div>
     </div>
@@ -307,5 +356,3 @@ function StatCard({ label, value, loading, color = 'text-slate-900' }: any) {
     </div>
   );
 }
-
-

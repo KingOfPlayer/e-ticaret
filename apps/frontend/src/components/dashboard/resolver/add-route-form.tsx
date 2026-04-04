@@ -51,13 +51,15 @@ export function AddRouteForm({ onAdd, onCancel }: AddRouteFormProps) {
   return (
     <div className="glass-panel border border-slate-200 rounded-[2rem] p-10 bg-white shadow-sm relative overflow-hidden group">
       <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 blur-3xl rounded-full -mr-32 -mt-32 transition-opacity group-hover:opacity-100 opacity-50" />
-      
+
       <div className="flex items-center justify-between mb-10 relative">
         <div className="flex items-center gap-4">
-           <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shadow-sm">
-              <Plus className="w-5 h-5 text-emerald-600" />
-           </div>
-           <h3 className="text-[12px] font-black text-slate-900 uppercase tracking-[0.3em]">YENİ ROTA TANIMLAMA</h3>
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shadow-sm">
+            <Plus className="w-5 h-5 text-emerald-600" />
+          </div>
+          <h3 className="text-[12px] font-black text-slate-900 uppercase tracking-[0.3em]">
+            YENİ ROTA TANIMLAMA
+          </h3>
         </div>
         <button
           onClick={onCancel}
@@ -71,25 +73,33 @@ export function AddRouteForm({ onAdd, onCancel }: AddRouteFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
           {/* Prefix Input */}
           <div className="space-y-3">
-            <label htmlFor="prefix" className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+            <label
+              htmlFor="prefix"
+              className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1"
+            >
               ERİŞİM ÖNEKİ (PREFIX)
             </label>
             <div className="relative">
-               <span className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 font-black text-[13px]">/</span>
-               <input
-                 id="prefix"
-                 type="text"
-                 value={prefix}
-                 onChange={(e) => setPrefix(e.target.value)}
-                 placeholder="örn: orders"
-                 className="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-6 py-5 text-[13px] font-black text-slate-900 placeholder:text-slate-300 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all uppercase tracking-tight shadow-sm"
-               />
+              <span className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 font-black text-[13px]">
+                /
+              </span>
+              <input
+                id="prefix"
+                type="text"
+                value={prefix}
+                onChange={(e) => setPrefix(e.target.value)}
+                placeholder="örn: orders"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-6 py-5 text-[13px] font-black text-slate-900 placeholder:text-slate-300 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all uppercase tracking-tight shadow-sm"
+              />
             </div>
           </div>
 
           {/* Target Input */}
           <div className="space-y-3">
-            <label htmlFor="target" className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+            <label
+              htmlFor="target"
+              className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1"
+            >
               HEDEF SERVİS URL (TARGET)
             </label>
             <input

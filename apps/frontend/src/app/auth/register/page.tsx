@@ -35,7 +35,7 @@ export default function RegisterPage() {
       {/* Background Orbs */}
       <div className="absolute top-1/4 -right-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 -left-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
-      
+
       <div className="w-full max-w-[440px] relative z-10">
         <div className="text-center mb-12">
           <Link href="/" className="inline-flex flex-col items-center gap-4 group">
@@ -43,10 +43,12 @@ export default function RegisterPage() {
               <Activity className="w-8 h-8 text-emerald-600" />
             </div>
             <div className="space-y-1">
-               <span className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic block">EcoSystem</span>
-               <div className="h-[2px] w-12 bg-emerald-500/40 mx-auto rounded-full overflow-hidden">
-                  <div className="w-full h-full bg-emerald-500 animate-[slide-right_2s_infinite]" />
-               </div>
+              <span className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic block">
+                EcoSystem
+              </span>
+              <div className="h-[2px] w-12 bg-emerald-500/40 mx-auto rounded-full overflow-hidden">
+                <div className="w-full h-full bg-emerald-500 animate-[slide-right_2s_infinite]" />
+              </div>
             </div>
           </Link>
         </div>
@@ -54,8 +56,12 @@ export default function RegisterPage() {
         <div className="glass-panel border border-slate-200 rounded-[2.5rem] p-10 shadow-sm bg-white backdrop-blur-3xl relative overflow-hidden">
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-2 text-center mb-4">
-               <h1 className="text-2xl font-black text-slate-900 tracking-tight uppercase italic underline decoration-emerald-500 decoration-wavy underline-offset-8">YENİ ÜYELİK</h1>
-               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mt-4">Ekosisteme dahil olmak için form doldurun</p>
+              <h1 className="text-2xl font-black text-slate-900 tracking-tight uppercase italic underline decoration-emerald-500 decoration-wavy underline-offset-8">
+                YENİ ÜYELİK
+              </h1>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mt-4">
+                Ekosisteme dahil olmak için form doldurun
+              </p>
             </div>
 
             {error && (
@@ -65,7 +71,9 @@ export default function RegisterPage() {
             )}
 
             <div className="space-y-3">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">E-POSTA ADRESİ</label>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+                E-POSTA ADRESİ
+              </label>
               <div className="relative group">
                 <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
                 <input
@@ -79,7 +87,9 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-3">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">ERİŞİM ANAHTARI (ŞİFRE)</label>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+                ERİŞİM ANAHTARI (ŞİFRE)
+              </label>
               <div className="relative group">
                 <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
                 <input
@@ -112,18 +122,18 @@ export default function RegisterPage() {
           </form>
 
           <div className="mt-10 pt-10 border-t border-slate-100 text-center">
-             <p className="text-slate-400 text-[10px] uppercase font-black tracking-[0.2em]">
-               Zaten bir hesabınız var mı?
-             </p>
-             <Link
-               href="/auth/login"
-               className="inline-block mt-3 text-emerald-600 font-black text-[11px] uppercase tracking-[0.2em] hover:text-emerald-500 transition-colors border-b border-emerald-500/20 pb-0.5"
-             >
-               MEVCUT OTURUMU AÇIN
-             </Link>
+            <p className="text-slate-400 text-[10px] uppercase font-black tracking-[0.2em]">
+              Zaten bir hesabınız var mı?
+            </p>
+            <Link
+              href="/auth/login"
+              className="inline-block mt-3 text-emerald-600 font-black text-[11px] uppercase tracking-[0.2em] hover:text-emerald-500 transition-colors border-b border-emerald-500/20 pb-0.5"
+            >
+              MEVCUT OTURUMU AÇIN
+            </Link>
           </div>
         </div>
-        
+
         <p className="text-center mt-12 text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">
           REGISTRATION PROTOCOL v1.2.0
         </p>

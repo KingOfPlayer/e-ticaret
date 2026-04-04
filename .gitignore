@@ -9,3 +9,5 @@ test.http
 
 !/apps/frontend/src/app/dashboard/logs/
 !/apps/frontend/src/app/dashboard/logs/**
+
+.postman/

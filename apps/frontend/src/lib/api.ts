@@ -13,7 +13,7 @@ export async function apiRequest(path: string, options: ApiRequestOptions = {}) 
 
   // Use gateway URL if flag is set, otherwise use API base URL
   const baseUrl = useGateway ? GATEWAY_URL : API_BASE_URL;
-  
+
   // Build URL with query parameters if provided
   let url = `${baseUrl}${path}`;
   if (query && Object.keys(query).length > 0) {
@@ -61,12 +61,12 @@ export async function apiRequest(path: string, options: ApiRequestOptions = {}) 
 export const api = {
   get: (path: string, useGateway: boolean = false, query?: Record<string, any>) =>
     apiRequest(path, { method: 'GET', useGateway, query }),
-  post: (path: string, data: any, useGateway: boolean = false,) =>
+  post: (path: string, data: any, useGateway: boolean = false) =>
     apiRequest(path, { method: 'POST', body: JSON.stringify(data), useGateway }),
   put: (path: string, data: any, useGateway: boolean = false) =>
     apiRequest(path, { method: 'PUT', body: JSON.stringify(data), useGateway }),
   patch: (path: string, data: any, useGateway: boolean = false) =>
     apiRequest(path, { method: 'PATCH', body: JSON.stringify(data), useGateway }),
-  delete: (path: string, useGateway: boolean = false,) =>
+  delete: (path: string, useGateway: boolean = false) =>
     apiRequest(path, { method: 'DELETE', useGateway }),
 };

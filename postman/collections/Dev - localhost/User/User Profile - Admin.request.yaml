@@ -1,10 +1,9 @@
 $kind: http-request
 name: User Profile - Admin
-url: "{{HOST}}api/auth/user/profile"
+url: "{{HOST}}api/auth/admin/user/profiles"
 method: GET
 auth:
   credentials:
-    - key: token
-      value: "{{access_token}}"
+    token: "{{access_token}}"
   type: bearer
 order: 1775170669507

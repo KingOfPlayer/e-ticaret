@@ -54,11 +54,13 @@ export default function DashboardPage() {
           });
         }
       }
-      
+
       // Filter for HttpLoggerMiddleware logs only
       const filteredLogs = allLogs.filter((log: any) => log.context === 'HttpLoggerMiddleware');
       setLogs(
-        filteredLogs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()),
+        filteredLogs.sort(
+          (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+        ),
       );
 
       // 3. Process Aggregate Stats from Endpoint Details
@@ -142,7 +144,8 @@ export default function DashboardPage() {
     fetchData();
     const interval = setInterval(fetchData, 10000); // Poll every 10s
     return () => clearInterval(interval);
-  }, []);  return (
+  }, []);
+  return (
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-20">
       {/* 1. Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -154,10 +157,14 @@ export default function DashboardPage() {
             {loading && <RefreshCw className="w-5 h-5 text-emerald-600 animate-spin" />}
           </div>
           <div className="flex items-center gap-2 mt-2">
-            <div className={cn(
-              "w-2 h-2 rounded-full animate-pulse",
-              error ? "bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.3)]" : "bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]"
-            )} />
+            <div
+              className={cn(
+                'w-2 h-2 rounded-full animate-pulse',
+                error
+                  ? 'bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.3)]'
+                  : 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]',
+              )}
+            />
             <p
               className={cn(
                 'text-[10px] font-black uppercase tracking-[0.4em] transition-colors',
@@ -182,7 +189,12 @@ export default function DashboardPage() {
             onClick={fetchData}
             className="p-3 bg-white border border-slate-200 rounded-2xl hover:bg-slate-50 hover:border-emerald-500/20 transition-all duration-300 group shadow-sm"
           >
-            <RefreshCw className={cn('w-5 h-5 text-slate-400 group-hover:text-emerald-600 transition-colors', loading && 'animate-spin')} />
+            <RefreshCw
+              className={cn(
+                'w-5 h-5 text-slate-400 group-hover:text-emerald-600 transition-colors',
+                loading && 'animate-spin',
+              )}
+            />
           </button>
         </div>
       </div>
@@ -192,7 +204,9 @@ export default function DashboardPage() {
           <div className="w-20 h-20 rounded-full bg-rose-50 flex items-center justify-center mb-6">
             <AlertCircle className="w-10 h-10 text-rose-500 opacity-60" />
           </div>
-          <h2 className="text-xl font-black text-slate-900 mb-3 uppercase tracking-tighter italic">Veri akış hatası</h2>
+          <h2 className="text-xl font-black text-slate-900 mb-3 uppercase tracking-tighter italic">
+            Veri akış hatası
+          </h2>
           <p className="text-xs text-slate-500 mb-8 max-w-sm font-bold leading-relaxed">{error}</p>
           <button
             onClick={fetchData}
@@ -224,11 +238,15 @@ export default function DashboardPage() {
                   <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">
                     SİSTEM KAYITLARI (LOGS)
                   </h3>
-                  <span className="text-[9px] font-bold text-emerald-600/70 uppercase tracking-widest mt-1">Gerçek Zamanlı Veri Akışı</span>
+                  <span className="text-[9px] font-bold text-emerald-600/70 uppercase tracking-widest mt-1">
+                    Gerçek Zamanlı Veri Akışı
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
-                   <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">LIVE</span>
-                   <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.3)] border border-emerald-400/20" />
+                  <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                    LIVE
+                  </span>
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.3)] border border-emerald-400/20" />
                 </div>
               </div>
               <div className="flex-1 overflow-auto custom-scrollbar">
@@ -249,4 +267,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
