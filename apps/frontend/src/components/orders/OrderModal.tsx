@@ -123,116 +123,140 @@ export default function OrderModal({ isOpen, onClose, onSuccess, order }: OrderM
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-      <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-        <div className="p-6 border-b border-slate-800 flex items-center justify-between bg-slate-900/50">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <ShoppingBag className="w-5 h-5 text-indigo-400" />
-            {isCreateMode ? 'Yeni Sipariş Oluştur' : 'Sipariş Durumunu Güncelle'}
-          </h2>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-500">
+      <div className="w-full max-w-4xl glass-panel border border-slate-200 rounded-[2.5rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-500 bg-white">
+        <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+          <div className="flex items-center gap-4">
+             <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shadow-sm">
+                <ShoppingBag className="w-6 h-6 text-emerald-600" />
+             </div>
+             <div>
+                <h2 className="text-[14px] font-black text-slate-900 uppercase tracking-[0.3em] italic underline decoration-emerald-500 decoration-wavy underline-offset-8">
+                  {isCreateMode ? 'YENİ TALEP OLUŞTURMA' : 'SİPARİŞ GÜNCELLEME'}
+                </h2>
+                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-3">VERİ GİRİŞİ VE İŞLEM ONAYI</p>
+             </div>
+          </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all"
+            className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-all duration-300 border border-transparent hover:border-rose-100"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="p-10 space-y-10">
           {error && (
-            <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-lg flex items-center gap-3 text-rose-400 text-sm">
+            <div className="p-5 bg-rose-50 border border-rose-100 rounded-2xl flex items-center gap-4 text-rose-600 text-[11px] font-black uppercase tracking-widest animate-shake shadow-sm">
               <AlertCircle className="w-5 h-5 shrink-0" />
               {error}
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300">Müşteri Adı</label>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="space-y-10">
+              <div className="space-y-3">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">MÜŞTERİ TANIMLAMASI</label>
                 <input
                   required
                   disabled={!isCreateMode}
                   type="text"
                   value={formData.customerName}
                   onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all font-medium disabled:opacity-50"
-                  placeholder="Müşteri adını girin..."
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-5 text-[13px] text-slate-900 placeholder:text-slate-300 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all font-bold tracking-tight uppercase disabled:opacity-30 shadow-sm"
+                  placeholder="Müşteri tam adını girin..."
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300">Sipariş Durumu</label>
-                <div className="grid grid-cols-1 gap-2">
+              <div className="space-y-3">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">İŞLEM DURUMU</label>
+                <div className="grid grid-cols-1 gap-3">
                   {STATUS_OPTIONS.map((status) => (
                     <button
                       key={status}
                       type="button"
                       onClick={() => setFormData({ ...formData, status })}
                       className={cn(
-                        'px-4 py-2.5 rounded-xl border text-[10px] font-black tracking-widest uppercase transition-all text-left flex items-center justify-between',
+                        'px-6 py-4 rounded-2xl border text-[10px] font-black tracking-[0.2em] uppercase transition-all flex items-center justify-between group active:scale-95 shadow-sm',
                         formData.status === status
-                          ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-500/20'
-                          : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700 hover:text-slate-300',
+                          ? status === 'COMPLETED' ? 'bg-emerald-600 text-white border-emerald-500 shadow-emerald-500/20 shadow-lg' :
+                            status === 'CANCELLED' ? 'bg-rose-600 text-white border-rose-500 shadow-rose-500/20 shadow-lg' :
+                            'bg-amber-500 text-white border-amber-400 shadow-amber-500/20 shadow-lg'
+                          : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-900',
                       )}
                     >
                       {status}
-                      {formData.status === status && <Plus className="w-3 h-3" />}
+                      {formData.status === status && <div className="w-2 h-2 rounded-full bg-white animate-pulse" />}
                     </button>
                   ))}
                 </div>
               </div>
 
-              <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2 text-center">
-                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                  Toplam Tutar
+              <div className="p-8 bg-slate-50 rounded-[2rem] border border-slate-200 relative overflow-hidden group shadow-sm">
+                 <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-3xl rounded-full" />
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">
+                  TOPLAM ANALİZ
                 </p>
-                <p className="text-3xl font-bold text-white">${totalAmount.toLocaleString()}</p>
-                <p className="text-[10px] text-slate-500">
-                  {formData.productIds.length} Ürün Seçildi
-                </p>
+                <div className="flex items-baseline gap-2">
+                   <p className="text-4xl font-black text-slate-900 tabular-nums tracking-tighter">₺{totalAmount.toLocaleString('tr-TR')}</p>
+                   <p className="text-[10px] font-black text-emerald-600 uppercase italic">Brüt</p>
+                </div>
+                <div className="mt-6 flex items-center gap-3">
+                   <div className="h-2 flex-1 bg-slate-200 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-emerald-500 transition-all duration-1000" 
+                        style={{ width: `${Math.min((formData.productIds.length / 5) * 100, 100)}%` }} 
+                      />
+                   </div>
+                   <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                     {formData.productIds.length} ÜRÜN SEÇİLDİ
+                   </p>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-4 flex flex-col h-[400px]">
-              <label className="text-sm font-medium text-slate-300">Ürün Seçimi</label>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+            <div className="space-y-4 flex flex-col h-[500px]">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">ENVANTER LİSTESİ</label>
+              <div className="relative group">
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
                 <input
                   type="text"
-                  placeholder="Ürün ara..."
+                  placeholder="Ürün adı ile filtrele..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-14 pr-5 py-4 text-[12px] font-black text-slate-900 placeholder:text-slate-300 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all uppercase tracking-tight shadow-sm"
                 />
               </div>
 
-              <div className="flex-1 overflow-y-auto pr-2 space-y-2 custom-scrollbar">
+              <div className="flex-1 overflow-y-auto pr-2 space-y-3 custom-scrollbar">
                 {filteredProducts.map((p) => (
                   <button
                     key={p._id}
                     type="button"
                     onClick={() => toggleProduct(p._id)}
                     className={cn(
-                      'w-full p-3 rounded-xl border text-left transition-all flex items-center justify-between group',
+                      'w-full p-5 rounded-2xl border text-left transition-all duration-300 flex items-center justify-between group active:scale-[0.98] shadow-sm',
                       formData.productIds.includes(p._id)
-                        ? 'bg-indigo-500/10 border-indigo-500/50'
-                        : 'bg-slate-950/50 border-slate-800 hover:border-slate-700',
+                        ? 'bg-emerald-50 border-emerald-200'
+                        : 'bg-white border-slate-100 hover:border-slate-200 hover:bg-slate-50/50',
                     )}
                   >
                     <div>
-                      <p className="text-sm font-semibold text-white group-hover:text-indigo-400 transition-colors">
+                      <p className={cn(
+                        "text-[12px] font-black group-hover:text-emerald-600 transition-colors uppercase tracking-tight",
+                        formData.productIds.includes(p._id) ? "text-emerald-600" : "text-slate-900"
+                      )}>
                         {p.name}
                       </p>
-                      <p className="text-xs text-slate-500">${p.price.toLocaleString()}</p>
+                      <p className="text-[10px] font-black text-slate-400 tabular-nums mt-1">₺{p.price.toLocaleString('tr-TR')}</p>
                     </div>
                     {formData.productIds.includes(p._id) ? (
-                      <div className="bg-indigo-600 rounded-full p-1">
-                        <Minus className="w-3 h-3 text-white" />
+                      <div className="bg-emerald-600 rounded-lg p-1.5 shadow-lg shadow-emerald-500/20">
+                         <Minus className="w-3 h-3 text-white" strokeWidth={3} />
                       </div>
                     ) : (
-                      <div className="bg-slate-800 group-hover:bg-slate-700 rounded-full p-1">
-                        <Plus className="w-3 h-3 text-slate-400 group-hover:text-white" />
+                      <div className="bg-slate-100 group-hover:bg-emerald-50 rounded-lg p-1.5 transition-colors border border-slate-200">
+                         <Plus className="w-3 h-3 text-slate-400 group-hover:text-emerald-600" strokeWidth={3} />
                       </div>
                     )}
                   </button>
@@ -241,25 +265,26 @@ export default function OrderModal({ isOpen, onClose, onSuccess, order }: OrderM
             </div>
           </div>
 
-          <div className="pt-2 flex items-center gap-3">
+          <div className="pt-6 flex items-center gap-6">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-slate-800 hover:bg-slate-700 text-white px-4 py-3 rounded-xl font-medium transition-all"
+              className="flex-1 bg-white hover:bg-slate-50 text-slate-400 hover:text-slate-900 px-6 py-5 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] transition-all border border-slate-200 active:scale-95 shadow-sm"
             >
-              İptal
+              İŞLEMİ İPTAL ET
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white px-4 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20"
+              className="flex-1 bg-emerald-600 hover:bg-emerald-50 disabled:opacity-50 text-white px-6 py-5 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-lg shadow-emerald-500/20 active:scale-95 group overflow-hidden relative"
             >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
-                  <Save className="w-5 h-5" />
-                  {isCreateMode ? 'Sipariş Ver' : 'Güncelle'}
+                  <Save className="w-4 h-4 fill-current" />
+                  {isCreateMode ? 'SİPARİŞİ KAYDET' : 'DURUMU GÜNCELLE'}
                 </>
               )}
             </button>
@@ -269,3 +294,4 @@ export default function OrderModal({ isOpen, onClose, onSuccess, order }: OrderM
     </div>
   );
 }
+
