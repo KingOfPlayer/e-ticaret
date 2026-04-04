@@ -71,7 +71,7 @@ export function LogDetailsViewer() {
       if (fromInput) query.from = new Date(fromInput).toISOString();
       if (untilInput) query.until = new Date(untilInput).toISOString();
 
-      const data: LogsResponse = await api.post('/log', {}, true, query);
+      const data: LogsResponse = await api.get('/log',true, query);
       setLogs(normalizeLogs(data));
       setError(null);
     } catch (err) {
