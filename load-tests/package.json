@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test:load:50": "k6 run -e TARGET=50 load-test.js",
-    "test:load:50:summary": "k6 run --summary-export=result-50.json load-test.js",
+    "test:load:50:summary": "k6 run -e TARGET=50 --summary-export=result-50.json load-test.js",
     "test:load:100": "k6 run -e TARGET=100 load-test.js",
-    "test:load:100:summary": "k6 run --summary-export=result-100.json load-test.js",
+    "test:load:100:summary": "k6 run -e TARGET=100 --summary-export=result-100.json load-test.js",
     "test:load:200": "k6 run -e TARGET=200 load-test.js",
-    "test:load:200:summary": "k6 run --summary-export=result-200.json load-test.js",
+    "test:load:200:summary": "k6 run -e TARGET=200 --summary-export=result-200.json load-test.js",
     "test:load:500": "k6 run -e TARGET=500 load-test.js",
-    "test:load:500:summary": "k6 run --summary-export=result-500.json load-test.js",
+    "test:load:500:summary": "k6 run -e TARGET=500 --summary-export=result-500.json load-test.js",
     "test:load:summary": "k6 run --summary-export=result.json load-test.js",
     "test:suite": "k6 run test-suite.js",
     "test:suite:summary": "k6 run --summary-export=test-suite-result.json test-suite.js"
