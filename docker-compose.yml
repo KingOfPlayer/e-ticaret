@@ -1,5 +1,5 @@
 services:
-  # Dispatcher
+  # Dispatcher (Gateway)
   dispatcher:
     build:
       context: .
@@ -10,23 +10,25 @@ services:
       - '5000:5000'
     environment:
       - PORT=5000
-      - MONGO_URI=mongodb://mongo:27017/dispatcher
+      - MONGO_URI=mongodb://db-dispatcher:27017/dispatcher
       - AUTH_SERVICE_URL=http://auth-service:5001
       - PRODUCT_SERVICE_URL=http://product-service:5002
       - ORDER_SERVICE_URL=http://order-service:5003
-      - LOGS_SERVICE_URL=http://dispatcher:5000
+      - LOGS_SERVICE_URL=http://dispatcher:5000/log
       - JWT_SECRET=super-secret-key
       - GATEWAY_SECRET=gateway-secret
     depends_on:
-      - mongo
+      - db-dispatcher
     networks:
       - backend-network
       - frontend-network
 
-  mongo:
+  db-dispatcher:
     image: mongo:latest
+    ports:
+      - '27014:27017'
     volumes:
-      - mongo-data:/data/db
+      - mongo-dispatcher-data:/data/db
     networks:
       - backend-network
 
@@ -39,11 +41,20 @@ services:
         APP_NAME: auth-service
     environment:
       - PORT=5001
-      - MONGO_URI=mongodb://mongo:27017/auth
+      - MONGO_URI=mongodb://db-auth:27017/auth
       - JWT_SECRET=super-secret-key
       - GATEWAY_SECRET=gateway-secret
     depends_on:
-      - mongo
+      - db-auth
+    networks:
+      - backend-network
+
+  db-auth:
+    image: mongo:latest
+    ports:
+      - '27011:27017'
+    volumes:
+      - mongo-auth-data:/data/db
     networks:
       - backend-network
 
@@ -56,10 +67,19 @@ services:
         APP_NAME: product-service
     environment:
       - PORT=5002
-      - MONGO_URI=mongodb://mongo:27017/products
+      - MONGO_URI=mongodb://db-product:27017/products
       - GATEWAY_SECRET=gateway-secret
     depends_on:
-      - mongo
+      - db-product
+    networks:
+      - backend-network
+
+  db-product:
+    image: mongo:latest
+    ports:
+      - '27012:27017'
+    volumes:
+      - mongo-product-data:/data/db
     networks:
       - backend-network
 
@@ -72,10 +92,19 @@ services:
         APP_NAME: order-service
     environment:
       - PORT=5003
-      - MONGO_URI=mongodb://mongo:27017/orders
+      - MONGO_URI=mongodb://db-order:27017/orders
       - GATEWAY_SECRET=gateway-secret
     depends_on:
-      - mongo
+      - db-order
+    networks:
+      - backend-network
+
+  db-order:
+    image: mongo:latest
+    ports:
+      - '27013:27017'
+    volumes:
+      - mongo-order-data:/data/db
     networks:
       - backend-network
 
@@ -101,4 +130,7 @@ networks:
     driver: bridge
 
 volumes:
-  mongo-data:
+  mongo-auth-data:
+  mongo-product-data:
+  mongo-order-data:
+  mongo-dispatcher-data:

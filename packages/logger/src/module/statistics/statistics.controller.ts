@@ -7,9 +7,16 @@ import { RoleGuard, Roles, UserRole } from '@e-ticaret/role';
 export class StatisticsController {
   constructor(private readonly statisticsService: StatisticsService) {}
 
+  // Returning first index now to history data
+  @Get('timeseries')
+  @Roles(UserRole.Admin)
+  getTimeSeries() {
+    return this.statisticsService.getTimeSeries();
+  }
+
   @Get()
   @Roles(UserRole.Admin)
-  GetTrafficSummary() {
-    return this.statisticsService.GetTrafficSummary();
+  getEndpointStatistics() {
+    return this.statisticsService.getEndpointStatistics();
   }
 }

@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get Products by Category
+url: "{{HOST}}api/products?category=Electronics"
+method: GET
+order: 3

@@ -1,26 +1,31 @@
 import { Module, NestModule, MiddlewareConsumer, Type } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { OrdersModule } from './orders/orders.module';
+import { OrdersModule } from './modules/orders/orders.module';
 import {
   HttpLoggerMiddleware,
   LoggerModule,
   StatisticsModule,
 } from '@e-ticaret/logger';
-import { MicroserviceMiddleware } from '@e-ticaret/microservice';
+import { HealthModule, MicroserviceMiddleware } from '@e-ticaret/microservice';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      process.env.MONGO_URI || 'mongodb://localhost:27017/orders',
-    ),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MongooseModule.forRootAsync({
+      useFactory: () => ({
+        uri: process.env.MONGO_URI || 'mongodb://127.0.0.1:27013/orders',
+      }),
+    }),
     OrdersModule,
     LoggerModule.register({ serviceName: 'order-service' }),
     StatisticsModule.register(),
+    HealthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

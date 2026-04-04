@@ -21,7 +21,7 @@ export default function RegisterPage() {
     const password = formData.get('password');
 
     try {
-      await api.post('/auth/register', { email, password });
+      await api.post('/auth/register', { email, password }, true);
       router.push('/auth/login?registered=true');
     } catch (err: any) {
       setError(err.message || 'Kayıt işlemi başarısız.');

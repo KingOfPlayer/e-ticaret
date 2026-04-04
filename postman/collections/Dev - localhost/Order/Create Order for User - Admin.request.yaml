@@ -1,0 +1,19 @@
+$kind: http-request
+name: Create Order for User - Admin
+url: "{{HOST}}api/orders"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "userId": "507f1f77bcf86cd799439012",
+      "customerName": "Jane Smith",
+      "productIds": ["507f1f77bcf86cd799439011", "507f1f77bcf86cd799439013"],
+      "totalAmount": 199.99,
+      "address": "456 Oak Ave, Town, State 54321"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+order: 4

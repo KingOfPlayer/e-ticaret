@@ -1,0 +1,5 @@
+$kind: http-request
+name: Get Product by ID
+url: "{{HOST}}api/products/{{product_id}}"
+method: GET
+order: 2

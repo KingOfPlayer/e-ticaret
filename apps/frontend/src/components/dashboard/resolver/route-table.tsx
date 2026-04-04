@@ -12,19 +12,19 @@ interface Route {
 
 interface RouteTableProps {
   routes: Route[];
-  onDelete: (routeId: string) => Promise<void>;
+  onDelete: (prefix: string) => Promise<void>;
 }
 
 export function RouteTable({ routes, onDelete }: RouteTableProps) {
-  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deletingPrefix, setDeletingPrefix] = useState<string | null>(null);
 
-  const handleDelete = async (routeId: string) => {
+  const handleDelete = async (prefix: string) => {
     if (window.confirm('Are you sure you want to delete this route?')) {
-      setDeletingId(routeId);
+      setDeletingPrefix(prefix);
       try {
-        await onDelete(routeId);
+        await onDelete(prefix);
       } finally {
-        setDeletingId(null);
+        setDeletingPrefix(null);
       }
     }
   };
@@ -63,8 +63,8 @@ export function RouteTable({ routes, onDelete }: RouteTableProps) {
               </td>
               <td className="px-6 py-4 text-center">
                 <button
-                  onClick={() => handleDelete(route._id)}
-                  disabled={deletingId === route._id}
+                  onClick={() => handleDelete(route.prefix)}
+                  disabled={deletingPrefix === route.prefix}
                   className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:text-red-300 disabled:opacity-50 transition-all inline-flex items-center justify-center"
                   title="Delete route"
                 >

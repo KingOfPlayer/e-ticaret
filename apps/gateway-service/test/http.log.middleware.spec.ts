@@ -16,7 +16,9 @@ describe('HttpLoggerMiddleware', () => {
     };
 
     mockStatisticsService = {
-      RecordStatistics: jest.fn(),
+      addEndpointStatistics: jest.fn(),
+      addRequestStatistics: jest.fn(),
+      getEndpointStatistics: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({

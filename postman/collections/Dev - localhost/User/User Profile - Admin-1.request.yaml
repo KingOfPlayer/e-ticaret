@@ -1,0 +1,15 @@
+$kind: http-request
+name: User Profile - Admin
+url: "{{HOST}}api/auth/admin/user/69cef3f8f5f01e4b95a35e7a"
+method: PATCH
+body:
+  type: json
+  content: |-
+    {
+        "address": "asdasd"
+    }
+auth:
+  credentials:
+    token: "{{access_token}}"
+  type: bearer
+order: 2808938617401620

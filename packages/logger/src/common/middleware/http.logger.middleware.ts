@@ -20,7 +20,7 @@ export class HttpLoggerMiddleware implements NestMiddleware {
       const { statusCode } = res;
       const duration = Date.now() - start;
 
-      this.statistics.RecordStatistics(originalUrl, statusCode, duration);
+      this.statistics.addRequestStatistics(originalUrl, statusCode, duration);
 
       const logMessage = `${method} ${originalUrl} ${statusCode} - ${duration}ms`;
       const logMeta = { method, url: originalUrl, statusCode, duration, ip };

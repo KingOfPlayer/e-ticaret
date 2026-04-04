@@ -64,7 +64,7 @@ export default function ProductModal({ isOpen, onClose, onSuccess, product }: Pr
       if (product?._id) {
         await api.put(`/products/${product._id}`, formData);
       } else {
-        await api.post('/products', formData);
+        await api.post('/products', formData, true);
       }
       onSuccess();
       onClose();

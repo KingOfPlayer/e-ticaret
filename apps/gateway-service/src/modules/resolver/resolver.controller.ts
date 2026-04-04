@@ -10,9 +10,11 @@ import {
   Post,
   Patch,
   BadRequestException,
+  Delete,
+  HttpCode,
 } from '@nestjs/common';
 import * as express from 'express';
-import { RouteResolverService } from './route.resolver.service';
+import { ResolverService } from './resolver.service';
 import { LoggerService } from '@e-ticaret/logger';
 import { RoleGuard, Roles, UserRole } from '@e-ticaret/role';
 
@@ -21,7 +23,7 @@ import { RoleGuard, Roles, UserRole } from '@e-ticaret/role';
 @Roles(UserRole.Admin)
 export class RouteResolverController {
   constructor(
-    private readonly routeResolverService: RouteResolverService,
+    private readonly routeResolverService: ResolverService,
     private readonly logger: LoggerService,
   ) {}
 
@@ -47,5 +49,12 @@ export class RouteResolverController {
     await this.routeResolverService.addRoute({ prefix, target });
     this.logger.info(`Added new route: ${prefix} -> ${target}`, 'RouteResolverController');
     return res.status(201).json({ message: 'Route added successfully' });
+  }
+
+  @Delete(':prefix')
+  async deleteRoute(@Param('prefix') prefix: string, @Res() res: express.Response) {
+    await this.routeResolverService.deleteRoute(prefix);
+    this.logger.info(`Deleted route: ${prefix}`, 'RouteResolverController');
+    return res.status(204).send();
   }
 }

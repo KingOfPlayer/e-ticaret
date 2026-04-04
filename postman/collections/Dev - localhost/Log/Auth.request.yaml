@@ -1,9 +1,0 @@
-$kind: http-request
-name: Auth
-url: "{{HOST}}api/auth/log"
-method: POST
-auth:
-  credentials:
-    token: "{{access_token}}"
-  type: bearer
-order: 4286903697435204

@@ -1,0 +1,19 @@
+$kind: http-request
+name: Create Product - Admin
+url: "{{HOST}}api/products"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "name": "New Product",
+      "description": "High quality product",
+      "price": 49.99,
+      "stock": 100,
+      "category": "Electronics"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+order: 1

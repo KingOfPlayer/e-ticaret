@@ -64,10 +64,10 @@ export function ResolverDashboard() {
     }
   };
 
-  const handleDeleteRoute = async (routeId: string) => {
+  const handleDeleteRoute = async (prefix: string) => {
     setError(null);
     try {
-      await api.delete(`/route/${routeId}`, true);
+      await api.delete(`/route/${prefix}`, true);
       // Refresh routes after deletion
       await fetchRoutes();
     } catch (err) {

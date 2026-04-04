@@ -1,11 +1,32 @@
 name: Dev - localhost
 values:
-  - key: user_password
+  - key: HOST
+    value: 'http://localhost:5000/'
+    enabled: true
+  - key: user_id
     value: ''
     enabled: true
-  - key: user_email
+  - key: admin_id
     value: ''
+    enabled: true
+  - key: order_id
+    value: 507f1f77bcf86cd799439012
     enabled: true
   - key: access_token
-    value: ''
+    value: your_user_token_here
+    enabled: true
+  - key: admin_access_token
+    value: your_admin_token_here
+    enabled: true
+  - key: user_email
+    value: admin@ecosystem.com
+    enabled: true
+  - key: user_password
+    value: admin123
+    enabled: true
+  - key: user_name
+    value: John
+    enabled: true
+  - key: user_surname
+    value: Doe
     enabled: true

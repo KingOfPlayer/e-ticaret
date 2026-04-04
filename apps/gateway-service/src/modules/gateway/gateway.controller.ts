@@ -2,13 +2,15 @@ import { Controller, All, Req, Res, Param, NotFoundException } from '@nestjs/com
 import * as express from 'express';
 import { GatewayService } from './gateway.service';
 import { LoggerService } from '@e-ticaret/logger';
-import { RouteResolverService } from '../resolver/route.resolver.service';
+import { ResolverService } from '../resolver/resolver.service';
+
+import { addHateoasLinks } from '../../common/utils/hateoas.util';
 
 @Controller('api')
 export class GatewayController {
   constructor(
     private readonly gatewayService: GatewayService,
-    private readonly routeResolverService: RouteResolverService,
+    private readonly routeResolverService: ResolverService,
     private readonly logger: LoggerService,
   ) {}
 
@@ -18,26 +20,30 @@ export class GatewayController {
     @Res() res: express.Response,
     @Param('path') path: any,
   ) {
-    const target = await this.routeResolverService.resolveRoute(path[0]);
+    const fullPath = path.join('/');
+    const target = await this.routeResolverService.resolveRoute(fullPath);
 
     if (!target) {
-      this.logger.warn(`No route found for path: ${path}`, 'GatewayController');
-      return new NotFoundException(`No route found`);
+      this.logger.warn(`No route found for path: ${fullPath}`, 'GatewayController');
+      throw new NotFoundException(`No route found`);
     }
-    const targetUrl = target.target + path.join('/').substring(target.prefix.length);
+    const targetUrl = target.target + fullPath.substring(target.prefix.length);
 
     const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     req.headers['x-forwarded-for'] = clientIp;
 
     try {
-      const response = await this.gatewayService.proxyRequest(targetUrl, {
+      const { status, data } = await this.gatewayService.proxyRequest(targetUrl, {
         method: req.method,
         data: req.body,
         headers: req.headers,
         params: req.query,
         req, // Passing original request for IP forwarding
       });
-      return res.status(200).json(response);
+
+      const hateoasData = addHateoasLinks(req.originalUrl, data);
+
+      return res.status(status).json(hateoasData);
     } catch (error: any) {
       if (error.status >= 400) {
         const errorMessage = error.message || 'Unknown proxy error';

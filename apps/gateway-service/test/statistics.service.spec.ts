@@ -17,16 +17,16 @@ describe('StatisticsService', () => {
   });
 
   it('should return empty statistics for no recorded data', () => {
-    const stats = service.GetTrafficSummary();
+    const stats = service.getEndpointStatistics();
     expect(stats).toEqual({});
   });
 
   it('should handle multiple endpoints correctly', () => {
-    service.RecordStatistics('/endpoint1', 200, 30);
-    service.RecordStatistics('/endpoint1', 200, 40);
-    service.RecordStatistics('/endpoint2', 404, 60);
+    service.addEndpointStatistics('/endpoint1', 200, 30);
+    service.addEndpointStatistics('/endpoint1', 200, 40);
+    service.addEndpointStatistics('/endpoint2', 404, 60);
 
-    const stats = service.GetTrafficSummary();
+    const stats = service.getEndpointStatistics();
     expect(stats).toEqual({
       '/endpoint1': {
         totalRequests: 2,

@@ -14,142 +14,91 @@ interface Log {
   createdAt: string | Date;
 }
 
-const mockLogs: Log[] = [
-  {
-    id: '1',
-    path: '/api/auth/login',
-    method: 'POST',
-    statusCode: 200,
-    latencyMs: 45,
-    service: 'auth-service',
-    createdAt: new Date(),
-  },
-  {
-    id: '2',
-    path: '/api/products',
-    method: 'GET',
-    statusCode: 200,
-    latencyMs: 12,
-    service: 'product-service',
-    createdAt: new Date(),
-  },
-  {
-    id: '3',
-    path: '/api/orders',
-    method: 'POST',
-    statusCode: 201,
-    latencyMs: 89,
-    service: 'order-service',
-    createdAt: new Date(),
-  },
-  {
-    id: '4',
-    path: '/api/products/123',
-    method: 'DELETE',
-    statusCode: 204,
-    latencyMs: 34,
-    service: 'product-service',
-    createdAt: new Date(),
-  },
-  {
-    id: '5',
-    path: '/api/auth/register',
-    method: 'POST',
-    statusCode: 400,
-    latencyMs: 23,
-    service: 'auth-service',
-    createdAt: new Date(),
-  },
-];
+export function LogTable({ logs = [] }: { logs?: any[] }) {
+  const displayLogs = logs.length > 0 ? logs.map((log) => {
+    // Extract metadata from nested structure
+    const metadata = log.metadata?.['0'] || {};
+    
+    return {
+      method: metadata.method || 'UNKNOWN',
+      url: metadata.url || '/',
+      label: log.label || 'system',
+      statusCode: metadata.statusCode || 200,
+      responseTime: metadata.duration || 0,
+      timestamp: log.timestamp,
+    };
+  }) : [];
 
-export function LogTable() {
   return (
-    <div className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden">
-      <div className="p-6 border-b border-slate-800 flex items-center justify-between bg-slate-900/30">
-        <div className="flex items-center gap-3">
-          <ActivityIcon className="w-5 h-5 text-indigo-400" />
-          <h3 className="text-lg font-semibold text-white">Sistem Logları</h3>
-        </div>
-        <div className="flex gap-2">
-          <span className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-medium border border-indigo-500/20">
-            Canlı İzleme Aktif
-          </span>
-        </div>
-      </div>
-
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-slate-950/50">
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+    <div className="w-full bg-transparent overflow-hidden">
+      <div className="overflow-x-auto h-[350px]">
+        <table className="w-full text-left border-collapse table-fixed">
+          <thead className="sticky top-0 z-10 bg-slate-900/90 backdrop-blur-md">
+            <tr className="border-b border-white/5">
+              <th className="w-20 px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">
                 Method
               </th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">
                 Path
               </th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Servis
-              </th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">
+              <th className="w-20 px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-center">
                 Durum
               </th>
-              <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">
+              <th className="w-24 px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-right">
                 Gecikme
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800">
-            {mockLogs.map((log) => (
-              <tr key={log.id} className="hover:bg-slate-800/30 transition-colors group">
-                <td className="px-6 py-4">
-                  <span
-                    className={cn(
-                      'px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider',
-                      getMethodColor(log.method),
-                    )}
-                  >
-                    {log.method}
-                  </span>
-                </td>
-                <td className="px-6 py-4">
-                  <code className="text-sm text-slate-300 font-mono group-hover:text-white transition-colors">
-                    {log.path}
-                  </code>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-slate-600" />
-                    <span className="text-sm text-slate-400 uppercase tracking-tight text-[11px] font-medium">
-                      {log.service}
-                    </span>
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-center">
-                  <span
-                    className={cn(
-                      'text-sm font-semibold',
-                      log.statusCode >= 400 ? 'text-rose-500' : 'text-emerald-500',
-                    )}
-                  >
-                    {log.statusCode}
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex items-center justify-end gap-1.5">
-                    <Zap className="w-3 h-3 text-amber-500" />
-                    <span className="text-sm text-slate-300 font-medium">{log.latencyMs}ms</span>
-                  </div>
+          <tbody className="divide-y divide-white/5">
+            {displayLogs.length === 0 ? (
+              <tr>
+                <td colSpan={4} className="px-6 py-20 text-center">
+                  <p className="text-xs font-bold text-slate-600 uppercase tracking-widest italic">
+                    Veri akışı bekleniyor...
+                  </p>
                 </td>
               </tr>
-            ))}
+            ) : (
+              displayLogs.map((log, index) => (
+                <tr key={index} className="hover:bg-white/[0.03] transition-colors group">
+                  <td className="px-6 py-4">
+                    <span
+                      className={cn(
+                        'px-2 py-0.5 rounded text-[9px] font-black tracking-widest border',
+                        getMethodColor(log.method),
+                      )}
+                    >
+                      {log.method}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 truncate">
+                    <code className="text-xs text-slate-300 font-mono group-hover:text-indigo-300 transition-colors">
+                      {log.url}
+                    </code>
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <span
+                      className={cn(
+                        'text-xs font-black font-mono',
+                        log.statusCode >= 400 ? 'text-rose-500' : 'text-emerald-500',
+                      )}
+                    >
+                      {log.statusCode}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <div className="flex items-center justify-end gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
+                      <span className="text-[10px] text-slate-300 font-mono italic">
+                        {log.responseTime}ms
+                      </span>
+                      <Zap className="w-3 h-3 text-amber-500" />
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
-      </div>
-
-      <div className="p-4 bg-slate-900/30 border-t border-slate-800 flex justify-center">
-        <button className="text-xs font-medium text-slate-500 hover:text-indigo-400 transition-colors flex items-center gap-2">
-          Hepsini Gör <Clock className="w-3 h-3" />
-        </button>
       </div>
     </div>
   );

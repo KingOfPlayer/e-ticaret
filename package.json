@@ -8,6 +8,7 @@
     "seed": "turbo run seed --parallel",
     "test": "turbo run test --parallel",
     "dev": "turbo run dev --parallel",
+    "docker:db": "docker-compose up -d db-dispatcher db-auth db-product db-order",
     "prestart": "turbo run build --filter=@e-ticaret/*",
     "start": "turbo run start --parallel",
     "build": "turbo run build",

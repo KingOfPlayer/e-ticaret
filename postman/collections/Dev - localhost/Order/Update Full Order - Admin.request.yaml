@@ -1,0 +1,17 @@
+$kind: http-request
+name: Update Full Order - Admin
+url: "{{HOST}}api/orders/admin/{{order_id}}"
+method: PUT
+body:
+  type: json
+  content: |-
+    {
+      "customerName": "Jane Smith Updated",
+      "status": "shipped",
+      "address": "789 Pine Rd, Village, State 99999"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+order: 5

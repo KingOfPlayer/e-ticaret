@@ -4,4 +4,8 @@
 *.tsbuildinfo
 skill/
 test.http
-logs/
+**/logs/
+.env
+
+!/apps/frontend/src/app/dashboard/logs/
+!/apps/frontend/src/app/dashboard/logs/**

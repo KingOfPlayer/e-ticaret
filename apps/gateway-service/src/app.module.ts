@@ -5,10 +5,18 @@ import { HttpLoggerMiddleware, LoggerModule, StatisticsModule } from '@e-ticaret
 import { AuthMiddleware } from './common/middleware/auth.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { ResolverModule } from './modules/resolver/resolver.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27017/gateway'),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MongooseModule.forRootAsync({
+      useFactory: () => ({
+        uri: process.env.MONGO_URI || 'mongodb://127.0.0.1:27014/gateway',
+      }),
+    }),
     LoggerModule.register({ serviceName: 'gateway-service' }),
     StatisticsModule.register(),
     JwtModule.register({

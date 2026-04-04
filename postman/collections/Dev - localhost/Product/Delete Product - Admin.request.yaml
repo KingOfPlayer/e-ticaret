@@ -1,0 +1,9 @@
+$kind: http-request
+name: Delete Product - Admin
+url: "{{HOST}}api/products/{{product_id}}"
+method: DELETE
+auth:
+  type: bearer
+  credentials:
+    token: "{{access_token}}"
+order: 3

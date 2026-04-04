@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
-import { RouteResolverService } from '../src/modules/resolver/route.resolver.service';
 import { Route } from '../src/modules/resolver/schemas/route.schema';
+import { ResolverService } from '../src/modules/resolver/resolver.service';
 
 describe('RouteResolverService', () => {
-  let service: RouteResolverService;
+  let service: ResolverService;
   let mongodbMonk: any;
 
   beforeEach(async () => {
@@ -12,13 +12,22 @@ describe('RouteResolverService', () => {
       find: jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue([]),
       }),
+      findOne: jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue([]),
+      }),
+      updateOne: jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue([]),
+      }),
+      deleteOne: jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue({}),
+      }),
       create: jest.fn(),
       save: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        RouteResolverService,
+        ResolverService,
         {
           provide: getModelToken(Route.name),
           useValue: mongodbMonk,
@@ -26,7 +35,7 @@ describe('RouteResolverService', () => {
       ],
     }).compile();
 
-    service = module.get<RouteResolverService>(RouteResolverService);
+    service = module.get<ResolverService>(ResolverService);
   });
 
   it('should be defined', () => {
@@ -94,32 +103,53 @@ describe('RouteResolverService', () => {
 
   it('should route seeding', async () => {
     await service.seedRoutes();
-    expect(mongodbMonk.create).toHaveBeenCalledWith({
+    expect(mongodbMonk.findOne).toHaveBeenCalledWith({
       prefix: 'auth',
-      target: process.env.AUTH_SERVICE_URL || 'http://localhost:5001',
     });
-    expect(mongodbMonk.create).toHaveBeenCalledWith({
+    expect(mongodbMonk.findOne).toHaveBeenCalledWith({
       prefix: 'products',
-      target: process.env.PRODUCT_SERVICE_URL || 'http://localhost:5002',
     });
-    expect(mongodbMonk.create).toHaveBeenCalledWith({
+    expect(mongodbMonk.findOne).toHaveBeenCalledWith({
       prefix: 'orders',
-      target: process.env.ORDER_SERVICE_URL || 'http://localhost:5003',
     });
+    expect(mongodbMonk.updateOne).toHaveBeenCalledWith(
+      {
+        prefix: 'auth',
+      },
+      {
+        target: process.env.AUTH_SERVICE_URL || 'http://127.0.0.1:5001',
+      },
+    );
+    expect(mongodbMonk.updateOne).toHaveBeenCalledWith(
+      {
+        prefix: 'products',
+      },
+      {
+        target: process.env.PRODUCT_SERVICE_URL || 'http://127.0.0.1:5002',
+      },
+    );
+    expect(mongodbMonk.updateOne).toHaveBeenCalledWith(
+      {
+        prefix: 'orders',
+      },
+      {
+        target: process.env.ORDER_SERVICE_URL || 'http://127.0.0.1:5003',
+      },
+    );
   });
 
   it('should not seed routes if they already exist', async () => {
     mongodbMonk.find.mockReturnValue({
       exec: jest.fn().mockResolvedValue([
-        { prefix: 'auth', target: 'http://localhost:5001' },
-        { prefix: 'products', target: 'http://localhost:5002' },
-        { prefix: 'orders', target: 'http://localhost:5003' },
+        { prefix: 'auth', target: 'http://127.0.0.1:5001' },
+        { prefix: 'products', target: 'http://127.0.0.1:5002' },
+        { prefix: 'orders', target: 'http://127.0.0.1:5003' },
       ]),
     });
 
     await service.seedRoutes();
-    expect(mongodbMonk.find).toHaveBeenCalled();
-    expect(mongodbMonk.create).not.toHaveBeenCalled();
+    expect(mongodbMonk.findOne).toHaveBeenCalledTimes(3);
+    expect(mongodbMonk.updateOne).toHaveBeenCalledTimes(3);
   });
 
   it('should get available routes', async () => {
@@ -134,5 +164,16 @@ describe('RouteResolverService', () => {
 
     const routes = await service.getAllRoutes();
     expect(routes).toEqual(routesFromDb);
+  });
+
+  it('should handle delete route', async () => {
+    const routeToDelete = { prefix: 'test1', target: 'http://localhost:3001' };
+
+    mongodbMonk.find.mockReturnValue({
+      exec: jest.fn().mockResolvedValue([routeToDelete]),
+    });
+
+    await service.deleteRoute('test1');
+    expect(mongodbMonk.deleteOne).toHaveBeenCalledWith({ prefix: 'test1'});
   });
 });
