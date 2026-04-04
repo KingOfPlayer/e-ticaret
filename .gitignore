@@ -11,3 +11,4 @@ test.http
 !/apps/frontend/src/app/dashboard/logs/**
 
 .postman/
+result-*.json
