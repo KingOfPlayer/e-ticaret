@@ -142,55 +142,63 @@ export default function DashboardPage() {
     fetchData();
     const interval = setInterval(fetchData, 10000); // Poll every 10s
     return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-12">
+  }, []);  return (
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-20">
       {/* 1. Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-2xl font-black tracking-tighter text-white drop-shadow-md uppercase italic flex items-center gap-2">
-            Gösterge Paneli
-            {loading && <RefreshCw className="w-4 h-4 text-indigo-400 animate-spin" />}
-          </h1>
-          <p
-            className={cn(
-              'text-[10px] font-bold uppercase tracking-[0.3em] mt-1 transition-colors',
-              error ? 'text-rose-500' : 'text-slate-500',
-            )}
-          >
-            {error || 'Sistem Durumu: Çevrimiçi'}
-          </p>
+          <div className="flex items-center gap-3">
+            <h1 className="text-3xl font-black tracking-tighter text-slate-900 uppercase italic drop-shadow-sm">
+              KONTROL ÜNİTESİ
+            </h1>
+            {loading && <RefreshCw className="w-5 h-5 text-emerald-600 animate-spin" />}
+          </div>
+          <div className="flex items-center gap-2 mt-2">
+            <div className={cn(
+              "w-2 h-2 rounded-full animate-pulse",
+              error ? "bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.3)]" : "bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]"
+            )} />
+            <p
+              className={cn(
+                'text-[10px] font-black uppercase tracking-[0.4em] transition-colors',
+                error ? 'text-rose-600' : 'text-emerald-600',
+              )}
+            >
+              {error ? 'SİSTEM HATASI' : 'SİSTEM DURUMU: AKTİF'}
+            </p>
+          </div>
         </div>
 
         <div className="flex items-center gap-4">
           <div className="relative group hidden md:block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-indigo-400 transition-colors" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-600 transition-all duration-300" />
             <input
               type="text"
-              placeholder="Rota veya Log ara..."
-              className="bg-white/[0.03] border border-white/5 rounded-xl py-2 pl-10 pr-4 text-xs text-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500/30 w-64 transition-all"
+              placeholder="Sistem kayıtlarında ara..."
+              className="bg-white border border-slate-200 rounded-2xl py-3 pl-12 pr-6 text-[11px] font-bold text-slate-700 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 w-80 transition-all placeholder:text-slate-400 shadow-sm"
             />
           </div>
           <button
             onClick={fetchData}
-            className="p-2 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors"
+            className="p-3 bg-white border border-slate-200 rounded-2xl hover:bg-slate-50 hover:border-emerald-500/20 transition-all duration-300 group shadow-sm"
           >
-            <RefreshCw className={cn('w-4 h-4 text-slate-400', loading && 'animate-spin')} />
+            <RefreshCw className={cn('w-5 h-5 text-slate-400 group-hover:text-emerald-600 transition-colors', loading && 'animate-spin')} />
           </button>
         </div>
       </div>
 
       {error ? (
-        <div className="glass-panel p-12 rounded-3xl border border-rose-500/20 bg-rose-500/[0.02] flex flex-col items-center justify-center text-center">
-          <AlertCircle className="w-12 h-12 text-rose-500 mb-4 opacity-50" />
-          <h2 className="text-lg font-bold text-white mb-2">Veri Alınamadı</h2>
-          <p className="text-sm text-slate-400 mb-6 max-w-md">{error}</p>
+        <div className="glass-panel p-20 rounded-[2.5rem] border border-rose-500/20 bg-white flex flex-col items-center justify-center text-center shadow-xl">
+          <div className="w-20 h-20 rounded-full bg-rose-50 flex items-center justify-center mb-6">
+            <AlertCircle className="w-10 h-10 text-rose-500 opacity-60" />
+          </div>
+          <h2 className="text-xl font-black text-slate-900 mb-3 uppercase tracking-tighter italic">Veri akış hatası</h2>
+          <p className="text-xs text-slate-500 mb-8 max-w-sm font-bold leading-relaxed">{error}</p>
           <button
             onClick={fetchData}
-            className="px-6 py-2 bg-indigo-600 text-white rounded-xl font-bold shadow-lg shadow-indigo-500/20 active:scale-95 transition-all"
+            className="px-10 py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-emerald-500/20 active:scale-95 transition-all"
           >
-            Verileri Yeniden Yükle
+            Terminali Yeniden Başlat
           </button>
         </div>
       ) : (
@@ -199,33 +207,39 @@ export default function DashboardPage() {
           <StatsCards stats={stats?.cards} />
 
           {/* 3. Main Analytics Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 glass-panel rounded-3xl h-[400px] border border-white/5 bg-white/[0.01] flex flex-col overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 glass-panel rounded-[2.5rem] h-[450px] border border-slate-200 bg-white flex flex-col overflow-hidden shadow-sm">
               <LatencyLineChart data={stats?.latencySeries} />
             </div>
-            <div className="glass-panel rounded-3xl h-[400px] border border-white/5 bg-white/[0.01] flex flex-col overflow-hidden">
+            <div className="glass-panel rounded-[2.5rem] h-[450px] border border-slate-200 bg-white flex flex-col overflow-hidden shadow-sm">
               <StatusDonutChart data={stats?.statusDistribution} />
             </div>
           </div>
 
           {/* 4. Detailed Insights Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="glass-panel rounded-3xl h-[450px] border border-white/5 bg-white/[0.01] overflow-hidden flex flex-col">
-              <div className="p-6 border-b border-white/5 flex items-center justify-between">
-                <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">
-                  HIZLI AKIŞ (REACH)
-                </h3>
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="glass-panel rounded-[2.5rem] min-h-[500px] border border-slate-200 bg-white overflow-hidden flex flex-col shadow-sm">
+              <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/30">
+                <div className="flex flex-col">
+                  <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">
+                    SİSTEM KAYITLARI (LOGS)
+                  </h3>
+                  <span className="text-[9px] font-bold text-emerald-600/70 uppercase tracking-widest mt-1">Gerçek Zamanlı Veri Akışı</span>
+                </div>
+                <div className="flex items-center gap-2">
+                   <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">LIVE</span>
+                   <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.3)] border border-emerald-400/20" />
+                </div>
               </div>
-              <div className="flex-1 overflow-auto scrollbar-hide">
+              <div className="flex-1 overflow-auto custom-scrollbar">
                 <LogTable logs={logs} />
               </div>
             </div>
-            <div className="space-y-6">
-              <div className="glass-panel rounded-3xl h-[213px] border border-white/5 bg-white/[0.01] flex flex-col overflow-hidden">
+            <div className="flex flex-col gap-8">
+              <div className="glass-panel rounded-[2.5rem] flex-1 border border-slate-200 bg-white flex flex-col overflow-hidden shadow-sm">
                 <RouteChart data={stats?.routes} />
               </div>
-              <div className="glass-panel rounded-3xl h-[213px] border border-white/5 bg-white/[0.01] flex flex-col overflow-hidden">
+              <div className="glass-panel rounded-[2.5rem] flex-1 border border-slate-200 bg-white flex flex-col overflow-hidden shadow-sm">
                 <MethodChart data={stats?.statusDistribution} />
               </div>
             </div>
@@ -235,3 +249,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+

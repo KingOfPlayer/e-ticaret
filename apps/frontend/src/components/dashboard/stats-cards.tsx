@@ -75,61 +75,62 @@ export function StatsCards({ stats }: { stats?: StatsData }) {
 
 function StatCard({ title, value, subtitle, icon: Icon, color, trend }: StatCardProps) {
   const colorMap = {
-    blue: 'text-blue-400 bg-blue-500/10 border-blue-500/20 shadow-blue-500/5',
-    emerald: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20 shadow-emerald-500/5',
-    amber: 'text-amber-400 bg-amber-500/10 border-amber-100 shadow-amber-500/5',
-    rose: 'text-rose-400 bg-rose-500/10 border-rose-500/20 shadow-rose-500/5',
+    blue: 'text-emerald-600 bg-emerald-50 border-emerald-100 shadow-sm',
+    emerald: 'text-emerald-600 bg-emerald-50 border-emerald-100 shadow-sm',
+    amber: 'text-amber-600 bg-amber-50 border-amber-100 shadow-sm',
+    rose: 'text-rose-600 bg-rose-50 border-rose-100 shadow-sm',
   };
 
   return (
-    <div className="glass-panel group overflow-hidden relative p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-300">
+    <div className="glass-panel group overflow-hidden relative p-6 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 transition-all duration-300 shadow-sm hover:shadow-md">
       {/* Background Glow */}
       <div
         className={cn(
-          'absolute -right-4 -top-4 w-24 h-24 blur-[40px] opacity-20 rounded-full transition-all duration-500 group-hover:opacity-40',
-          color === 'blue' && 'bg-blue-500',
-          color === 'emerald' && 'bg-emerald-500',
-          color === 'amber' && 'bg-amber-500',
-          color === 'rose' && 'bg-rose-500',
+          'absolute -right-8 -top-8 w-32 h-32 blur-[50px] opacity-10 rounded-full transition-all duration-500 group-hover:opacity-30',
+          color === 'emerald' || color === 'blue' ? 'bg-emerald-500' : 
+          color === 'amber' ? 'bg-amber-500' : 'bg-rose-500'
         )}
       />
 
-      <div className="relative flex flex-col gap-4">
+      <div className="relative flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <div
             className={cn(
-              'p-2.5 rounded-xl border transition-transform duration-300 group-hover:scale-110',
+              'p-3 rounded-xl border transition-all duration-500 group-hover:scale-110',
               colorMap[color],
             )}
           >
-            <Icon className="w-5 h-5" />
+            <Icon className="w-5 h-5 transition-transform duration-500 group-hover:rotate-12" />
           </div>
           {trend && (
-            <span
-              className={cn(
-                'text-[10px] font-bold px-2 py-0.5 rounded-full',
-                trend.startsWith('+')
-                  ? 'bg-emerald-500/10 text-emerald-500'
-                  : trend.startsWith('-')
-                    ? 'bg-amber-500/10 text-amber-500'
-                    : 'bg-rose-500/10 text-rose-500',
-              )}
-            >
-              {trend}
-            </span>
+            <div className="flex flex-col items-end">
+              <span
+                className={cn(
+                  'text-[10px] font-black tracking-widest px-2.5 py-1 rounded-full uppercase border',
+                  trend.startsWith('+')
+                    ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                    : trend.startsWith('-')
+                      ? 'bg-amber-50 text-amber-600 border-amber-100'
+                      : 'bg-rose-50 text-rose-600 border-rose-100',
+                )}
+              >
+                {trend}
+              </span>
+            </div>
           )}
         </div>
 
         <div>
-          <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-1">
+          <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2 leading-none">
             {title}
           </h4>
           <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-black text-white tracking-tight">{value}</span>
-            <span className="text-[10px] font-medium text-slate-400">{subtitle}</span>
+            <span className="text-3xl font-black text-slate-900 tracking-tighter tabular-nums drop-shadow-sm">{value}</span>
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{subtitle}</span>
           </div>
         </div>
       </div>
     </div>
   );
 }
+

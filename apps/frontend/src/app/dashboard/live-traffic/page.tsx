@@ -101,47 +101,49 @@ export default function LiveTrafficPage() {
   });
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-700">
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-20">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-white/90 uppercase tracking-tight">
-          Canlı Trafik Akışı
-        </h1>
-        <div className="flex items-center gap-2">
-          <div
-            className={cn(
-              'w-1.5 h-1.5 rounded-full',
-              loading ? 'bg-yellow-500 animate-pulse' : 'bg-emerald-500 animate-pulse',
-            )}
-          />
-          <span
-            className={cn(
-              'text-[10px] font-black uppercase tracking-widest',
-              loading ? 'text-yellow-400' : 'text-emerald-400',
-            )}
-          >
-            {loading ? 'YÜKLENİYOR...' : 'GERÇEK ZAMANLI'}
+        <div>
+          <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic drop-shadow-sm">
+            CANLI TRAFİK AKIŞI
+          </h1>
+          <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] mt-2">
+            Gateway üzerinden geçen gerçek zamanlı HTTP istek analizi
+          </p>
+        </div>
+        <div className="px-6 py-3 glass-panel border border-emerald-100 bg-emerald-50 rounded-2xl flex items-center gap-3 shadow-sm">
+          <div className={cn(
+            'w-2.5 h-2.5 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.3)]',
+            loading ? 'bg-amber-500' : 'bg-emerald-500'
+          )} />
+          <span className={cn(
+            'text-[10px] font-black uppercase tracking-widest',
+            loading ? 'text-amber-600' : 'text-emerald-600'
+          )}>
+            {loading ? 'YÜKLENİYOR...' : 'GERÇEK ZAMANLI AKTİF'}
           </span>
         </div>
       </div>
 
       {error && (
-        <div className="glass-panel rounded-2xl border border-rose-500/20 bg-rose-500/5 p-4 text-rose-400 text-sm">
-          <p>Loglar alınamadı: {error}</p>
+        <div className="p-6 bg-rose-50 border border-rose-100 rounded-2xl flex items-center gap-4 text-rose-600 text-[11px] font-black uppercase tracking-widest animate-shake shadow-sm">
+          <Activity className="w-5 h-5 shrink-0" />
+          {error}
         </div>
       )}
 
-      <div className="glass-panel rounded-2xl overflow-hidden border border-white/5">
+      <div className="glass-panel border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm bg-white">
         {/* Filters */}
-        <div className="p-4 border-b border-white/5 flex gap-2 overflow-x-auto">
+        <div className="p-6 border-b border-slate-100 flex gap-3 overflow-x-auto custom-scrollbar bg-slate-50/50">
           {filters.map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
               className={cn(
-                'px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all',
+                'px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 border shadow-sm',
                 filter === f
-                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
-                  : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white',
+                  ? 'bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-500/20'
+                  : 'bg-white border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-300'
               )}
             >
               {f}
@@ -150,50 +152,64 @@ export default function LiveTrafficPage() {
         </div>
 
         {/* Traffic List */}
-        <div className="overflow-y-auto max-h-[600px] scrollbar-hide">
+        <div className="overflow-y-auto max-h-[700px] custom-scrollbar">
           {traffic.length === 0 && !loading ? (
-            <div className="flex items-center justify-center h-32 text-slate-500">
-              <p className="text-sm">Henüz log verisi bulunamadı</p>
+            <div className="flex flex-col items-center justify-center py-32 gap-6 opacity-40">
+               <Activity className="w-20 h-20 text-slate-300" strokeWidth={1} />
+               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">HİÇBİR VERİ AKIŞI BULUNAMADI</p>
             </div>
           ) : (
-            filteredTraffic.map((t, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between px-6 py-4 border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors"
-              >
-                <div className="flex items-center gap-6">
-                  <span
-                    className={cn(
-                      'px-2 py-0.5 rounded text-[10px] font-black w-14 text-center',
-                      t.method === 'GET' && 'bg-blue-500/10 text-blue-400',
-                      t.method === 'POST' && 'bg-emerald-500/10 text-emerald-400',
-                      t.method === 'DELETE' && 'bg-rose-500/10 text-rose-400',
-                      t.method === 'PUT' && 'bg-amber-500/10 text-amber-400',
-                    )}
-                  >
-                    {t.method}
-                  </span>
-                  <span className="text-sm font-medium text-slate-300 font-mono truncate max-w-md">
-                    {t.path}
-                  </span>
-                </div>
+            <div className="divide-y divide-slate-100">
+              {filteredTraffic.map((t, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between px-10 py-6 hover:bg-slate-50/50 transition-all duration-300 group"
+                >
+                  <div className="flex items-center gap-10">
+                    <span
+                      className={cn(
+                        'px-4 py-2 rounded-xl text-[10px] font-black w-20 text-center uppercase tracking-widest border shadow-sm',
+                        t.method === 'GET' && 'bg-blue-50 text-blue-600 border-blue-100',
+                        t.method === 'POST' && 'bg-emerald-50 text-emerald-600 border-emerald-100',
+                        t.method === 'DELETE' && 'bg-rose-50 text-rose-600 border-rose-100',
+                        t.method === 'PUT' && 'bg-amber-50 text-amber-600 border-amber-100',
+                      )}
+                    >
+                      {t.method}
+                    </span>
+                    <span className="text-[13px] font-black text-slate-400 font-mono truncate max-w-2xl group-hover:text-slate-900 transition-colors tracking-tight">
+                      {t.path}
+                    </span>
+                  </div>
 
-                <div className="flex items-center gap-8">
-                  <span
-                    className={cn(
-                      'text-xs font-bold font-mono',
-                      t.status < 400 ? 'text-emerald-400' : 'text-rose-400',
-                    )}
-                  >
-                    {t.status}
-                  </span>
-                  <span className="text-[10px] text-slate-500 font-mono w-10 text-right">
-                    {t.latency}
-                  </span>
-                  <span className="text-[10px] text-slate-600 font-mono">{t.time}</span>
+                  <div className="flex items-center gap-12">
+                    <div className="flex flex-col items-end">
+                       <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">DURUM</p>
+                       <span
+                         className={cn(
+                           'text-[14px] font-black font-mono tracking-tighter shadow-sm px-2 rounded-lg',
+                           t.status < 400 ? 'text-emerald-600 bg-emerald-50/30' : 'text-rose-600 bg-rose-50/30',
+                         )}
+                       >
+                         {t.status}
+                       </span>
+                    </div>
+                    
+                    <div className="flex flex-col items-end w-20">
+                       <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">LATENCY</p>
+                       <span className="text-[12px] text-slate-400 font-black font-mono">
+                         {t.latency}
+                       </span>
+                    </div>
+
+                    <div className="flex flex-col items-end w-24">
+                       <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">TIMESTAMP</p>
+                       <span className="text-[12px] text-slate-500 font-black font-mono">{t.time}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
       </div>

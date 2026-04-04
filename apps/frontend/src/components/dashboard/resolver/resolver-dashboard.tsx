@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshCw, Plus, Trash2, AlertCircle } from 'lucide-react';
 import { api } from '@/lib/api';
+import { cn } from '@/lib/utils';
 import { RouteTable } from './route-table';
 import { AddRouteForm } from './add-route-form';
 
@@ -76,58 +77,61 @@ export function ResolverDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-20">
+      <div className="max-w-7xl mx-auto space-y-10">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-purple-500/20 border border-purple-500/40 rounded-lg">
-                <RefreshCw className="w-6 h-6 text-purple-400" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-white">Route Resolver</h1>
-                <p className="text-slate-400 text-sm">Manage service routes and prefixes</p>
-              </div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <div className="w-16 h-16 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center justify-center shadow-sm">
+              <RefreshCw className="w-8 h-8 text-emerald-600" />
             </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                onClick={handleRefreshRoutes}
-                disabled={refreshing}
-                className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600 disabled:opacity-50 text-white font-medium transition-all flex items-center gap-2"
-              >
-                <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-                Refresh
-              </button>
-              <button
-                onClick={() => setShowAddForm(!showAddForm)}
-                className="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium transition-all flex items-center gap-2"
-              >
-                <Plus className="w-4 h-4" />
-                Add Route
-              </button>
+            <div>
+              <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic drop-shadow-sm">
+                ROUTE RESOLVER
+              </h1>
+              <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] mt-2">
+                Service routing, prefix mapping and gateway configuration
+              </p>
             </div>
           </div>
 
-          {/* Status Bar */}
-          <div className="flex items-center gap-2 px-4 py-2 bg-purple-500/10 border border-purple-500/20 rounded-lg w-fit">
-            <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-            <span className="text-sm text-purple-400 font-medium">
-              {routes.length} route{routes.length !== 1 ? 's' : ''} configured
-            </span>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handleRefreshRoutes}
+              disabled={refreshing}
+              className="px-6 py-4 rounded-2xl glass-panel border border-slate-200 text-slate-600 hover:text-slate-900 font-black text-[10px] uppercase tracking-[0.2em] transition-all flex items-center gap-3 active:scale-95 bg-white shadow-sm"
+            >
+              <RefreshCw className={cn('w-4 h-4', refreshing && 'animate-spin')} />
+              Sync Gateway
+            </button>
+            <button
+              onClick={() => setShowAddForm(!showAddForm)}
+              className="px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px] uppercase tracking-[0.2em] transition-all flex items-center gap-3 shadow-lg shadow-emerald-500/20 active:scale-95 group overflow-hidden relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <Plus className="w-4 h-4" strokeWidth={3} />
+              Yeni Giriş
+            </button>
           </div>
+        </div>
+
+        {/* Status Bar */}
+        <div className="flex items-center gap-3 px-6 py-3 glass-panel border border-emerald-100 rounded-2xl w-fit bg-emerald-50 shadow-sm">
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.3)]" />
+          <span className="text-[10px] text-emerald-600 font-black uppercase tracking-widest">
+            {routes.length} AKTİF ROTA YAPILANDIRILDI
+          </span>
         </div>
 
         {/* Error Alert */}
         {error && (
-          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+          <div className="p-6 bg-rose-50 border border-rose-100 rounded-2xl flex items-center gap-4 text-rose-600 text-[11px] font-black uppercase tracking-widest animate-shake shadow-sm">
+            <AlertCircle className="w-5 h-5 shrink-0" />
             <div className="flex-1">
-              <p className="text-red-400 font-medium">Error</p>
-              <p className="text-red-300 text-sm">{error}</p>
+              <p className="font-black">SİSTEM HATASI</p>
+              <p className="text-rose-600/60 mt-1 uppercase tracking-tighter">{error}</p>
             </div>
-            <button onClick={() => setError(null)} className="text-red-400 hover:text-red-300">
+            <button onClick={() => setError(null)} className="text-rose-400 hover:text-rose-600 transition-colors">
               ✕
             </button>
           </div>
@@ -135,33 +139,30 @@ export function ResolverDashboard() {
 
         {/* Add Route Form */}
         {showAddForm && (
-          <div className="mb-6">
+          <div className="animate-in slide-in-from-top-4 duration-500">
             <AddRouteForm onAdd={handleAddRoute} onCancel={() => setShowAddForm(false)} />
           </div>
         )}
 
         {/* Routes Table */}
-        <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg overflow-hidden">
+        <div className="glass-panel border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm bg-white">
           {loading ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="text-center">
-                <div className="inline-block animate-spin mb-4">
-                  <RefreshCw className="w-8 h-8 text-slate-400" />
-                </div>
-                <p className="text-slate-400">Loading routes...</p>
-              </div>
+            <div className="flex flex-col items-center justify-center py-32 gap-6">
+               <div className="relative">
+                  <div className="w-16 h-16 border-4 border-emerald-50 border-t-emerald-500 rounded-full animate-spin" />
+                  <RefreshCw className="w-6 h-6 text-emerald-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+               </div>
+               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">VERİLER ALINIYOR...</p>
             </div>
           ) : routes.length > 0 ? (
             <RouteTable routes={routes} onDelete={handleDeleteRoute} />
           ) : (
-            <div className="flex items-center justify-center py-12">
-              <div className="text-center">
-                <div className="p-3 bg-slate-700/50 rounded-lg inline-block mb-3">
-                  <RefreshCw className="w-6 h-6 text-slate-500" />
-                </div>
-                <p className="text-slate-400">No routes configured yet</p>
-                <p className="text-slate-500 text-sm mt-1">Add a new route to get started</p>
-              </div>
+            <div className="flex flex-col items-center justify-center py-32 gap-8 opacity-40">
+               <RefreshCw className="w-20 h-20 text-slate-300" strokeWidth={1} />
+               <div className="text-center space-y-2">
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.5em]">GİRİŞ BULUNAMADI</p>
+                  <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest">SİSTEME ROTA EKLEYEREK BAŞLAYIN</p>
+               </div>
             </div>
           )}
         </div>
@@ -169,3 +170,4 @@ export function ResolverDashboard() {
     </div>
   );
 }
+

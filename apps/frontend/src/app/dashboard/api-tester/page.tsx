@@ -80,37 +80,37 @@ export default function ApiTesterPage() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-180px)] gap-6 animate-in fade-in duration-700">
-      {/* Left Sidebar: Endpoints List (Image 4 Style) */}
-      <div className="w-80 glass-panel rounded-2xl flex flex-col overflow-hidden border border-white/5">
-        <div className="p-4 border-b border-white/5 bg-white/[0.02]">
-          <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-            ENDPOINT'LER
+    <div className="flex h-[calc(100vh-220px)] gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      {/* Left Sidebar: Endpoints List */}
+      <div className="w-80 glass-panel rounded-[2rem] flex flex-col overflow-hidden border border-slate-200 shadow-sm bg-white">
+        <div className="p-6 border-b border-slate-100 bg-slate-50/50">
+          <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+            İSTEK HAVUZU
           </p>
         </div>
-        <div className="flex-1 overflow-y-auto p-2 space-y-1 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-3 space-y-2 custom-scrollbar">
           {ENDPOINTS.map((ep) => (
             <button
               key={ep.id}
               onClick={() => selectEndpoint(ep)}
               className={cn(
-                'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-left group',
+                'w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 text-left group border border-transparent',
                 selectedEndpoint.id === ep.id
-                  ? 'bg-indigo-600/20 border border-indigo-500/20 text-white'
-                  : 'hover:bg-white/[0.03] text-slate-400',
+                  ? 'bg-emerald-50 border-emerald-100 text-emerald-700 shadow-sm'
+                  : 'hover:bg-slate-50 text-slate-500 hover:text-slate-900',
               )}
             >
-              <span
+              <div
                 className={cn(
-                  'text-[8px] font-black px-1.5 py-0.5 rounded uppercase w-10 text-center',
+                  'text-[8px] font-black px-2 py-1 rounded-lg uppercase w-12 text-center border transition-all duration-300',
                   ep.method === 'POST'
-                    ? 'bg-emerald-500/20 text-emerald-400'
-                    : 'bg-blue-500/20 text-blue-400',
+                    ? selectedEndpoint.id === ep.id ? 'bg-emerald-100 border-emerald-200 text-emerald-700' : 'bg-slate-100 border-slate-200 text-emerald-600'
+                    : selectedEndpoint.id === ep.id ? 'bg-blue-100 border-blue-200 text-blue-700' : 'bg-slate-100 border-slate-200 text-blue-600',
                 )}
               >
                 {ep.method}
-              </span>
-              <span className="text-xs font-bold truncate group-hover:text-white transition-colors">
+              </div>
+              <span className="text-[11px] font-black truncate tracking-tight">
                 {ep.label}
               </span>
             </button>
@@ -118,115 +118,136 @@ export default function ApiTesterPage() {
         </div>
       </div>
 
-      {/* Main Area: Request/Response (Image 4 Style) */}
-      <div className="flex-1 glass-panel rounded-2xl flex flex-col overflow-hidden border border-white/5 p-6 space-y-6">
-        <div className="space-y-4">
-          <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">
-            BİR ENDPOINT SEÇİN
-          </h3>
+      {/* Main Area: Request/Response */}
+      <div className="flex-1 glass-panel rounded-[2rem] flex flex-col overflow-hidden border border-slate-200 p-8 space-y-8 shadow-sm bg-white">
+        <div className="space-y-6 flex flex-col h-full">
+          <div className="flex items-center justify-between">
+             <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.4em]">
+               TERMINAL KONTROL
+             </h3>
+             <div className="flex items-center gap-2">
+                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">READY TO DISPATCH</span>
+                <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)] border border-emerald-400/20" />
+             </div>
+          </div>
 
-          {/* URL Input */}
-          <div className="space-y-2">
-            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-              URL
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+             {/* URL Input */}
+            <div className="md:col-span-3 space-y-2.5">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.22em] ml-1">
+                DAĞITIM ROTA ADRESİ (URL)
+              </label>
+              <div className="flex items-center gap-4 bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus-within:ring-4 focus-within:ring-emerald-500/10 transition-all shadow-sm">
+                <Globe className="w-4 h-4 text-emerald-600" />
+                <span className="text-xs text-slate-400 font-black tabular-nums opacity-50 uppercase tracking-tighter">http://gateway:5000</span>
+                <input
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  className="flex-1 bg-transparent border-none outline-none text-[13px] text-slate-900 font-bold tracking-tight"
+                />
+              </div>
+            </div>
+
+            <div className="md:col-span-1 space-y-2.5">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.22em] ml-1">
+                METOD
+              </label>
+              <div className="relative group">
+                <select
+                  value={method}
+                  disabled
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 text-[11px] text-slate-900 font-black outline-none appearance-none cursor-not-allowed opacity-80 shadow-sm"
+                >
+                  <option>GET</option>
+                  <option>POST</option>
+                  <option>PUT</option>
+                  <option>DELETE</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <ChevronRight className="w-4 h-4 text-slate-300 rotate-90" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Token Row */}
+          <div className="space-y-2.5">
+            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.22em] ml-1">
+              SİSTEM YETKİ ANAHTARI (TOKEN)
             </label>
-            <div className="flex items-center gap-2 bg-black/40 border border-white/10 rounded-xl px-4 py-3">
-              <Globe className="w-4 h-4 text-slate-500" />
-              <span className="text-xs text-slate-500 font-mono">http://localhost:5000</span>
+            <div className="flex items-center gap-4 bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 opacity-70">
+              <Lock className="w-4 h-4 text-emerald-600" />
               <input
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                className="flex-1 bg-transparent border-none outline-none text-xs text-white font-mono"
+                value={token ? `BEARER_TOKEN/${token.substring(0, 48)}...` : 'YETKİ ANAHTARI BULUNAMADI'}
+                disabled
+                className="flex-1 bg-transparent border-none outline-none text-[11px] text-slate-400 font-black tracking-widest uppercase"
               />
             </div>
           </div>
 
-          {/* Token & Method Row */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="md:col-span-1 space-y-2">
-              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                METOD
+          <div className="flex gap-8 min-h-0 flex-1">
+            {/* Body Editor */}
+            <div className="flex-1 space-y-2.5 flex flex-col">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.22em] ml-1">
+                İSTEK GÖVDESİ (PAYLOAD JSON)
               </label>
-              <select
-                value={method}
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-white font-bold outline-none"
-                disabled
-              >
-                <option>GET</option>
-                <option>POST</option>
-                <option>PUT</option>
-                <option>DELETE</option>
-              </select>
+              <textarea
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
+                className="flex-1 w-full min-h-[160px] bg-slate-50 border border-slate-200 rounded-2xl p-6 text-[12px] font-bold text-slate-900 outline-none custom-scrollbar resize-none font-mono tracking-tight ring-emerald-500/10 focus:ring-4 transition-all shadow-sm"
+                placeholder="{}"
+              />
             </div>
-            <div className="md:col-span-3 space-y-2">
-              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                TOKEN (OTOMATİK DOLDURULUR)
-              </label>
-              <div className="flex items-center gap-2 bg-black/40 border border-white/10 rounded-xl px-4 py-3">
-                <Lock className="w-4 h-4 text-indigo-500" />
-                <input
-                  value={token ? `Bearer ${token.substring(0, 30)}...` : 'Token yok'}
-                  disabled
-                  className="flex-1 bg-transparent border-none outline-none text-[10px] text-slate-500 font-mono"
-                />
-              </div>
-            </div>
-          </div>
 
-          {/* Body Editor */}
-          <div className="space-y-2">
-            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-              REQUEST BODY (JSON)
-            </label>
-            <textarea
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              className="w-full h-32 bg-black/40 border border-white/10 rounded-xl p-4 text-xs font-mono text-emerald-400 outline-none scrollbar-hide resize-none"
-              placeholder="{}"
-            />
-          </div>
-
-          <button
-            onClick={handleSend}
-            disabled={loading}
-            className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black uppercase tracking-widest py-3 px-8 rounded-xl flex items-center gap-2 transition-all shadow-[0_0_20px_rgba(99,102,241,0.3)]"
-          >
-            <Play className="w-4 h-4" /> GÖNDER
-          </button>
-        </div>
-
-        {/* Response Area */}
-        <div className="flex-1 flex flex-col space-y-2 min-h-0">
-          <div className="flex items-center justify-between">
-            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-              YANIT
-            </label>
-            {response && (
-              <span
-                className={cn(
-                  'text-[10px] font-bold px-2 py-0.5 rounded uppercase',
-                  response.status < 400
-                    ? 'bg-emerald-500/20 text-emerald-400'
-                    : 'bg-rose-500/20 text-rose-400',
+            {/* Response Area */}
+            <div className="flex-1 flex flex-col space-y-2.5 min-h-0">
+              <div className="flex items-center justify-between ml-1 leading-none">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.22em]">
+                  SUNUCU YANITI (RESPONSE)
+                </label>
+                {response && (
+                  <span
+                    className={cn(
+                      'text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest border shadow-sm',
+                      response.status < 400
+                        ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                        : 'bg-rose-50 text-rose-600 border-rose-100',
+                    )}
+                  >
+                    STATUS {response.status}
+                  </span>
                 )}
-              >
-                {response.status} {response.status === 200 ? 'OK' : ''}
-              </span>
-            )}
-          </div>
-          <div className="flex-1 bg-black/60 border border-white/10 rounded-xl p-4 overflow-auto scrollbar-hide">
-            {response ? (
-              <pre className="text-[11px] font-mono text-indigo-300">
-                {JSON.stringify(response.data, null, 2)}
-              </pre>
-            ) : (
-              <div className="h-full flex items-center justify-center text-slate-600 italic text-xs">
-                İsteği göndererek yanıtı buradan izleyin...
               </div>
-            )}
+              <div className="flex-1 bg-slate-900 border border-slate-950 rounded-2xl p-6 overflow-auto custom-scrollbar shadow-inner">
+                {response ? (
+                  <pre className="text-[12px] font-bold font-mono text-emerald-400 leading-relaxed selection:bg-emerald-500/20 selection:text-emerald-100">
+                    {JSON.stringify(response.data, null, 2)}
+                  </pre>
+                ) : (
+                  <div className="h-full flex flex-col items-center justify-center text-slate-700 uppercase font-black text-[10px] tracking-[0.4em] gap-4">
+                    <div className="w-12 h-1 bg-slate-800 rounded-full overflow-hidden">
+                       <div className="w-1/2 h-full bg-emerald-500/20 animate-[slide-right_2s_infinite]" />
+                    </div>
+                    VERİ BEKLENİYOR
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-2">
+            <button
+              onClick={handleSend}
+              disabled={loading}
+              className="bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-black uppercase tracking-[0.3em] py-4 px-12 rounded-2xl flex items-center gap-3 transition-all duration-300 shadow-lg shadow-emerald-500/20 active:scale-95 disabled:grayscale disabled:opacity-50 group overflow-hidden relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <Play className="w-4 h-4 fill-current" /> DAĞITIMI BAŞLAT (DISPATCH)
+            </button>
           </div>
         </div>
       </div>
     </div>
   );
 }
+
