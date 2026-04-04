@@ -80,57 +80,57 @@ export function LogStatistics() {
 
   if (loading) {
     return (
-      <div className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl p-6 text-center">
+      <div className="w-full bg-white border border-slate-200 rounded-2xl p-8 text-center shadow-sm">
         <div className="inline-block animate-spin">
-          <Activity className="w-6 h-6 text-indigo-400" />
+          <Activity className="w-6 h-6 text-emerald-500" />
         </div>
-        <p className="text-slate-400 mt-2">Statistics loading...</p>
+        <p className="text-slate-400 mt-3 text-[10px] font-black uppercase tracking-widest">Statistics loading...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="w-full bg-slate-900/50 border border-red-500/20 rounded-2xl p-6">
-        <div className="flex items-center gap-3 text-red-400">
+      <div className="w-full bg-rose-50 border border-rose-100 rounded-2xl p-6 shadow-sm">
+        <div className="flex items-center gap-3 text-rose-600">
           <AlertCircle className="w-5 h-5" />
-          <p>Failed to load statistics: {error}</p>
+          <p className="text-xs font-black uppercase tracking-tight">Failed to load statistics: {error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-6">
       <div className="flex items-center gap-3 mb-6">
-        <TrendingUp className="w-5 h-5 text-indigo-400" />
-        <h3 className="text-xl font-bold text-white">API Statistics</h3>
+        <TrendingUp className="w-5 h-5 text-emerald-500" />
+        <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight italic">API Statistics</h3>
       </div>
 
-      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-          <div className="bg-slate-800/40 rounded-lg p-3">
-            <p className="text-xs text-slate-400">Total Routes</p>
-            <p className="text-lg font-semibold text-white">{overall.totalRoutes}</p>
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xl">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 shadow-sm">
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Routes</p>
+            <p className="text-2xl font-black text-slate-900 tabular-nums">{overall.totalRoutes}</p>
           </div>
-          <div className="bg-slate-800/40 rounded-lg p-3">
-            <p className="text-xs text-slate-400">Total Requests</p>
-            <p className="text-lg font-semibold text-white">{overall.totalRequests}</p>
+          <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 shadow-sm">
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Requests</p>
+            <p className="text-2xl font-black text-slate-900 tabular-nums">{overall.totalRequests}</p>
           </div>
-          <div className="bg-slate-800/40 rounded-lg p-3">
-            <p className="text-xs text-slate-400">Error Count (300-598)</p>
-            <p className="text-lg font-semibold text-red-400">{overall.errorStatusCount}</p>
+          <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 shadow-sm">
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Error Count (300-598)</p>
+            <p className="text-2xl font-black text-rose-600 tabular-nums">{overall.errorStatusCount}</p>
           </div>
-          <div className="bg-slate-800/40 rounded-lg p-3">
-            <p className="text-xs text-slate-400">Overall Error Rate</p>
-            <p className="text-lg font-semibold text-red-400">{overall.errorRate.toFixed(2)}%</p>
+          <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 shadow-sm">
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Overall Error Rate</p>
+            <p className="text-2xl font-black text-rose-600 tabular-nums">{overall.errorRate.toFixed(2)}%</p>
           </div>
         </div>
       </div>
 
-      <div className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden">
-        <div className="grid grid-cols-12 gap-3 px-4 py-3 bg-slate-950/40 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
-          <div className="col-span-4">Route</div>
+      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xl">
+        <div className="grid grid-cols-12 gap-3 px-6 py-4 bg-slate-50/50 border-b border-slate-100 text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black">
+          <div className="col-span-4">Route Path</div>
           <div className="col-span-2 text-right">Requests</div>
           <div className="col-span-2 text-right">Avg (ms)</div>
           <div className="col-span-1 text-right">Min</div>
@@ -138,25 +138,25 @@ export function LogStatistics() {
           <div className="col-span-2 text-right">Performance</div>
         </div>
 
-        <div className="divide-y divide-slate-800">
+        <div className="divide-y divide-slate-50">
           {routeEntries.map(([route, stats]) => (
             <div
               key={route}
-              className="grid grid-cols-12 gap-3 px-4 py-3 text-sm hover:bg-slate-800/20"
+              className="grid grid-cols-12 gap-3 px-6 py-4 text-[12px] hover:bg-slate-50/50 transition-colors group"
             >
-              <div className="col-span-4 text-indigo-300 truncate" title={route}>
+              <div className="col-span-4 text-emerald-600 font-black truncate uppercase tracking-tight" title={route}>
                 {route}
               </div>
-              <div className="col-span-2 text-right text-slate-200">{stats.totalRequests}</div>
-              <div className="col-span-2 text-right text-cyan-400">
+              <div className="col-span-2 text-right text-slate-400 font-bold tabular-nums group-hover:text-slate-900 transition-colors">{stats.totalRequests}</div>
+              <div className="col-span-2 text-right text-slate-900 font-black tabular-nums">
                 {stats.averageResponseTime.toFixed(2)}
               </div>
-              <div className="col-span-1 text-right text-green-400">{stats.minResponseTime}</div>
-              <div className="col-span-1 text-right text-orange-400">{stats.maxResponseTime}</div>
+              <div className="col-span-1 text-right text-emerald-600 font-bold tabular-nums">{stats.minResponseTime}</div>
+              <div className="col-span-1 text-right text-orange-600 font-bold tabular-nums">{stats.maxResponseTime}</div>
               <div
                 className={cn(
-                  'col-span-2 text-right font-medium',
-                  getPerformanceClass(stats.averageResponseTime),
+                  'col-span-2 text-right font-black uppercase tracking-widest text-[10px]',
+                  getPerformanceClass(stats.averageResponseTime).replace('400', '600'),
                 )}
               >
                 {getPerformanceText(stats.averageResponseTime)}

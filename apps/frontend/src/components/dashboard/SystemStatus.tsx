@@ -29,21 +29,21 @@ export function SystemStatus() {
   }, []);
 
   return (
-    <div className="flex items-center gap-4 bg-slate-900/50 border border-slate-800 rounded-full px-4 py-1.5 backdrop-blur-md">
+    <div className="flex items-center gap-4 bg-white border border-slate-200 rounded-full px-5 py-2 shadow-sm">
       <div className="flex items-center gap-2">
         <div className="relative">
           <div
             className={cn(
-              'w-2 h-2 rounded-full',
+              'w-2 h-2 rounded-full shadow-sm',
               status === 'online'
-                ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]'
+                ? 'bg-emerald-500 shadow-emerald-500/20'
                 : status === 'offline'
                   ? 'bg-rose-500'
-                  : 'bg-slate-500 animate-pulse',
+                  : 'bg-slate-300 animate-pulse',
             )}
           />
           {status === 'online' && (
-            <div className="absolute inset-0 w-2 h-2 rounded-full bg-emerald-500 animate-ping opacity-75" />
+            <div className="absolute inset-0 w-2 h-2 rounded-full bg-emerald-500 animate-ping opacity-30" />
           )}
         </div>
         <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
@@ -56,15 +56,15 @@ export function SystemStatus() {
       </div>
 
       {status === 'online' && latency && (
-        <div className="flex items-center gap-1.5 border-l border-slate-800 pl-4">
-          <Zap className="w-3 h-3 text-amber-400" />
-          <span className="text-[10px] font-bold text-slate-500">{latency}ms</span>
+        <div className="flex items-center gap-1.5 border-l border-slate-100 pl-4">
+          <Zap className="w-3 h-3 text-amber-500" />
+          <span className="text-[10px] font-black text-slate-400 tabular-nums">{latency}ms</span>
         </div>
       )}
 
-      <div className="flex items-center gap-1.5 border-l border-slate-800 pl-4">
-        <ShieldCheck className="w-3 h-3 text-indigo-400" />
-        <span className="text-[10px] font-bold text-slate-500 uppercase">Güvenli</span>
+      <div className="flex items-center gap-1.5 border-l border-slate-100 pl-4">
+        <ShieldCheck className="w-3 h-3 text-emerald-600" />
+        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Güvenli</span>
       </div>
     </div>
   );
