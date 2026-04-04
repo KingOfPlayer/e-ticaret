@@ -23,16 +23,11 @@ export default function Home() {
         <div className="flex items-center gap-6">
           <Link
             href="/auth/login"
-            className="text-sm font-medium text-slate-400 hover:text-white transition-colors"
+            className="px-6 py-2.5 border border-slate-700/50 rounded-full bg-slate-800/30 text-white text-sm font-bold hover:bg-slate-800/60 hover:border-indigo-500/50 transition-all shadow-xl shadow-indigo-500/5 active:scale-95"
           >
             Giriş Yap
           </Link>
-          <Link
-            href="/auth/register"
-            className="px-5 py-2.5 bg-white text-slate-950 rounded-full text-sm font-bold hover:bg-slate-200 transition-all shadow-xl shadow-white/5 active:scale-95"
-          >
-            Hemen Katıl
-          </Link>
+
         </div>
       </nav>
 
