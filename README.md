@@ -7,10 +7,6 @@ Ferhat SEZGİN - 231307112
 
 ---
 
-# İçindekiler
-
-[TOC]
-
 ## Problemin Tanımı ve Amaç
 
 ### Problemin Tanımı
